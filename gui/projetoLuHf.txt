@@ -1,0 +1,7 @@
+Cor de fundo do menu principal: #17181A;
+Cor de fundo dos widgets: #202123;
+Cor dos botões e elementos:#04BF7B; 
+Cor secundária:#025939;
+
+Cor do texto: Branco;
+
