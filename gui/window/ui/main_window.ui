@@ -14,26 +14,32 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">*{
+   <string notr="true">/*	Propriedades globais, que se aplicam em toda interface*/
+*{
 	font-family:&quot;Bahnschrift Light&quot;;
 }
+/*	Propriedades da Central Widget*/
 #centralwidget{
 	background-color:#17181A;
 	
 }
+/*	Propriedades que se aplicam ao menu esquerdo*/
 #leftMenuContent{
 	background-color: #202123;
 }
+/*	Propriedades que se aplicam ao widget do conteúdo principal da janela*/
 #bodyContent{
 	background-color:#17181A;
 }
+/*	Propriedades que se aplicam ao conteudo do cabeçalho da interface*/
 #header_content{
 	background-color:#025939;
 }
+/*	Propriedades que se aplicam ao conteúdo do rodapé na interface */
 #footer_content{
 	background-color:#025939;
 }
-
+/*	Propriedades que se aplicam aos botões localizados ao menu esquerdo*/
 #leftMenuContent QPushButton{
 	background-position: left center;
     background-repeat: no-repeat;
@@ -46,6 +52,16 @@
 	font-weight: bold;
 	color: #acacac;
 }
+/*	Propriedades que se aplicam aos botões , que aplicam um efeito de hover quando o mouse é passado por eles*/
+#leftMenuContent QPushButton:hover{
+	background-color: rgb(40, 44, 52);
+}
+/*	Propriedades que se aplicam aos botões , que aplicam um efeito dque muda a cor dos botões quando eles são pressionados */
+#leftMenuContent .QPushButton:pressed {	
+	background-color: #04BF7B;
+	color: rgb(255, 255, 255);
+}
+/*	Propriedades que serão aplicadas ao frame que contém os botões de minimizar, maximizar e fechar janela*/
 #frame_redm_janela QPushButton{
 	background-color: transparent;
 	background-position: center;
@@ -53,13 +69,7 @@
 	border: none;
 }
 
-#leftMenuContent QPushButton:hover{
-	background-color: rgb(40, 44, 52);
-}
-#leftMenuContent .QPushButton:pressed {	
-	background-color: #04BF7B;
-	color: rgb(255, 255, 255);
-}</string>
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
@@ -530,7 +540,7 @@
           </property>
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
-            <widget class="QWidget" name="page"/>
+            <widget class="QWidget" name="pagina_inicial"/>
             <widget class="QWidget" name="page_2"/>
            </widget>
           </item>
