@@ -256,4 +256,27 @@
     <file>icons/icon_restore.png</file>
     <file>icons/icon_settings.png</file>
   </qresource>
+  <qresource prefix="images">
+    <file>images/logo50x50edit.png</file>
+    <file>images/logo512x512edit.png</file>
+    <file>images/logo50x50.png</file>
+    <file>images/logo.ico.png</file>
+    <file>images/logo40x40.ico</file>
+    <file>images/logo40x40.png</file>
+    <file>images/logo256x256.png</file>
+    <file>images/logo512x512.png</file>
+    <file>images/logo600x600.png</file>
+    <file>images/logo1000x1000.png</file>
+    <file>images/logo2000x2000.jpeg</file>
+    <file>images/logo400.png.png</file>
+    <file>images/btn_novo_projeto.png</file>
+    <file>images/folder (1).png</file>
+    <file>images/folder (2).png</file>
+    <file>images/folder.png</file>
+    <file>images/logo(45).png.png</file>
+    <file>images/logo(30).png</file>
+    <file>images/logo(50).png.png</file>
+    <file>images/logo.ico.png</file>
+    <file>images/logo.png.png</file>
+  </qresource>
 </RCC>

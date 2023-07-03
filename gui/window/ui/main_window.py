@@ -1,31 +1,75 @@
-from qt_core import *
-from gui.resources import *
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'main_windowRVRNqY.ui'
+##
+## Created by: Qt User Interface Compiler version 6.3.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
+    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
+    QSpacerItem, QStackedWidget, QVBoxLayout, QWidget)
+import rsc_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(682, 530)
-        MainWindow.setStyleSheet(u"*{\n"
-"	font-family:\"Bahnschrift Light\";\n"
+        MainWindow.resize(800, 506)
+        MainWindow.setMinimumSize(QSize(800, 500))
+        MainWindow.setStyleSheet(u"/*	Propriedades globais, que se aplicam em toda interface*/\n"
+"*{\n"
+"	font-family:\"Segoe UI\";\n"
+"	background-repeat: none;\n"
+"	background-position: center;\n"
 "}\n"
+"\n"
+"/*	Propriedades da Central Widget*/\n"
 "#centralwidget{\n"
 "	background-color:#17181A;\n"
 "	\n"
 "}\n"
+"/*	Propriedades que se aplicam ao menu esquerdo*/\n"
 "#leftMenuContent{\n"
 "	background-color: #202123;\n"
 "}\n"
+"/*	Propriedades que se aplicam ao widget do conte\u00fado principal da janela*/\n"
 "#bodyContent{\n"
 "	background-color:#17181A;\n"
 "}\n"
+"/*	Propriedades que se aplicam ao conteudo do cabe\u00e7alho da interface*/\n"
 "#header_content{\n"
 "	background-color:#025939;\n"
+"	color: white;\n"
 "}\n"
+"#header_content QPushButton{\n"
+"	background-color: transparent;\n"
+"	border-radius: 5px;\n"
+"}\n"
+"/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
+"#header_content QPushButton:hover{\n"
+"	background-color: rgb(40, 44, 52);\n"
+"}\n"
+"/*	Propriedades que se ap"
+                        "licam aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
+"#header_content.QPushButton:pressed {	\n"
+"	background-color: #04BF7B;\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"/*	Propriedades que se aplicam ao conte\u00fado do rodap\u00e9 na interface */\n"
 "#footer_content{\n"
 "	background-color:#025939;\n"
 "}\n"
-"\n"
+"/*	Propriedades que se aplicam aos bot\u00f5es localizados ao menu esquerdo*/\n"
 "#leftMenuContent QPushButton{\n"
 "	background-position: left center;\n"
 "    background-repeat: no-repeat;\n"
@@ -38,21 +82,61 @@ class Ui_MainWindow(object):
 "	font-weight: bold;\n"
 "	color: #acacac;\n"
 "}\n"
+"/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
+"#leftMenuContent QPushButton:hover{\n"
+"	background-color: rgb(40, 44, 52);\n"
+"}\n"
+"/*	Propriedades que se aplicam"
+                        " aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
+"#leftMenuContent .QPushButton:pressed {	\n"
+"	background-color: #04BF7B;\n"
+"	color: rgb(255, 255, 255);\n"
+"}\n"
+"#leftMenuContent .QPushButton:checked{\n"
+"	background-color: red;\n"
+"}\n"
+"/*	Propriedades que ser\u00e3o aplicadas ao frame que cont\u00e9m os bot\u00f5es de minimizar, maximizar e fechar janela*/\n"
 "#frame_redm_janela QPushButton{\n"
 "	background-color: transparent;\n"
 "	background-position: center;\n"
 "	background-repeat:none;\n"
 "	border: none;\n"
 "}\n"
-"\n"
-"#leftMenuContent QPushButton:hover{\n"
-"	background-color: rgb(40, 44, 52);\n"
+"/*Criando um estilo para o bot\u00e3o que ir\u00e1 criar um novo projeto*/\n"
+"#stackedWidget QPushButton{\n"
+"	background-color: rgba(255, 255, 255,0);\n"
+"	border-radius: 5px;\n"
+"	border: none;\n"
 "}\n"
-"#leftMenuContent .QPushButton:pressed {	\n"
-"	background-color: #04BF7B;\n"
-"	color: rgb(255,"
-                        " 255, 255);\n"
-"}")
+"#stackedWidget QPushButton:hover{\n"
+"	background-color: rgba(255, 255, 255,10);\n"
+"}\n"
+"\n"
+"#widget_novo_projeto{\n"
+"	background-color: #202123;\n"
+"	border-radius: 10px;\n"
+"}\n"
+"\n"
+"/*Criando um estilo para os toolti"
+                        "ps*/\n"
+"QToolTip {\n"
+"	color: #ffffff;\n"
+"	background-color: rgba(33, 37, 43, 180);\n"
+"	border: none;\n"
+"	text-align: left;\n"
+"	padding-left: 8px;\n"
+"	margin: 0px;\n"
+"}\n"
+"QLineEdit{\n"
+"	background-color: #202123 ;\n"
+"	border: 1px solid  black;\n"
+"	border-radius: 5px;\n"
+"\n"
+"}\n"
+"\n"
+"\n"
+"\n"
+"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"")
@@ -62,43 +146,29 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.header_content = QWidget(self.centralwidget)
         self.header_content.setObjectName(u"header_content")
-        self.header_content.setMinimumSize(QSize(0, 35))
-        self.header_content.setMaximumSize(QSize(16777215, 35))
+        self.header_content.setMinimumSize(QSize(0, 40))
+        self.header_content.setMaximumSize(QSize(16777214, 40))
         self.horizontalLayout = QHBoxLayout(self.header_content)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.frame_logo = QFrame(self.header_content)
         self.frame_logo.setObjectName(u"frame_logo")
+        self.frame_logo.setMinimumSize(QSize(50, 50))
+        self.frame_logo.setMaximumSize(QSize(50, 50))
+        self.frame_logo.setStyleSheet(u"background-image: url(:/images/images/logo50x50.png);")
         self.frame_logo.setFrameShape(QFrame.StyledPanel)
         self.frame_logo.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_2 = QHBoxLayout(self.frame_logo)
+        self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.label = QLabel(self.frame_logo)
-        self.label.setObjectName(u"label")
-
-        self.horizontalLayout_2.addWidget(self.label, 0, Qt.AlignLeft)
-
+        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, -1)
 
         self.horizontalLayout.addWidget(self.frame_logo, 0, Qt.AlignLeft)
 
-        self.frame_nome_programa = QFrame(self.header_content)
-        self.frame_nome_programa.setObjectName(u"frame_nome_programa")
-        self.frame_nome_programa.setFrameShape(QFrame.StyledPanel)
-        self.frame_nome_programa.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_3 = QHBoxLayout(self.frame_nome_programa)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.label_2 = QLabel(self.frame_nome_programa)
-        self.label_2.setObjectName(u"label_2")
-        font = QFont()
-        font.setFamilies([u"Bahnschrift Light"])
-        font.setPointSize(12)
-        self.label_2.setFont(font)
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.horizontalLayout_3.addWidget(self.label_2, 0, Qt.AlignLeft)
-
-
-        self.horizontalLayout.addWidget(self.frame_nome_programa)
+        self.horizontalLayout.addItem(self.horizontalSpacer)
 
         self.frame_redm_janela = QFrame(self.header_content)
         self.frame_redm_janela.setObjectName(u"frame_redm_janela")
@@ -108,13 +178,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.btn_fechar_janela = QPushButton(self.frame_redm_janela)
-        self.btn_fechar_janela.setObjectName(u"btn_fechar_janela")
-        self.btn_fechar_janela.setMinimumSize(QSize(28, 28))
-        self.btn_fechar_janela.setMaximumSize(QSize(28, 28))
-        self.btn_fechar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_minimize.png);")
+        self.btn_minimizar_janela = QPushButton(self.frame_redm_janela)
+        self.btn_minimizar_janela.setObjectName(u"btn_minimizar_janela")
+        self.btn_minimizar_janela.setMinimumSize(QSize(28, 28))
+        self.btn_minimizar_janela.setMaximumSize(QSize(28, 28))
+        self.btn_minimizar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_minimize.png);")
 
-        self.horizontalLayout_4.addWidget(self.btn_fechar_janela)
+        self.horizontalLayout_4.addWidget(self.btn_minimizar_janela)
 
         self.btn_maximizar_janela = QPushButton(self.frame_redm_janela)
         self.btn_maximizar_janela.setObjectName(u"btn_maximizar_janela")
@@ -124,13 +194,13 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.btn_maximizar_janela)
 
-        self.btn_minimizar_janela = QPushButton(self.frame_redm_janela)
-        self.btn_minimizar_janela.setObjectName(u"btn_minimizar_janela")
-        self.btn_minimizar_janela.setMinimumSize(QSize(28, 28))
-        self.btn_minimizar_janela.setMaximumSize(QSize(28, 28))
-        self.btn_minimizar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_close.png);")
+        self.btn_fechar_janela = QPushButton(self.frame_redm_janela)
+        self.btn_fechar_janela.setObjectName(u"btn_fechar_janela")
+        self.btn_fechar_janela.setMinimumSize(QSize(28, 28))
+        self.btn_fechar_janela.setMaximumSize(QSize(28, 28))
+        self.btn_fechar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_close.png);")
 
-        self.horizontalLayout_4.addWidget(self.btn_minimizar_janela)
+        self.horizontalLayout_4.addWidget(self.btn_fechar_janela)
 
 
         self.horizontalLayout.addWidget(self.frame_redm_janela, 0, Qt.AlignRight)
@@ -176,11 +246,11 @@ class Ui_MainWindow(object):
         self.btn_menu.setSizePolicy(sizePolicy1)
         self.btn_menu.setMinimumSize(QSize(100, 45))
         self.btn_menu.setMaximumSize(QSize(16777215, 45))
-        font1 = QFont()
-        font1.setFamilies([u"Bahnschrift Light"])
-        font1.setPointSize(10)
-        font1.setBold(True)
-        self.btn_menu.setFont(font1)
+        font = QFont()
+        font.setFamilies([u"Segoe UI"])
+        font.setPointSize(10)
+        font.setBold(True)
+        self.btn_menu.setFont(font)
         self.btn_menu.setStyleSheet(u"background-image: url(:/icones/icons/icon_menu.png);")
 
         self.verticalLayout_3.addWidget(self.btn_menu)
@@ -204,13 +274,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.btn_inicio)
 
-        self.pushButton_3 = QPushButton(self.frame_center_menu)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setMinimumSize(QSize(100, 45))
-        self.pushButton_3.setMaximumSize(QSize(16777215, 45))
-        self.pushButton_3.setStyleSheet(u"background-image: url(:/icones/icons/cil-3d.png);")
+        self.btn_novo_projeto = QPushButton(self.frame_center_menu)
+        self.btn_novo_projeto.setObjectName(u"btn_novo_projeto")
+        self.btn_novo_projeto.setMinimumSize(QSize(100, 45))
+        self.btn_novo_projeto.setMaximumSize(QSize(16777215, 45))
+        self.btn_novo_projeto.setStyleSheet(u"background-image: url(:/icones/icons/cil-folder.png);")
 
-        self.verticalLayout_4.addWidget(self.pushButton_3)
+        self.verticalLayout_4.addWidget(self.btn_novo_projeto)
 
         self.pushButton_4 = QPushButton(self.frame_center_menu)
         self.pushButton_4.setObjectName(u"pushButton_4")
@@ -251,12 +321,116 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.stackedWidget = QStackedWidget(self.mainBodyContent)
         self.stackedWidget.setObjectName(u"stackedWidget")
-        self.page = QWidget()
-        self.page.setObjectName(u"page")
-        self.stackedWidget.addWidget(self.page)
-        self.page_2 = QWidget()
-        self.page_2.setObjectName(u"page_2")
-        self.stackedWidget.addWidget(self.page_2)
+        self.stackedWidget.setStyleSheet(u"")
+        self.pagina_inicial = QWidget()
+        self.pagina_inicial.setObjectName(u"pagina_inicial")
+        self.verticalLayout_6 = QVBoxLayout(self.pagina_inicial)
+        self.verticalLayout_6.setSpacing(0)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.widget_logo = QWidget(self.pagina_inicial)
+        self.widget_logo.setObjectName(u"widget_logo")
+        self.widget_logo.setStyleSheet(u"background-image: url(:/images/images/logo512x512edit.png);")
+
+        self.verticalLayout_6.addWidget(self.widget_logo)
+
+        self.stackedWidget.addWidget(self.pagina_inicial)
+        self.pagina_novo_projeto = QWidget()
+        self.pagina_novo_projeto.setObjectName(u"pagina_novo_projeto")
+        self.verticalLayout_7 = QVBoxLayout(self.pagina_novo_projeto)
+        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.widget_novo_projeto = QWidget(self.pagina_novo_projeto)
+        self.widget_novo_projeto.setObjectName(u"widget_novo_projeto")
+        self.widget_novo_projeto.setMinimumSize(QSize(600, 300))
+        self.widget_novo_projeto.setMaximumSize(QSize(600, 300))
+        self.widget_novo_projeto.setStyleSheet(u"font-size: 10pt;\n"
+"font-weight: bold;\n"
+"color: #acacac;\n"
+"")
+        self.widget = QWidget(self.widget_novo_projeto)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(20, 10, 106, 38))
+        self.widget.setStyleSheet(u"")
+        self.horizontalLayout_8 = QHBoxLayout(self.widget)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.label = QLabel(self.widget)
+        self.label.setObjectName(u"label")
+        self.label.setStyleSheet(u"")
+
+        self.horizontalLayout_8.addWidget(self.label, 0, Qt.AlignTop)
+
+        self.frame_2 = QFrame(self.widget_novo_projeto)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setGeometry(QRect(20, 70, 567, 41))
+        self.frame_2.setStyleSheet(u"")
+        self.frame_2.setFrameShape(QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_2)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.label_3 = QLabel(self.frame_2)
+        self.label_3.setObjectName(u"label_3")
+
+        self.horizontalLayout_6.addWidget(self.label_3)
+
+        self.lineEdit_nome_projeto = QLineEdit(self.frame_2)
+        self.lineEdit_nome_projeto.setObjectName(u"lineEdit_nome_projeto")
+        self.lineEdit_nome_projeto.setMinimumSize(QSize(500, 0))
+        self.lineEdit_nome_projeto.setMaximumSize(QSize(500, 16777215))
+
+        self.horizontalLayout_6.addWidget(self.lineEdit_nome_projeto)
+
+        self.frame_4 = QFrame(self.widget_novo_projeto)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setGeometry(QRect(240, 230, 100, 38))
+        self.frame_4.setMinimumSize(QSize(100, 0))
+        self.frame_4.setMaximumSize(QSize(100, 16777215))
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.frame_4)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.btn_criar_projeto = QPushButton(self.frame_4)
+        self.btn_criar_projeto.setObjectName(u"btn_criar_projeto")
+        self.btn_criar_projeto.setMinimumSize(QSize(0, 30))
+        self.btn_criar_projeto.setStyleSheet(u"")
+
+        self.horizontalLayout_3.addWidget(self.btn_criar_projeto)
+
+        self.frame = QFrame(self.widget_novo_projeto)
+        self.frame.setObjectName(u"frame")
+        self.frame.setGeometry(QRect(20, 130, 547, 45))
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_7 = QHBoxLayout(self.frame)
+        self.horizontalLayout_7.setSpacing(5)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.label_4 = QLabel(self.frame)
+        self.label_4.setObjectName(u"label_4")
+
+        self.horizontalLayout_7.addWidget(self.label_4)
+
+        self.label_5 = QLabel(self.frame)
+        self.label_5.setObjectName(u"label_5")
+        self.label_5.setMinimumSize(QSize(450, 20))
+        self.label_5.setMaximumSize(QSize(450, 20))
+        self.label_5.setStyleSheet(u"border: 1px solid black;\n"
+"border-radius: 5px;")
+
+        self.horizontalLayout_7.addWidget(self.label_5)
+
+        self.btn_selecionar_local_projeto = QPushButton(self.frame)
+        self.btn_selecionar_local_projeto.setObjectName(u"btn_selecionar_local_projeto")
+        self.btn_selecionar_local_projeto.setMinimumSize(QSize(25, 25))
+        self.btn_selecionar_local_projeto.setMaximumSize(QSize(25, 25))
+        self.btn_selecionar_local_projeto.setStyleSheet(u"background-image: url(:/icones/icons/cil-folder.png);")
+
+        self.horizontalLayout_7.addWidget(self.btn_selecionar_local_projeto)
+
+
+        self.verticalLayout_7.addWidget(self.widget_novo_projeto, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+
+        self.stackedWidget.addWidget(self.pagina_novo_projeto)
 
         self.verticalLayout_5.addWidget(self.stackedWidget)
 
@@ -277,20 +451,36 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
+        self.stackedWidget.setCurrentIndex(1)
+
+
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"LOGO", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"NOME DO PROGRAMA", None))
-        self.btn_fechar_janela.setText("")
-        self.btn_maximizar_janela.setText("")
+#if QT_CONFIG(tooltip)
+        self.btn_minimizar_janela.setToolTip(QCoreApplication.translate("MainWindow", u"Minimizar", None))
+#endif // QT_CONFIG(tooltip)
         self.btn_minimizar_janela.setText("")
+#if QT_CONFIG(tooltip)
+        self.btn_maximizar_janela.setToolTip(QCoreApplication.translate("MainWindow", u"Maximizar", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_maximizar_janela.setText("")
+#if QT_CONFIG(tooltip)
+        self.btn_fechar_janela.setToolTip(QCoreApplication.translate("MainWindow", u"Fechar", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_fechar_janela.setText("")
         self.btn_menu.setText(QCoreApplication.translate("MainWindow", u"Menu", None))
         self.btn_inicio.setText(QCoreApplication.translate("MainWindow", u"In\u00edcio", None))
-        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 1", None))
+        self.btn_novo_projeto.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
         self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 2", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 3", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"Novo projeto:", None))
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"Nome:", None))
+        self.btn_criar_projeto.setText(QCoreApplication.translate("MainWindow", u"Criar projeto", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"Local: ", None))
+        self.label_5.setText("")
+        self.btn_selecionar_local_projeto.setText("")
     # retranslateUi
 
