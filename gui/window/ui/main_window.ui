@@ -97,22 +97,30 @@
 }
 /*Criando um estilo para o botão que irá criar um novo projeto*/
 #stackedWidget QPushButton{
-	background-color: rgba(255, 255, 255,0);
+	background-color:  transparent;
+	background-repeat: none;
+	background-position:center;
+	border: 1px solid black;
 	border-radius: 5px;
-	border: none;
+	font-size: 10pt;
+	font-weight: bold;
+	color: #acacac;
 }
 #stackedWidget QPushButton:hover{
-	background-color: rgba(255, 255, 255,10);
+	background-color:  rgb(40, 44, 52);
 }
 #stackedWidget QPushButton:pressed{
-	background-color: #04BF7B;
+	background-color: #025939;
 	color: rgb(255, 255, 255);
-
 }
 
 #widget_novo_projeto{
 	background-color: #202123;
 	border-radius: 10px;
+}
+#widget_inicio{
+	background-color: #202123;
+	border-radius: 10px
 }
 
 /*Criando um estilo para os tooltips*/
@@ -216,6 +224,18 @@ QLineEdit{
            <number>0</number>
           </property>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_nome_projeto">
+         <property name="styleSheet">
+          <string notr="true">font-size: 9pt;
+color: white;
+font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
         </widget>
        </item>
        <item>
@@ -505,7 +525,7 @@ QLineEdit{
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btn_novo_projeto">
+              <widget class="QPushButton" name="btn_pagina_novo_projeto">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -527,7 +547,7 @@ QLineEdit{
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="btn_pagina_add_arquivos">
                <property name="minimumSize">
                 <size>
                  <width>100</width>
@@ -541,7 +561,7 @@ QLineEdit{
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-image: url(:/icones/icons/cil-alarm.png);</string>
+                <string notr="true">background-image: url(:/icones/icons/cil-file.png);</string>
                </property>
                <property name="text">
                 <string>Opção 2</string>
@@ -619,33 +639,150 @@ QLineEdit{
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>1</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="pagina_inicial">
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
-               <widget class="QWidget" name="widget_logo" native="true">
-                <property name="styleSheet">
-                 <string notr="true">background-image: url(:/images/images/logo512x512edit.png);</string>
+               <widget class="QWidget" name="widget_inicio" native="true">
+                <property name="minimumSize">
+                 <size>
+                  <width>500</width>
+                  <height>250</height>
+                 </size>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>500</width>
+                  <height>250</height>
+                 </size>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_10">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="frame_4">
+                   <property name="styleSheet">
+                    <string notr="true">background-image: url(:/images/images/logo256x256edit.png);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_6">
+                   <property name="minimumSize">
+                    <size>
+                     <width>1</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>1</width>
+                     <height>240</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(102, 101, 95);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_5">
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <item alignment="Qt::AlignHCenter">
+                     <widget class="QPushButton" name="btn_novo_projeto_home">
+                      <property name="minimumSize">
+                       <size>
+                        <width>150</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Novo projeto</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item alignment="Qt::AlignHCenter">
+                     <widget class="QPushButton" name="btn_abrir_projeto">
+                      <property name="minimumSize">
+                       <size>
+                        <width>150</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Abrir projeto</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
+            </widget>
+            <widget class="QWidget" name="pagina_add_arquivos">
+             <widget class="QPushButton" name="btn_add_arquivos_dados">
+              <property name="geometry">
+               <rect>
+                <x>574</x>
+                <y>380</y>
+                <width>91</width>
+                <height>24</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Add Arquivos</string>
+              </property>
+             </widget>
             </widget>
             <widget class="QWidget" name="pagina_novo_projeto">
              <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -679,199 +816,171 @@ QLineEdit{
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">font-size: 10pt;
+                 <string notr="true">
+font-size: 10pt;
 font-weight: bold;
-color: #acacac;
-</string>
+color: #acacac;</string>
                 </property>
-                <widget class="QWidget" name="widget" native="true">
-                 <property name="geometry">
-                  <rect>
-                   <x>20</x>
-                   <y>10</y>
-                   <width>106</width>
-                   <height>38</height>
-                  </rect>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_8">
-                  <item alignment="Qt::AlignTop">
-                   <widget class="QLabel" name="label">
-                    <property name="styleSheet">
-                     <string notr="true"/>
-                    </property>
-                    <property name="text">
-                     <string>Novo projeto:</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QFrame" name="frame_2">
-                 <property name="geometry">
-                  <rect>
-                   <x>20</x>
-                   <y>70</y>
-                   <width>567</width>
-                   <height>41</height>
-                  </rect>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_6">
-                  <item>
-                   <widget class="QLabel" name="label_3">
-                    <property name="text">
-                     <string>Nome:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="lineEdit_nome_projeto">
-                    <property name="minimumSize">
-                     <size>
-                      <width>500</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>500</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QFrame" name="frame_4">
-                 <property name="geometry">
-                  <rect>
-                   <x>240</x>
-                   <y>230</y>
-                   <width>100</width>
-                   <height>38</height>
-                  </rect>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>100</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_3">
-                  <item>
-                   <widget class="QPushButton" name="btn_criar_projeto">
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>30</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true"/>
-                    </property>
-                    <property name="text">
-                     <string>Criar projeto</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-                <widget class="QFrame" name="frame">
-                 <property name="geometry">
-                  <rect>
-                   <x>20</x>
-                   <y>130</y>
-                   <width>547</width>
-                   <height>45</height>
-                  </rect>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_7">
-                  <property name="spacing">
-                   <number>5</number>
-                  </property>
-                  <item>
-                   <widget class="QLabel" name="label_4">
-                    <property name="text">
-                     <string>Local: </string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_local_projeto">
-                    <property name="minimumSize">
-                     <size>
-                      <width>450</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>450</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">border: 1px solid black;
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <item>
+                  <widget class="QWidget" name="widget" native="true">
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <item alignment="Qt::AlignTop">
+                     <widget class="QLabel" name="label">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
+                      <property name="text">
+                       <string>Novo projeto:</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_2">
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_6">
+                    <item>
+                     <widget class="QLabel" name="label_3">
+                      <property name="text">
+                       <string>Nome:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="lineEdit_nome_projeto">
+                      <property name="minimumSize">
+                       <size>
+                        <width>500</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>500</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_7">
+                    <item>
+                     <widget class="QLabel" name="label_4">
+                      <property name="text">
+                       <string>Local: </string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_local_projeto">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="minimumSize">
+                       <size>
+                        <width>450</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>450</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">border: 1px solid black;
 border-radius: 5px;</string>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="btn_selecionar_local_projeto">
-                    <property name="minimumSize">
-                     <size>
-                      <width>25</width>
-                      <height>25</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>25</width>
-                      <height>25</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-image: url(:/icones/icons/cil-folder.png);</string>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="btn_selecionar_local_projeto">
+                      <property name="minimumSize">
+                       <size>
+                        <width>30</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>30</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-image: url(:/icones/icons/cil-folder.png);</string>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_3">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_3">
+                    <item>
+                     <widget class="QPushButton" name="btn_criar_projeto">
+                      <property name="minimumSize">
+                       <size>
+                        <width>100</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>100</width>
+                        <height>30</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string>Criar projeto</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
              </layout>
@@ -892,6 +1001,37 @@ border-radius: 5px;</string>
               <height>25</height>
              </size>
             </property>
+            <widget class="QLabel" name="label_2">
+             <property name="geometry">
+              <rect>
+               <x>680</x>
+               <y>0</y>
+               <width>75</width>
+               <height>25</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>75</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>75</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font-size: 9pt;
+color: white;
+font-weight: bold;
+</string>
+             </property>
+             <property name="text">
+              <string>v0.01</string>
+             </property>
+            </widget>
            </widget>
           </item>
          </layout>

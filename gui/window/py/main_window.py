@@ -85,23 +85,31 @@ class Ui_MainWindow(object):
 "}\n"
 "/*Criando um estilo para o bot\u00e3o que ir\u00e1 criar um novo projeto*/\n"
 "#stackedWidget QPushButton{\n"
-"	background-color: rgba(255, 255, 255,0);\n"
+"	background-color:  transparent;\n"
+"	background-repeat: none;\n"
+"	background-position:center;\n"
+"	border: 1px solid black;\n"
 "	border-radius: 5px;\n"
-"	border: none;\n"
+"	font-size: 10pt;\n"
+"	font-weight: bold;\n"
+"	color: #acacac;\n"
 "}\n"
 "#stackedWidget QPushButton:hover{\n"
-"	background-color: rgba(255, 255, 255,10);\n"
+"	background-color:  rgb(40, 44"
+                        ", 52);\n"
 "}\n"
 "#stackedWidget QPushButton:pressed{\n"
-"	background-color: #04BF7B;\n"
+"	background-color: #025939;\n"
 "	color: rgb(255, 255, 255);\n"
-"\n"
-""
-                        "}\n"
+"}\n"
 "\n"
 "#widget_novo_projeto{\n"
 "	background-color: #202123;\n"
 "	border-radius: 10px;\n"
+"}\n"
+"#widget_inicio{\n"
+"	background-color: #202123;\n"
+"	border-radius: 10px\n"
 "}\n"
 "\n"
 "/*Criando um estilo para os tooltips*/\n"
@@ -151,6 +159,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setContentsMargins(-1, 0, -1, -1)
 
         self.horizontalLayout.addWidget(self.frame_logo, 0, Qt.AlignLeft)
+
+        self.label_nome_projeto = QLabel(self.header_content)
+        self.label_nome_projeto.setObjectName(u"label_nome_projeto")
+        self.label_nome_projeto.setStyleSheet(u"font-size: 9pt;\n"
+"color: white;\n"
+"font-weight: bold;")
+
+        self.horizontalLayout.addWidget(self.label_nome_projeto)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -260,21 +276,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addWidget(self.btn_inicio)
 
-        self.btn_novo_projeto = QPushButton(self.frame_center_menu)
-        self.btn_novo_projeto.setObjectName(u"btn_novo_projeto")
-        self.btn_novo_projeto.setMinimumSize(QSize(100, 45))
-        self.btn_novo_projeto.setMaximumSize(QSize(16777215, 45))
-        self.btn_novo_projeto.setStyleSheet(u"background-image: url(:/icones/icons/cil-folder.png);")
+        self.btn_pagina_novo_projeto = QPushButton(self.frame_center_menu)
+        self.btn_pagina_novo_projeto.setObjectName(u"btn_pagina_novo_projeto")
+        self.btn_pagina_novo_projeto.setMinimumSize(QSize(100, 45))
+        self.btn_pagina_novo_projeto.setMaximumSize(QSize(16777215, 45))
+        self.btn_pagina_novo_projeto.setStyleSheet(u"background-image: url(:/icones/icons/cil-folder.png);")
 
-        self.verticalLayout_4.addWidget(self.btn_novo_projeto)
+        self.verticalLayout_4.addWidget(self.btn_pagina_novo_projeto)
 
-        self.pushButton_4 = QPushButton(self.frame_center_menu)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setMinimumSize(QSize(100, 45))
-        self.pushButton_4.setMaximumSize(QSize(16777215, 45))
-        self.pushButton_4.setStyleSheet(u"background-image: url(:/icones/icons/cil-alarm.png);")
+        self.btn_pagina_add_arquivos = QPushButton(self.frame_center_menu)
+        self.btn_pagina_add_arquivos.setObjectName(u"btn_pagina_add_arquivos")
+        self.btn_pagina_add_arquivos.setMinimumSize(QSize(100, 45))
+        self.btn_pagina_add_arquivos.setMaximumSize(QSize(16777215, 45))
+        self.btn_pagina_add_arquivos.setStyleSheet(u"background-image: url(:/icones/icons/cil-file.png);")
 
-        self.verticalLayout_4.addWidget(self.pushButton_4)
+        self.verticalLayout_4.addWidget(self.btn_pagina_add_arquivos)
 
         self.pushButton_5 = QPushButton(self.frame_center_menu)
         self.pushButton_5.setObjectName(u"pushButton_5")
@@ -310,17 +326,68 @@ class Ui_MainWindow(object):
         self.stackedWidget.setStyleSheet(u"")
         self.pagina_inicial = QWidget()
         self.pagina_inicial.setObjectName(u"pagina_inicial")
-        self.verticalLayout_6 = QVBoxLayout(self.pagina_inicial)
-        self.verticalLayout_6.setSpacing(0)
-        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
-        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
-        self.widget_logo = QWidget(self.pagina_inicial)
-        self.widget_logo.setObjectName(u"widget_logo")
-        self.widget_logo.setStyleSheet(u"background-image: url(:/images/images/logo512x512edit.png);")
+        self.horizontalLayout_9 = QHBoxLayout(self.pagina_inicial)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.widget_inicio = QWidget(self.pagina_inicial)
+        self.widget_inicio.setObjectName(u"widget_inicio")
+        self.widget_inicio.setMinimumSize(QSize(500, 250))
+        self.widget_inicio.setMaximumSize(QSize(500, 250))
+        self.horizontalLayout_10 = QHBoxLayout(self.widget_inicio)
+        self.horizontalLayout_10.setSpacing(0)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.frame_4 = QFrame(self.widget_inicio)
+        self.frame_4.setObjectName(u"frame_4")
+        self.frame_4.setStyleSheet(u"background-image: url(:/images/images/logo256x256edit.png);")
+        self.frame_4.setFrameShape(QFrame.StyledPanel)
+        self.frame_4.setFrameShadow(QFrame.Raised)
 
-        self.verticalLayout_6.addWidget(self.widget_logo)
+        self.horizontalLayout_10.addWidget(self.frame_4)
+
+        self.frame_6 = QFrame(self.widget_inicio)
+        self.frame_6.setObjectName(u"frame_6")
+        self.frame_6.setMinimumSize(QSize(1, 0))
+        self.frame_6.setMaximumSize(QSize(1, 240))
+        self.frame_6.setStyleSheet(u"background-color: rgb(102, 101, 95);")
+        self.frame_6.setFrameShape(QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QFrame.Raised)
+
+        self.horizontalLayout_10.addWidget(self.frame_6)
+
+        self.frame_5 = QFrame(self.widget_inicio)
+        self.frame_5.setObjectName(u"frame_5")
+        self.frame_5.setStyleSheet(u"")
+        self.frame_5.setFrameShape(QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_6 = QVBoxLayout(self.frame_5)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.btn_novo_projeto_home = QPushButton(self.frame_5)
+        self.btn_novo_projeto_home.setObjectName(u"btn_novo_projeto_home")
+        self.btn_novo_projeto_home.setMinimumSize(QSize(150, 30))
+        self.btn_novo_projeto_home.setMaximumSize(QSize(150, 30))
+
+        self.verticalLayout_6.addWidget(self.btn_novo_projeto_home, 0, Qt.AlignHCenter)
+
+        self.btn_abrir_projeto = QPushButton(self.frame_5)
+        self.btn_abrir_projeto.setObjectName(u"btn_abrir_projeto")
+        self.btn_abrir_projeto.setMinimumSize(QSize(150, 30))
+        self.btn_abrir_projeto.setMaximumSize(QSize(150, 30))
+
+        self.verticalLayout_6.addWidget(self.btn_abrir_projeto, 0, Qt.AlignHCenter)
+
+
+        self.horizontalLayout_10.addWidget(self.frame_5)
+
+
+        self.horizontalLayout_9.addWidget(self.widget_inicio)
 
         self.stackedWidget.addWidget(self.pagina_inicial)
+        self.pagina_add_arquivos = QWidget()
+        self.pagina_add_arquivos.setObjectName(u"pagina_add_arquivos")
+        self.btn_add_arquivos_dados = QPushButton(self.pagina_add_arquivos)
+        self.btn_add_arquivos_dados.setObjectName(u"btn_add_arquivos_dados")
+        self.btn_add_arquivos_dados.setGeometry(QRect(574, 380, 91, 24))
+        self.stackedWidget.addWidget(self.pagina_add_arquivos)
         self.pagina_novo_projeto = QWidget()
         self.pagina_novo_projeto.setObjectName(u"pagina_novo_projeto")
         self.verticalLayout_7 = QVBoxLayout(self.pagina_novo_projeto)
@@ -331,13 +398,14 @@ class Ui_MainWindow(object):
         self.widget_novo_projeto.setObjectName(u"widget_novo_projeto")
         self.widget_novo_projeto.setMinimumSize(QSize(600, 300))
         self.widget_novo_projeto.setMaximumSize(QSize(600, 300))
-        self.widget_novo_projeto.setStyleSheet(u"font-size: 10pt;\n"
+        self.widget_novo_projeto.setStyleSheet(u"\n"
+"font-size: 10pt;\n"
 "font-weight: bold;\n"
-"color: #acacac;\n"
-"")
+"color: #acacac;")
+        self.verticalLayout_8 = QVBoxLayout(self.widget_novo_projeto)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.widget = QWidget(self.widget_novo_projeto)
         self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(20, 10, 106, 38))
         self.widget.setStyleSheet(u"")
         self.horizontalLayout_8 = QHBoxLayout(self.widget)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
@@ -347,9 +415,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_8.addWidget(self.label, 0, Qt.AlignTop)
 
+
+        self.verticalLayout_8.addWidget(self.widget)
+
         self.frame_2 = QFrame(self.widget_novo_projeto)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setGeometry(QRect(20, 70, 567, 41))
         self.frame_2.setStyleSheet(u"")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
@@ -367,29 +437,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6.addWidget(self.lineEdit_nome_projeto)
 
-        self.frame_4 = QFrame(self.widget_novo_projeto)
-        self.frame_4.setObjectName(u"frame_4")
-        self.frame_4.setGeometry(QRect(240, 230, 100, 38))
-        self.frame_4.setMinimumSize(QSize(100, 0))
-        self.frame_4.setMaximumSize(QSize(100, 16777215))
-        self.frame_4.setFrameShape(QFrame.StyledPanel)
-        self.frame_4.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_3 = QHBoxLayout(self.frame_4)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.btn_criar_projeto = QPushButton(self.frame_4)
-        self.btn_criar_projeto.setObjectName(u"btn_criar_projeto")
-        self.btn_criar_projeto.setMinimumSize(QSize(0, 30))
-        self.btn_criar_projeto.setStyleSheet(u"")
 
-        self.horizontalLayout_3.addWidget(self.btn_criar_projeto)
+        self.verticalLayout_8.addWidget(self.frame_2)
 
         self.frame = QFrame(self.widget_novo_projeto)
         self.frame.setObjectName(u"frame")
-        self.frame.setGeometry(QRect(20, 130, 547, 45))
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_7 = QHBoxLayout(self.frame)
-        self.horizontalLayout_7.setSpacing(5)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.label_4 = QLabel(self.frame)
         self.label_4.setObjectName(u"label_4")
@@ -398,6 +453,11 @@ class Ui_MainWindow(object):
 
         self.label_local_projeto = QLabel(self.frame)
         self.label_local_projeto.setObjectName(u"label_local_projeto")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.label_local_projeto.sizePolicy().hasHeightForWidth())
+        self.label_local_projeto.setSizePolicy(sizePolicy3)
         self.label_local_projeto.setMinimumSize(QSize(450, 20))
         self.label_local_projeto.setMaximumSize(QSize(450, 20))
         self.label_local_projeto.setStyleSheet(u"border: 1px solid black;\n"
@@ -407,11 +467,30 @@ class Ui_MainWindow(object):
 
         self.btn_selecionar_local_projeto = QPushButton(self.frame)
         self.btn_selecionar_local_projeto.setObjectName(u"btn_selecionar_local_projeto")
-        self.btn_selecionar_local_projeto.setMinimumSize(QSize(25, 25))
-        self.btn_selecionar_local_projeto.setMaximumSize(QSize(25, 25))
+        self.btn_selecionar_local_projeto.setMinimumSize(QSize(30, 30))
+        self.btn_selecionar_local_projeto.setMaximumSize(QSize(30, 30))
         self.btn_selecionar_local_projeto.setStyleSheet(u"background-image: url(:/icones/icons/cil-folder.png);")
 
         self.horizontalLayout_7.addWidget(self.btn_selecionar_local_projeto)
+
+
+        self.verticalLayout_8.addWidget(self.frame)
+
+        self.frame_3 = QFrame(self.widget_novo_projeto)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.frame_3)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.btn_criar_projeto = QPushButton(self.frame_3)
+        self.btn_criar_projeto.setObjectName(u"btn_criar_projeto")
+        self.btn_criar_projeto.setMinimumSize(QSize(100, 30))
+        self.btn_criar_projeto.setMaximumSize(QSize(100, 30))
+
+        self.horizontalLayout_3.addWidget(self.btn_criar_projeto)
+
+
+        self.verticalLayout_8.addWidget(self.frame_3)
 
 
         self.verticalLayout_7.addWidget(self.widget_novo_projeto, 0, Qt.AlignHCenter|Qt.AlignVCenter)
@@ -424,6 +503,15 @@ class Ui_MainWindow(object):
         self.footer_content.setObjectName(u"footer_content")
         self.footer_content.setMinimumSize(QSize(0, 25))
         self.footer_content.setMaximumSize(QSize(16777215, 25))
+        self.label_2 = QLabel(self.footer_content)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(680, 0, 75, 25))
+        self.label_2.setMinimumSize(QSize(75, 20))
+        self.label_2.setMaximumSize(QSize(75, 16777215))
+        self.label_2.setStyleSheet(u"font-size: 9pt;\n"
+"color: white;\n"
+"font-weight: bold;\n"
+"")
 
         self.verticalLayout_5.addWidget(self.footer_content, 0, Qt.AlignBottom)
 
@@ -445,6 +533,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.label_nome_projeto.setText("")
 #if QT_CONFIG(tooltip)
         self.btn_minimizar_janela.setToolTip(QCoreApplication.translate("MainWindow", u"Minimizar", None))
 #endif // QT_CONFIG(tooltip)
@@ -459,14 +548,18 @@ class Ui_MainWindow(object):
         self.btn_fechar_janela.setText("")
         self.btn_menu.setText(QCoreApplication.translate("MainWindow", u"Menu", None))
         self.btn_inicio.setText(QCoreApplication.translate("MainWindow", u"In\u00edcio", None))
-        self.btn_novo_projeto.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
-        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 2", None))
+        self.btn_pagina_novo_projeto.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
+        self.btn_pagina_add_arquivos.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 2", None))
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 3", None))
+        self.btn_novo_projeto_home.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
+        self.btn_abrir_projeto.setText(QCoreApplication.translate("MainWindow", u"Abrir projeto", None))
+        self.btn_add_arquivos_dados.setText(QCoreApplication.translate("MainWindow", u"Add Arquivos", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Novo projeto:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Nome:", None))
-        self.btn_criar_projeto.setText(QCoreApplication.translate("MainWindow", u"Criar projeto", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Local: ", None))
         self.label_local_projeto.setText("")
         self.btn_selecionar_local_projeto.setText("")
+        self.btn_criar_projeto.setText(QCoreApplication.translate("MainWindow", u"Criar projeto", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"v0.01", None))
     # retranslateUi
 
