@@ -1,5 +1,6 @@
 from qt_core import *
 from gui.resources import *
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
@@ -15,22 +16,21 @@ class Ui_MainWindow(object):
 "\n"
 "/*	Propriedades da Central Widget*/\n"
 "#centralwidget{\n"
-"	background-color:#17181A;\n"
+"	background-color: #0F1526;\n"
 "	border-radius:10px;\n"
 "	\n"
 "}\n"
 "/*	Propriedades que se aplicam ao menu esquerdo*/\n"
 "#leftMenuContent{\n"
-"	background-color: #202123;\n"
+"	background-color: #131931;\n"
 "}\n"
 "/*	Propriedades que se aplicam ao widget do conte\u00fado principal da janela*/\n"
 "#bodyContent{\n"
-"	background-color:#17181A;\n"
+"	background-color:#0F1526;\n"
 "}\n"
 "/*	Propriedades que se aplicam ao conteudo do cabe\u00e7alho da interface*/\n"
 "#header_content{\n"
-"	background-color:#025939;\n"
-"	color: white;\n"
+"	background-color:#182037;\n"
 "}\n"
 "#header_content QPushButton{\n"
 "	background-color: transparent;\n"
@@ -38,17 +38,17 @@ class Ui_MainWindow(object):
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
 "#header_content QPushButton:hover{\n"
-"	background-color: rgb(40, 44, 52);\n"
+"	background-color: rgba(255, 255, 255, 0.1);\n"
 "}\n"
-""
-                        "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
+"/*	Propri"
+                        "edades que se aplicam aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
 "#header_content.QPushButton:pressed {	\n"
-"	background-color: #04BF7B;\n"
-"	color: rgb(255, 255, 255);\n"
+"	background-color: #169EF2 ;\n"
+"	color: #495D7DE3;\n"
 "}\n"
 "/*	Propriedades que se aplicam ao conte\u00fado do rodap\u00e9 na interface */\n"
 "#footer_content{\n"
-"	background-color:#025939;\n"
+"	background-color:#182037;\n"
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es localizados ao menu esquerdo*/\n"
 "#leftMenuContent QPushButton{\n"
@@ -60,21 +60,17 @@ class Ui_MainWindow(object):
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
 "	font-size: 10pt;\n"
-"	font-weight: bold;\n"
-"	color: #acacac;\n"
+"	color: #495D7DE3;\n"
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
 "#leftMenuContent QPushButton:hover{\n"
-"	background-color: rgb(40, 44, 52);\n"
+"	background-color: rgba(255, 255, 255, 0.1);\n"
 "}\n"
-"/*	Pr"
-                        "opriedades que se aplicam aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
+"/*	Propriedades que se aplicam aos "
+                        "bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
 "#leftMenuContent .QPushButton:pressed {	\n"
-"	background-color: #04BF7B;\n"
+"	background-color: #169EF2;\n"
 "	color: rgb(255, 255, 255);\n"
-"}\n"
-"#leftMenuContent .QPushButton:checked{\n"
-"	background-color: red;\n"
 "}\n"
 "/*	Propriedades que ser\u00e3o aplicadas ao frame que cont\u00e9m os bot\u00f5es de minimizar, maximizar e fechar janela*/\n"
 "#frame_redm_janela QPushButton{\n"
@@ -85,30 +81,31 @@ class Ui_MainWindow(object):
 "}\n"
 "/*Criando um estilo para o bot\u00e3o que ir\u00e1 criar um novo projeto*/\n"
 "#stackedWidget QPushButton{\n"
-"	background-color:  transparent;\n"
+"	background-color:  #169EF2;\n"
 "	background-repeat: none;\n"
 "	background-position:center;\n"
 "	border: 1px solid black;\n"
 "	border-radius: 5px;\n"
 "	font-size: 10pt;\n"
 "	font-weight: bold;\n"
-"	color: #acacac;\n"
+"	color: white;\n"
 "}\n"
 "#stackedWidget QPushButton:hover{\n"
-"	background-color:  rgb(40, 44"
-                        ", 52);\n"
+"	background-color:  rgba(255, 255, 255, 0.1);;\n"
 "}\n"
 "#stackedWidget QPushButton:pressed{\n"
-"	background-color: #025939;\n"
-"	color: rgb(255, 255, 255);\n"
+"	background-color: #169EF2;\n"
+"	color: rgb(25"
+                        "5, 255, 255);\n"
 "}\n"
 "\n"
 "#widget_novo_projeto{\n"
-"	background-color: #202123;\n"
+"	background-color:#1D2840 ;\n"
 "	border-radius: 10px;\n"
+"	\n"
 "}\n"
 "#widget_inicio{\n"
-"	background-color: #202123;\n"
+"	background-color: #1D2840;\n"
 "	border-radius: 10px\n"
 "}\n"
 "\n"
@@ -122,7 +119,7 @@ class Ui_MainWindow(object):
 "	margin: 0px;\n"
 "}\n"
 "QLineEdit{\n"
-"	background-color: #202123 ;\n"
+"	background-color:#0F1526 ;\n"
 "	border: 1px solid  black;\n"
 "	border-radius: 5px;\n"
 "\n"
@@ -140,26 +137,12 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.header_content = QWidget(self.centralwidget)
         self.header_content.setObjectName(u"header_content")
-        self.header_content.setMinimumSize(QSize(0, 40))
-        self.header_content.setMaximumSize(QSize(16777214, 40))
+        self.header_content.setMinimumSize(QSize(0, 25))
+        self.header_content.setMaximumSize(QSize(16777214, 25))
         self.horizontalLayout = QHBoxLayout(self.header_content)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.frame_logo = QFrame(self.header_content)
-        self.frame_logo.setObjectName(u"frame_logo")
-        self.frame_logo.setMinimumSize(QSize(50, 50))
-        self.frame_logo.setMaximumSize(QSize(50, 50))
-        self.frame_logo.setStyleSheet(u"background-image: url(:/images/images/logo50x50.png);")
-        self.frame_logo.setFrameShape(QFrame.StyledPanel)
-        self.frame_logo.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_2 = QHBoxLayout(self.frame_logo)
-        self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(-1, 0, -1, -1)
-
-        self.horizontalLayout.addWidget(self.frame_logo, 0, Qt.AlignLeft)
-
         self.label_nome_projeto = QLabel(self.header_content)
         self.label_nome_projeto.setObjectName(u"label_nome_projeto")
         self.label_nome_projeto.setStyleSheet(u"font-size: 9pt;\n"
@@ -182,24 +165,24 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.btn_minimizar_janela = QPushButton(self.frame_redm_janela)
         self.btn_minimizar_janela.setObjectName(u"btn_minimizar_janela")
-        self.btn_minimizar_janela.setMinimumSize(QSize(28, 28))
-        self.btn_minimizar_janela.setMaximumSize(QSize(28, 28))
+        self.btn_minimizar_janela.setMinimumSize(QSize(25, 25))
+        self.btn_minimizar_janela.setMaximumSize(QSize(25, 25))
         self.btn_minimizar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_minimize.png);")
 
         self.horizontalLayout_4.addWidget(self.btn_minimizar_janela)
 
         self.btn_maximizar_janela = QPushButton(self.frame_redm_janela)
         self.btn_maximizar_janela.setObjectName(u"btn_maximizar_janela")
-        self.btn_maximizar_janela.setMinimumSize(QSize(28, 28))
-        self.btn_maximizar_janela.setMaximumSize(QSize(28, 28))
+        self.btn_maximizar_janela.setMinimumSize(QSize(25, 25))
+        self.btn_maximizar_janela.setMaximumSize(QSize(25, 25))
         self.btn_maximizar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_maximize.png);")
 
         self.horizontalLayout_4.addWidget(self.btn_maximizar_janela)
 
         self.btn_fechar_janela = QPushButton(self.frame_redm_janela)
         self.btn_fechar_janela.setObjectName(u"btn_fechar_janela")
-        self.btn_fechar_janela.setMinimumSize(QSize(28, 28))
-        self.btn_fechar_janela.setMaximumSize(QSize(28, 28))
+        self.btn_fechar_janela.setMinimumSize(QSize(25, 25))
+        self.btn_fechar_janela.setMaximumSize(QSize(25, 25))
         self.btn_fechar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_close.png);")
 
         self.horizontalLayout_4.addWidget(self.btn_fechar_janela)
@@ -330,15 +313,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.widget_inicio = QWidget(self.pagina_inicial)
         self.widget_inicio.setObjectName(u"widget_inicio")
-        self.widget_inicio.setMinimumSize(QSize(500, 250))
-        self.widget_inicio.setMaximumSize(QSize(500, 250))
+        self.widget_inicio.setMinimumSize(QSize(600, 300))
+        self.widget_inicio.setMaximumSize(QSize(600, 300))
         self.horizontalLayout_10 = QHBoxLayout(self.widget_inicio)
         self.horizontalLayout_10.setSpacing(0)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.frame_4 = QFrame(self.widget_inicio)
         self.frame_4.setObjectName(u"frame_4")
-        self.frame_4.setStyleSheet(u"background-image: url(:/images/images/logo256x256edit.png);")
+        self.frame_4.setStyleSheet(u"background-image: url(:/images/images/logo256x256edit-azul.png);")
         self.frame_4.setFrameShape(QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QFrame.Raised)
 
@@ -361,19 +344,34 @@ class Ui_MainWindow(object):
         self.frame_5.setFrameShadow(QFrame.Raised)
         self.verticalLayout_6 = QVBoxLayout(self.frame_5)
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(65, -1, -1, -1)
         self.btn_novo_projeto_home = QPushButton(self.frame_5)
         self.btn_novo_projeto_home.setObjectName(u"btn_novo_projeto_home")
         self.btn_novo_projeto_home.setMinimumSize(QSize(150, 30))
         self.btn_novo_projeto_home.setMaximumSize(QSize(150, 30))
 
-        self.verticalLayout_6.addWidget(self.btn_novo_projeto_home, 0, Qt.AlignHCenter)
+        self.verticalLayout_6.addWidget(self.btn_novo_projeto_home)
 
         self.btn_abrir_projeto = QPushButton(self.frame_5)
         self.btn_abrir_projeto.setObjectName(u"btn_abrir_projeto")
         self.btn_abrir_projeto.setMinimumSize(QSize(150, 30))
         self.btn_abrir_projeto.setMaximumSize(QSize(150, 30))
 
-        self.verticalLayout_6.addWidget(self.btn_abrir_projeto, 0, Qt.AlignHCenter)
+        self.verticalLayout_6.addWidget(self.btn_abrir_projeto)
+
+        self.pushButton = QPushButton(self.frame_5)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setMinimumSize(QSize(150, 30))
+        self.pushButton.setMaximumSize(QSize(150, 30))
+
+        self.verticalLayout_6.addWidget(self.pushButton)
+
+        self.pushButton_2 = QPushButton(self.frame_5)
+        self.pushButton_2.setObjectName(u"pushButton_2")
+        self.pushButton_2.setMinimumSize(QSize(150, 30))
+        self.pushButton_2.setMaximumSize(QSize(150, 30))
+
+        self.verticalLayout_6.addWidget(self.pushButton_2)
 
 
         self.horizontalLayout_10.addWidget(self.frame_5)
@@ -384,9 +382,10 @@ class Ui_MainWindow(object):
         self.stackedWidget.addWidget(self.pagina_inicial)
         self.pagina_add_arquivos = QWidget()
         self.pagina_add_arquivos.setObjectName(u"pagina_add_arquivos")
-        self.btn_add_arquivos_dados = QPushButton(self.pagina_add_arquivos)
-        self.btn_add_arquivos_dados.setObjectName(u"btn_add_arquivos_dados")
-        self.btn_add_arquivos_dados.setGeometry(QRect(574, 380, 91, 24))
+        self.verticalLayout_9 = QVBoxLayout(self.pagina_add_arquivos)
+        self.verticalLayout_9.setSpacing(8)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(9, 9, 9, 9)
         self.stackedWidget.addWidget(self.pagina_add_arquivos)
         self.pagina_novo_projeto = QWidget()
         self.pagina_novo_projeto.setObjectName(u"pagina_novo_projeto")
@@ -396,12 +395,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
         self.widget_novo_projeto = QWidget(self.pagina_novo_projeto)
         self.widget_novo_projeto.setObjectName(u"widget_novo_projeto")
-        self.widget_novo_projeto.setMinimumSize(QSize(600, 300))
-        self.widget_novo_projeto.setMaximumSize(QSize(600, 300))
-        self.widget_novo_projeto.setStyleSheet(u"\n"
-"font-size: 10pt;\n"
-"font-weight: bold;\n"
-"color: #acacac;")
+        self.widget_novo_projeto.setMinimumSize(QSize(600, 400))
+        self.widget_novo_projeto.setMaximumSize(QSize(600, 400))
+        self.widget_novo_projeto.setStyleSheet(u"font-size: 10pt;\n"
+"color: white;")
         self.verticalLayout_8 = QVBoxLayout(self.widget_novo_projeto)
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.widget = QWidget(self.widget_novo_projeto)
@@ -553,7 +550,8 @@ class Ui_MainWindow(object):
         self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 3", None))
         self.btn_novo_projeto_home.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
         self.btn_abrir_projeto.setText(QCoreApplication.translate("MainWindow", u"Abrir projeto", None))
-        self.btn_add_arquivos_dados.setText(QCoreApplication.translate("MainWindow", u"Add Arquivos", None))
+        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Exportar", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Configura\u00e7\u00f5es", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Novo projeto:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Nome:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Local: ", None))

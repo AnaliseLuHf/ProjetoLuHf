@@ -257,6 +257,7 @@
     <file>icons/icon_settings.png</file>
   </qresource>
   <qresource prefix="images">
+    <file>images/logo256x256edit-azul.png</file>
     <file>images/logo50x50edit.png</file>
     <file>images/logo512x512edit.png</file>
     <file>images/logo50x50.png</file>

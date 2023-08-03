@@ -18,6 +18,7 @@ class MainWindow(QMainWindow):
         # Atributo para o nome do projeto, para que ele possa ser usado por outro métodos
         self.nome_projeto = "LuHf" + str(datetime.now()) #Por padrão, sera LuHF + Data e Hore quando foi criado
 
+
         ''''#Este método retira a barra superior padrão do Windows
         self.setWindowFlags(Qt.FramelessWindowHint)'''
 
@@ -37,7 +38,7 @@ class MainWindow(QMainWindow):
         # Botões com as funcionalidade do programa
         self.ui.btn_pagina_novo_projeto.clicked.connect(self.clique_botao)
         self.ui.btn_pagina_add_arquivos.clicked.connect(self.clique_botao)
-        self.ui.btn_add_arquivos_dados.clicked.connect(self.clique_botao)
+
 
         # Botões que redimensionam a janela
         self.ui.btn_minimizar_janela.clicked.connect(self.clique_botao)
@@ -46,6 +47,9 @@ class MainWindow(QMainWindow):
 
         # Conectando o botão btn_selecionar_local_projeto com a função para selecionar o local onde a pasta do projeto ficará salva
         self.ui.btn_selecionar_local_projeto.clicked.connect(self.selecionar_local_projeto)
+
+        # Botão para criar um novo projeto a partir da tela principal
+        self.ui.btn_novo_projeto_home.clicked.connect(self.clique_botao)
 
         # Conectando o botão btn_criar_projeto a função que irá criar uma pasta para o projeto
         self.ui.btn_criar_projeto.clicked.connect(self.criar_novo_projeto)
@@ -60,7 +64,7 @@ class MainWindow(QMainWindow):
         largura_padrao = 60
 
         if largura_menu_esquerdo == 60:
-            largura_padrao = 200
+            largura_padrao = 160
 
         # Animando a transição
         self.animation = QPropertyAnimation(self.ui.leftMenuContent, b"minimumWidth")
@@ -83,7 +87,7 @@ class MainWindow(QMainWindow):
             self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_inicial)
 
         # Mostra a pagina para criar um novo projeto
-        if nome_botao == "btn_pagina_novo_projeto":
+        if nome_botao == "btn_pagina_novo_projeto" or nome_botao == "btn_novo_projeto_home":
             self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_novo_projeto)
 
         # Mostra a página para ver os arquivos carregados, já com os dados corrigidos do background
@@ -100,8 +104,6 @@ class MainWindow(QMainWindow):
                 self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
 
 
-        if nome_botao == "btn_add_arquivos_dados":
-            self.selecionar_arquivos()
 
 
         # Minimiza a janela da aplicação
@@ -115,6 +117,8 @@ class MainWindow(QMainWindow):
         # Fecha a aplicação
         if nome_botao == "btn_fechar_janela":
             self.close()
+
+
 
     # Função que seleciona o local onde o projeto ficará salvo
     def selecionar_local_projeto(self):
@@ -144,7 +148,7 @@ class MainWindow(QMainWindow):
                 # Se self.local_projeto estiver vazio o local padrão sera a pasta User>Desktop do PC
                 self.local_projeto = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 
-            # Chamando o método da clase GerenciarArquivos, para criar a pasta com o nome e local desejado
+            # Chamando o método da classe GerenciarArquivos, para criar a pasta com o nome e local desejado
             GerenciarArquivos.criar_pasta(self, local=self.local_projeto, nome_pasta=self.nome_projeto)
 
             # Se a criação da pasta do projeto teve exito
@@ -169,13 +173,15 @@ class MainWindow(QMainWindow):
             mensagem = "Erro!"
             DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
 
-        # Após o projeto ter sido criado, o programa vai automaticamente para a pasta para selecionar os arquivos com os dados
+        # Após o projeto ter sido criado, o programa vai automaticamente para
+        # a página  para selecionar os arquivos com os dados
         self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
 
         # Mostra o nome do projeto no header do programa
-        self.ui.label_nome_projeto.setText(f"{self.nome_projeto}")
+        '''self.ui.label_nome_projeto.setText(f"{self.nome_projeto}")'''
 
-    # Esta função irá verificar se o projeto foi criado (se existe uma pasta para ele), pois todas as funcionalidades do programa dependem disso
+    # Esta função irá verificar se o projeto foi criado (se existe uma pasta para ele),
+    # pois todas as funcionalidades do programa dependem disso
     def verificar_existencia_projeto(self):
         caminho_projeto = self.local_projeto + "/"+ self.nome_projeto
         # Verifica se o projeto existe ou não
@@ -186,13 +192,27 @@ class MainWindow(QMainWindow):
             return False
 
 
-    # Função que irpa selecionar os arquivos com os dados
-    def selecionar_arquivos(self):
+
+    # Função que irá selecionar os arquivos com os dados
+    # Criar o botão depois
+    '''def selecionar_arquivos(self):
+        # Função que irá criar uma pasta dentro do projeto para salvar os arquivos com os dados
+        pasta_destino = self.criar_pasta_arquivos_dados()
+        print(pasta_destino)
+
         # Caixa de dialogo que irá permitir selecionar os arquivos
         # Este método me retorna uma lista com os caminhos de todos os arquivos selecionados
         arquivos_selecionados = QFileDialog().getOpenFileNames(self, 'Dados', '', 'Text files (*.exp)')
 
+        # Criando uma copia dos arquivos selecionados dentro da pasta do projeto
+        GerenciarArquivos.copiar_arquvos(self, arquivos_selecionados, pasta_destino )'''
 
+
+    def criar_pasta_arquivos_dados(self):
+        local = self.local_projeto + "/" + self.nome_projeto
+        GerenciarArquivos.criar_pasta(self, local,"dados_originais")
+
+        return local + '/'+ "dados_originais"
 
 
 
