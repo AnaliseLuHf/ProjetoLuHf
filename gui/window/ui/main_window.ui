@@ -602,7 +602,7 @@ font-weight: bold;</string>
              <string notr="true"/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="pagina_inicial">
              <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -1050,7 +1050,7 @@ font-weight: bold;
   </widget>
  </widget>
  <resources>
-  <include location="../../rsc.qrc"/>
+  <include location="../../resources/rsc.qrc"/>
  </resources>
  <connections/>
 </ui>

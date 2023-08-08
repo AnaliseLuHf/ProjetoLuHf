@@ -2,29 +2,30 @@ import sys
 import os
 #import platform
 from qt_core import *
-from gui.window.py.main_window import *
+from gui.window.py.MainWindow import *
 from app.gerenciar_arquivos import * # Classe que gerencia a criação de pastas e arquivos do projeto
 from app.dialogs import * # Classe que gerencia as caixas de mensagem que aparecem
-from datetime import datetime # Usado para gerar um nome aleatório para  o projeto, caso seja necessário
-
+from  app.janela_novo_projeto import * # Classe que gerencia a janela para criar um projeto
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        # Passa o caminho onde esta a pasta do projeto como um atributo. Assim, esse caminho pode ser usado por vários métodos.
-        self.local_projeto = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop') #Por padrão, o local será User>Desktop
 
-        # Atributo para o nome do projeto, para que ele possa ser usado por outro métodos
-        self.nome_projeto = "LuHf" + str(datetime.now()) #Por padrão, sera LuHF + Data e Hore quando foi criado
+        # Atributos gerais da classe
+        self.local_projeto_criado = None
+        self.nome_projeto_criado = None
 
-
-        ''''#Este método retira a barra superior padrão do Windows
-        self.setWindowFlags(Qt.FramelessWindowHint)'''
 
         # Setup a Main Window
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+        # Definindo um título para a janela
+        self.setWindowTitle("LuHf")
+
+        # Definindo um ícone
+        self.setWindowIcon(QIcon("gui/images/icon.png"))
 
         # Exibindo a janela
         self.show()
@@ -35,7 +36,7 @@ class MainWindow(QMainWindow):
         # Conectando os botões do menu com as suas  funções
         self.ui.btn_inicio.clicked.connect(self.clique_botao)
 
-        # Botões com as funcionalidade do programa
+        # Botões com as funcionalidades do programa
         self.ui.btn_pagina_novo_projeto.clicked.connect(self.clique_botao)
         self.ui.btn_pagina_add_arquivos.clicked.connect(self.clique_botao)
 
@@ -45,15 +46,9 @@ class MainWindow(QMainWindow):
         self.ui.btn_maximizar_janela.clicked.connect(self.clique_botao)
         self.ui.btn_fechar_janela.clicked.connect(self.clique_botao)
 
-        # Conectando o botão btn_selecionar_local_projeto com a função para selecionar o local onde a pasta do projeto ficará salva
-        self.ui.btn_selecionar_local_projeto.clicked.connect(self.selecionar_local_projeto)
 
-        # Botão para criar um novo projeto a partir da tela principal
+        # Botão para criar um projeto a partir da tela principal
         self.ui.btn_novo_projeto_home.clicked.connect(self.clique_botao)
-
-        # Conectando o botão btn_criar_projeto a função que irá criar uma pasta para o projeto
-        self.ui.btn_criar_projeto.clicked.connect(self.criar_novo_projeto)
-
 
 
     # Função que irá expandir e retrair o menu esquerdo
@@ -74,6 +69,7 @@ class MainWindow(QMainWindow):
         self.animation.setEasingCurve(QEasingCurve.OutCirc)
         self.animation.start()
 
+
     # Essa função pega o nome do botão que foi clicado e conecta a uma "função" para ele
     def clique_botao(self):
         # Capturando o botão que enviou o sinal(foi clicado)
@@ -86,9 +82,17 @@ class MainWindow(QMainWindow):
         if nome_botao == "btn_inicio":
             self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_inicial)
 
-        # Mostra a pagina para criar um novo projeto
+        # Mostra a janela para criar  projeto
         if nome_botao == "btn_pagina_novo_projeto" or nome_botao == "btn_novo_projeto_home":
-            self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_novo_projeto)
+            # Abre a janela para criar um projeto
+            self.jn_novo_projeto = JanelaNovoProjeto()
+
+            # Muda os atributos da classe principal, pois a janela do novo projeto pega o
+            # nome e o local do projeto escolhido pelo usuário
+            self.jn_novo_projeto.local_e_nome_projeto.connect(self.mudar_atributos_classe)
+
+            self.jn_novo_projeto.show()
+
 
         # Mostra a página para ver os arquivos carregados, já com os dados corrigidos do background
         if nome_botao == "btn_pagina_add_arquivos":
@@ -104,8 +108,6 @@ class MainWindow(QMainWindow):
                 self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
 
 
-
-
         # Minimiza a janela da aplicação
         if nome_botao == "btn_minimizar_janela":
             self.showMinimized()
@@ -118,102 +120,21 @@ class MainWindow(QMainWindow):
         if nome_botao == "btn_fechar_janela":
             self.close()
 
-
-
-    # Função que seleciona o local onde o projeto ficará salvo
-    def selecionar_local_projeto(self):
-        dialog = QFileDialog()
-        # Define para que seja escolhida apenas pastas
-        dialog.setFileMode(QFileDialog.Directory)
-        if dialog.exec():
-            # Pega o  caminho  da pasta que foi selecionada
-            self.local_projeto = dialog.selectedFiles()[0]
-
-        # Mostra o local selecionado no no campo label_local_projeto
-        self.ui.label_local_projeto.setText(self.local_projeto)
-
-    # Função que cria uma novo projeto
-    def criar_novo_projeto(self):
-        try:
-            self.nome_projeto = self.ui.lineEdit_nome_projeto.text()
-            self.local_projeto = self.ui.label_local_projeto.text()
-
-            # Verificando se o local onde é inserido o nome do projeto e o local onde ficará salvo estão vazios
-            if not self.nome_projeto.strip():
-                # Se self.nome_projeto estiver vazio o nome padrão será Analise Lu e Hf + Data e Hora de criação
-                nome_corrigido = "Análise Lu e Hf-" + str(datetime.now()).replace(':', '-').replace('.', '_')  # O nome precisa ser corrigido pois ele possui caracteres invalidos para os nomes das pastas (: e .)
-                self.nome_projeto = nome_corrigido
-
-            if not self.local_projeto.strip():
-                # Se self.local_projeto estiver vazio o local padrão sera a pasta User>Desktop do PC
-                self.local_projeto = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-
-            # Chamando o método da classe GerenciarArquivos, para criar a pasta com o nome e local desejado
-            GerenciarArquivos.criar_pasta(self, local=self.local_projeto, nome_pasta=self.nome_projeto)
-
-            # Se a criação da pasta do projeto teve exito
-            mensagem = "Projeto criado com sucesso!"
-
-            # Mostrando uma mensagem informando que o projeto foi criado
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Exito")
-
-        # Se tiver algum erro durante a criação da pasta
-        # Caso o local selecionado para salvar o projeto já tenha uma pasta como o nome escolhido
-        except FileExistsError:
-            mensagem = f"'{self.nome_projeto}' já existe em '{self.local_projeto}'"
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
-
-        # Caso o usuário não possua acesso ao local selecionado para salvar o projeto
-        except PermissionError:
-            mensagem = f"Acesso restrito a '{self.local_projeto}'!"
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
-
-        # Ou qualquer outro erro que apareça
-        except:
-            mensagem = "Erro!"
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
-
-        # Após o projeto ter sido criado, o programa vai automaticamente para
-        # a página  para selecionar os arquivos com os dados
-        self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
-
-        # Mostra o nome do projeto no header do programa
-        '''self.ui.label_nome_projeto.setText(f"{self.nome_projeto}")'''
+    def mudar_atributos_classe(self, valor_local_projeto, valor_nome_projeto):
+        self.local_projeto_criado = valor_local_projeto
+        self.nome_projeto_criado = valor_nome_projeto
 
     # Esta função irá verificar se o projeto foi criado (se existe uma pasta para ele),
     # pois todas as funcionalidades do programa dependem disso
     def verificar_existencia_projeto(self):
-        caminho_projeto = self.local_projeto + "/"+ self.nome_projeto
+        print(f"o projeto  foi criado em {self.local_projeto_criado}, com o nome de {self.nome_projeto_criado}")
+        '''caminho_projeto = self.local + "/"+ self.nome
         # Verifica se o projeto existe ou não
         status_projeto = GerenciarArquivos.verificar_pasta(self, caminho_projeto)
         if status_projeto == False:
             # Mostra uma mensagem informando para criar um projeto antes de adicionar os arquivos
             DialogosSistema.msg_alerta_crie_projeto(self, "Crie um projeto antes de adicionar os arquivos!")
-            return False
-
-
-
-    # Função que irá selecionar os arquivos com os dados
-    # Criar o botão depois
-    '''def selecionar_arquivos(self):
-        # Função que irá criar uma pasta dentro do projeto para salvar os arquivos com os dados
-        pasta_destino = self.criar_pasta_arquivos_dados()
-        print(pasta_destino)
-
-        # Caixa de dialogo que irá permitir selecionar os arquivos
-        # Este método me retorna uma lista com os caminhos de todos os arquivos selecionados
-        arquivos_selecionados = QFileDialog().getOpenFileNames(self, 'Dados', '', 'Text files (*.exp)')
-
-        # Criando uma copia dos arquivos selecionados dentro da pasta do projeto
-        GerenciarArquivos.copiar_arquvos(self, arquivos_selecionados, pasta_destino )'''
-
-
-    def criar_pasta_arquivos_dados(self):
-        local = self.local_projeto + "/" + self.nome_projeto
-        GerenciarArquivos.criar_pasta(self, local,"dados_originais")
-
-        return local + '/'+ "dados_originais"
-
+            return False'''
 
 
 if __name__ == "__main__":

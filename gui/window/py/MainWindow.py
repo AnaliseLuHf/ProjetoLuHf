@@ -1,5 +1,5 @@
 from qt_core import *
-from gui.resources import *
+from gui.resources.resources import *
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):

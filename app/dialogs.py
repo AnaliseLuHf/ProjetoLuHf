@@ -1,11 +1,12 @@
 # Esta classe irá gerenciar as caixas de mensagem que irão aparecer no app
 from qt_core import *
+from gui.window.py.NovoProjeto import *
+
 
 class DialogosSistema(QDialog):
 
     def __init__(self):
         super().__init__()
-
 
 
     def msg_criacao_projeto(self, mensagem,tipo):
