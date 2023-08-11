@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
         # Atributos gerais da classe
         self.local_projeto_criado = None
         self.nome_projeto_criado = None
+        self.arquivos_selecionados = None
 
 
         # Setup a Main Window
@@ -39,6 +40,7 @@ class MainWindow(QMainWindow):
         # Botões com as funcionalidades do programa
         self.ui.btn_pagina_novo_projeto.clicked.connect(self.clique_botao)
         self.ui.btn_pagina_add_arquivos.clicked.connect(self.clique_botao)
+        self.ui.btn_importar_dados.clicked.connect(self.selecionar_arquivos)
 
 
         # Botões que redimensionam a janela
@@ -85,6 +87,7 @@ class MainWindow(QMainWindow):
         # Mostra a janela para criar  projeto
         if nome_botao == "btn_pagina_novo_projeto" or nome_botao == "btn_novo_projeto_home":
             # Abre a janela para criar um projeto
+
             self.jn_novo_projeto = JanelaNovoProjeto()
 
             # Muda os atributos da classe principal, pois a janela do novo projeto pega o
@@ -96,17 +99,7 @@ class MainWindow(QMainWindow):
 
         # Mostra a página para ver os arquivos carregados, já com os dados corrigidos do background
         if nome_botao == "btn_pagina_add_arquivos":
-            # Verifica se existe um projeto criando antes de adicionar os arquivos
-            status_projeto = self.verificar_existencia_projeto()
-
-            # Se o projeto não tiver sido criado, o programa muda para a página onde se cria um novo projeto
-            if status_projeto == False:
-                self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_novo_projeto)
-
-            # Se o projeto tiver sido criado, o programa muda para a página onde é possível selecionar os arquivos com os dados
-            else:
-                self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
-
+            self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
 
         # Minimiza a janela da aplicação
         if nome_botao == "btn_minimizar_janela":
@@ -124,17 +117,56 @@ class MainWindow(QMainWindow):
         self.local_projeto_criado = valor_local_projeto
         self.nome_projeto_criado = valor_nome_projeto
 
-    # Esta função irá verificar se o projeto foi criado (se existe uma pasta para ele),
-    # pois todas as funcionalidades do programa dependem disso
-    def verificar_existencia_projeto(self):
-        print(f"o projeto  foi criado em {self.local_projeto_criado}, com o nome de {self.nome_projeto_criado}")
-        '''caminho_projeto = self.local + "/"+ self.nome
-        # Verifica se o projeto existe ou não
-        status_projeto = GerenciarArquivos.verificar_pasta(self, caminho_projeto)
-        if status_projeto == False:
-            # Mostra uma mensagem informando para criar um projeto antes de adicionar os arquivos
-            DialogosSistema.msg_alerta_crie_projeto(self, "Crie um projeto antes de adicionar os arquivos!")
-            return False'''
+
+    def verificar_projeto_criado(self):
+        if self.local_projeto_criado != None and self.nome_projeto_criado != None:
+            return True
+        else:
+            return False
+
+    def selecionar_arquivos(self):
+
+        status_projeto = self.verificar_projeto_criado()
+
+        if status_projeto == True:
+            file_dialog = QFileDialog()
+            file_dialog.setFileMode(QFileDialog.ExistingFiles)
+
+            # Mostra apenas os arquivos com extensão ".exp"
+            file_dialog.setNameFilter("Arquivos de Texto (*.exp);")
+
+            if file_dialog.exec():
+                # Muda o atributo da classe, com uma lista para os arquivos selecionados
+                arquivos_selecionados = file_dialog.selectedFiles()
+
+            # Copaindo os arquivos selecionados para a pasta "data" do projeto
+            caminho_pasta_data = self.local_projeto_criado + "/" + self.nome_projeto_criado + "/data"
+            print(caminho_pasta_data)
+            try:
+                GerenciarArquivos.copiar_arquvos(self, arquivos_selecionados, caminho_pasta_data )
+
+                # Pegando o caminho dos arquivos copiados para a pasta data, para passar como uma lista
+                # sendo um atributo da classe
+                caminhos_arquivos_data = []
+
+                for arquivo in os.listdir(caminho_pasta_data):
+                    caminho_arquivo = caminho_pasta_data + "/" + arquivo
+                    if os.path.isfile(caminho_arquivo):
+                        caminhos_arquivos_data.append(caminho_arquivo)
+
+                self.arquivos_selecionados = caminhos_arquivos_data
+
+                print(self.arquivos_selecionados)
+
+            except Exception as e:
+                DialogosSistema.msg_usuario(self, "e", tipo = "Erro")
+
+        else:
+            DialogosSistema.msg_alerta_crie_projeto(self,"Crie um projeto antes de importar os arquivos!")
+
+
+
+
 
 
 if __name__ == "__main__":

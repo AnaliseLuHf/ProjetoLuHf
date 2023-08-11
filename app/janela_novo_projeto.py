@@ -18,6 +18,8 @@ class JanelaNovoProjeto(QMainWindow):
         # Atributo para o nome do projeto, para que ele possa ser usado por outro métodos
         self.nome_projeto = "LuHf" + str(datetime.now())  # Por padrão, sera LuHF + Data e Hore quando foi criado
 
+        self.caminho_projeto = self.local_projeto+"\\"+ self.nome_projeto
+
         self.ui = Ui_JanelaNovoProjeto()
         self.ui.setupUi(self)
 
@@ -66,23 +68,23 @@ class JanelaNovoProjeto(QMainWindow):
             mensagem = "Projeto criado com sucesso!"
 
             # Mostrando uma mensagem informando que o projeto foi criado
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Exito")
+            DialogosSistema.msg_usuario(self, mensagem, tipo="Exito")
 
         # Se tiver algum erro durante a criação da pasta
         # Caso o local selecionado para salvar o projeto já tenha uma pasta como o nome escolhido
         except FileExistsError:
             mensagem = f"'{self.nome_projeto}' já existe em '{self.local_projeto}'"
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
+            DialogosSistema.msg_usuario(self, mensagem, tipo="Erro")
 
         # Caso o usuário não possua acesso ao local selecionado para salvar o projeto
         except PermissionError:
             mensagem = f"Acesso restrito a '{self.local_projeto}'!"
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
+            DialogosSistema.msg_usuario(self, mensagem, tipo="Erro")
 
         # Ou qualquer outro erro que apareça
         except:
             mensagem = "Erro!"
-            DialogosSistema.msg_criacao_projeto(self, mensagem, tipo="Erro")
+            DialogosSistema.msg_usuario(self, mensagem, tipo="Erro")
 
         # Após o projeto ter sido criado, o programa vai automaticamente para
         # a página para selecionar os arquivos com os dados
@@ -91,10 +93,23 @@ class JanelaNovoProjeto(QMainWindow):
         # Mostra o nome do projeto no header do programa
         '''self.ui.label_nome_projeto.setText(f"{self.nome_projeto}")'''
 
+        # Mudando os atributos nome e local da classe
+        self.caminho_projeto = self.local_projeto + "/"+ self.nome_projeto
+        print(self.caminho_projeto)
+
         # Enviando o nome do projeto e o local onde ele esta salvo para a janela principal
         valor_local_projeto = self.local_projeto
         valor_nome_projeto = self.nome_projeto
         self.local_e_nome_projeto.emit(valor_local_projeto, valor_nome_projeto)
+
+
+
+        # Cria as pastas necessárias para o projeto
+
+        # Pasta onde ficará guardado os arquivos importados
+        GerenciarArquivos.criar_pasta(self, self.caminho_projeto.replace("/", "\\"), "data")
+
+
         self.close()
 
 

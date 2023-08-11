@@ -9,11 +9,11 @@ class DialogosSistema(QDialog):
         super().__init__()
 
 
-    def msg_criacao_projeto(self, mensagem,tipo):
-        dialog_msg_criacao_projeto = QMessageBox()
-        dialog_msg_criacao_projeto.setWindowTitle("Criar projeto")
-        dialog_msg_criacao_projeto.setFixedWidth(300)
-        dialog_msg_criacao_projeto.setText(mensagem)
+    def msg_usuario(self, mensagem, tipo):
+        dialog_janela_msg = QMessageBox()
+        dialog_janela_msg.setWindowTitle("Alerta!")
+        dialog_janela_msg.setFixedWidth(300)
+        dialog_janela_msg.setText(mensagem)
 
         # Definir um ícone personalizado
         # Definir uma nova imagem usando QPixmap
@@ -24,9 +24,9 @@ class DialogosSistema(QDialog):
             arquivo_img = 'erro40.png'
 
         pixmap = QPixmap(f'C:/Users/arjun/Projetos/ProjetoLuHf/gui/images/icones_dialogs/{arquivo_img}')
-        dialog_msg_criacao_projeto.setIconPixmap(pixmap)
+        dialog_janela_msg.setIconPixmap(pixmap)
 
-        dialog_msg_criacao_projeto.exec()
+        dialog_janela_msg.exec()
 
     # Essa função vai exibir uma mensagem caso o usuário tente adicionar arquivos ao programa, sem antes ter criado uma pasta para isso
     def msg_alerta_crie_projeto(self, mensagem):
@@ -37,4 +37,7 @@ class DialogosSistema(QDialog):
         pixmap = QPixmap(f'C:/Users/arjun/Projetos/ProjetoLuHf/gui/images/icones_dialogs/info40.png')
         dialog_msg_alerta_crie_projeto.setIconPixmap(pixmap)
         dialog_msg_alerta_crie_projeto.exec()
+
+
+
 
