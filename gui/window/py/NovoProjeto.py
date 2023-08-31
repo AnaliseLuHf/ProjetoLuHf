@@ -1,5 +1,5 @@
 from qt_core import *
-from gui.resources.resources_jn_novo_projeto import *
+from gui.resources_jn_novo_projeto import *
 
 class Ui_JanelaNovoProjeto(object):
     def setupUi(self, JanelaNovoProjeto):
@@ -9,7 +9,7 @@ class Ui_JanelaNovoProjeto(object):
         JanelaNovoProjeto.setMinimumSize(QSize(560, 250))
         JanelaNovoProjeto.setMaximumSize(QSize(560, 250))
         JanelaNovoProjeto.setStyleSheet(u"*{\n"
-"	font-family: \"Segoe UI\";\n"
+"	font-family: \"Arial\";\n"
 "	color:#EFE3FE;\n"
 "	\n"
 "}\n"
@@ -23,9 +23,9 @@ class Ui_JanelaNovoProjeto(object):
 "}\n"
 "\n"
 "QPushButton{\n"
-"	background-color:#169EF2;\n"
+"	background-color:#4E7DA6;\n"
 "	border: none;\n"
-"	border-radius: 3px;\n"
+"	border-radius: 2px;\n"
 "	color: white;\n"
 "}\n"
 "QPushButton:hover{\n"
@@ -38,12 +38,12 @@ class Ui_JanelaNovoProjeto(object):
 "\n"
 "#label_local_projeto{\n"
 "	background-color: #1D2840;\n"
-"	border-radius: 5px;\n"
+"	border-radius: 2px;\n"
 "}\n"
 "\n"
 "#lineEdit_nome_do_projeto{\n"
 "	background-color: #1D2840;\n"
-"	border-radius: 5px;\n"
+"	border-radius: 2px;\n"
 "}")
         self.centralwidget = QWidget(JanelaNovoProjeto)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -103,6 +103,10 @@ class Ui_JanelaNovoProjeto(object):
         self.label_local_projeto.setSizePolicy(sizePolicy)
         self.label_local_projeto.setMinimumSize(QSize(450, 25))
         self.label_local_projeto.setMaximumSize(QSize(450, 25))
+        font = QFont()
+        font.setFamilies([u"Arial"])
+        font.setPointSize(11)
+        self.label_local_projeto.setFont(font)
         self.label_local_projeto.setStyleSheet(u"")
 
         self.horizontalLayout_2.addWidget(self.label_local_projeto)
@@ -136,6 +140,10 @@ class Ui_JanelaNovoProjeto(object):
         self.lineEdit_nome_do_projeto.setObjectName(u"lineEdit_nome_do_projeto")
         self.lineEdit_nome_do_projeto.setMinimumSize(QSize(450, 25))
         self.lineEdit_nome_do_projeto.setMaximumSize(QSize(450, 25))
+        font1 = QFont()
+        font1.setFamilies([u"Arial"])
+        font1.setPointSize(12)
+        self.lineEdit_nome_do_projeto.setFont(font1)
         self.lineEdit_nome_do_projeto.setStyleSheet(u"font-size: 12pt;")
 
         self.horizontalLayout_3.addWidget(self.lineEdit_nome_do_projeto)
@@ -147,11 +155,11 @@ class Ui_JanelaNovoProjeto(object):
         self.btn_criar_projeto.setObjectName(u"btn_criar_projeto")
         self.btn_criar_projeto.setMinimumSize(QSize(100, 30))
         self.btn_criar_projeto.setMaximumSize(QSize(100, 30))
-        font = QFont()
-        font.setFamilies([u"Segoe UI"])
-        font.setPointSize(10)
-        font.setBold(True)
-        self.btn_criar_projeto.setFont(font)
+        font2 = QFont()
+        font2.setFamilies([u"Arial"])
+        font2.setPointSize(10)
+        font2.setBold(True)
+        self.btn_criar_projeto.setFont(font2)
 
         self.verticalLayout_3.addWidget(self.btn_criar_projeto, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 

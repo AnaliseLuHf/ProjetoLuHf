@@ -27,7 +27,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">*{
-	font-family: &quot;Segoe UI&quot;;
+	font-family: &quot;Arial&quot;;
 	color:#EFE3FE;
 	
 }
@@ -41,9 +41,9 @@
 }
 
 QPushButton{
-	background-color:#169EF2;
+	background-color:#4E7DA6;
 	border: none;
-	border-radius: 3px;
+	border-radius: 2px;
 	color: white;
 }
 QPushButton:hover{
@@ -56,12 +56,12 @@ QPushButton:pressed {
 
 #label_local_projeto{
 	background-color: #1D2840;
-	border-radius: 5px;
+	border-radius: 2px;
 }
 
 #lineEdit_nome_do_projeto{
 	background-color: #1D2840;
-	border-radius: 5px;
+	border-radius: 2px;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -205,6 +205,12 @@ QPushButton:pressed {
                  <height>25</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>11</pointsize>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true"/>
                </property>
@@ -282,6 +288,12 @@ background-position: center;</string>
                  <height>25</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
                <property name="styleSheet">
                 <string notr="true">font-size: 12pt;</string>
                </property>
@@ -309,7 +321,7 @@ background-position: center;</string>
             </property>
             <property name="font">
              <font>
-              <family>Segoe UI</family>
+              <family>Arial</family>
               <pointsize>10</pointsize>
               <bold>true</bold>
              </font>

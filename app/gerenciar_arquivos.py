@@ -17,7 +17,7 @@ class GerenciarArquivos:
         else:
             return False
 
-    def copiar_arquvos(self, caminho_origem, caminho_destino):
+    def copiar_arquivos(self, caminho_origem, caminho_destino):
         for c in range (0, len(caminho_origem)):
             caminho_original = caminho_origem[c]
             caminho_final = caminho_destino

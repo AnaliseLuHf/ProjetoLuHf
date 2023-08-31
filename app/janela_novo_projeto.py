@@ -109,6 +109,9 @@ class JanelaNovoProjeto(QMainWindow):
         # Pasta onde ficará guardado os arquivos importados
         GerenciarArquivos.criar_pasta(self, self.caminho_projeto.replace("/", "\\"), "data")
 
+        # Pasta onde ficará os arquivos após a filragem dos dados importantes
+        GerenciarArquivos.criar_pasta(self, self.caminho_projeto.replace("/", "\\"), "txt")
+
 
         self.close()
 
