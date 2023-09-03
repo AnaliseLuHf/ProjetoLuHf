@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="icones">
+    <file>icons/cil-folder-open.png</file>
+    <file>icons/icon_close.png</file>
+  </qresource>
+  <qresource prefix="imagens">
+    <file>images/icones_dialogs/erro40.png</file>
+    <file>images/icones_dialogs/exito40.png</file>
+    <file>images/icones_dialogs/info40.png</file>
+    <file>images/icon.png</file>
+  </qresource>
+</RCC>

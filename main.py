@@ -24,8 +24,9 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        # Definindo um título para a janela
-        self.setWindowTitle("LuHf")
+
+        # Oculta a barra de títulos
+        self.setWindowFlag(Qt.FramelessWindowHint)
 
         # Definindo um ícone
         self.setWindowIcon(QIcon("gui/images/icon.png"))
@@ -35,8 +36,7 @@ class MainWindow(QMainWindow):
 
         # Conectando o btn_menu a função que irá expandir/retrair o menu quando ele for clicado
         self.ui.btn_menu.clicked.connect(self.expandir_menu)
-
-        # Conectando os botões do menu com as suas  funções
+        # Conectando os botões do menu com as suas funções
         self.ui.btn_inicio.clicked.connect(self.clique_botao)
 
         # Botões com as funcionalidades do programa
@@ -54,26 +54,6 @@ class MainWindow(QMainWindow):
         # Botão para criar um projeto a partir da tela principal
         self.ui.btn_novo_projeto_home.clicked.connect(self.clique_botao)
 
-
-    # Função que irá expandir e retrair o menu esquerdo
-    def expandir_menu(self):
-        # Pegando a largura do menu esquerdo
-        largura_menu_esquerdo = self.ui.leftMenuContent.width()
-
-        largura_padrao = 60
-
-        if largura_menu_esquerdo == 60:
-            largura_padrao = 160
-
-        # Animando a transição
-        self.animation = QPropertyAnimation(self.ui.leftMenuContent, b"minimumWidth")
-        self.animation.setDuration(900)
-        self.animation.setStartValue(largura_menu_esquerdo)
-        self.animation.setEndValue(largura_padrao)
-        self.animation.setEasingCurve(QEasingCurve.OutCirc)
-        self.animation.start()
-
-
     # Essa função pega o nome do botão que foi clicado e conecta a uma "função" para ele
     def clique_botao(self):
         # Capturando o botão que enviou o sinal(foi clicado)
@@ -86,7 +66,7 @@ class MainWindow(QMainWindow):
         if nome_botao == "btn_inicio":
             self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_inicial)
 
-        # Mostra a janela para criar  projeto
+        # Mostra a janela para criar um projeto
         if nome_botao == "btn_pagina_novo_projeto" or nome_botao == "btn_novo_projeto_home":
             # Abre a janela para criar um projeto
             self.jn_novo_projeto = JanelaNovoProjeto()
@@ -96,6 +76,7 @@ class MainWindow(QMainWindow):
             self.jn_novo_projeto.local_e_nome_projeto.connect(self.mudar_atributos_classe)
 
             self.jn_novo_projeto.show()
+
 
 
         # Mostra a página para ver os arquivos carregados, já com os dados corrigidos do background
@@ -112,15 +93,53 @@ class MainWindow(QMainWindow):
 
         # Maximiza a janela da aplicação
         if nome_botao == "btn_maximizar_janela":
-            self.showMaximized()
+
+            # Se a janela estiver no seu tamanho máximo, ele volta para o seu tamanho mínimo definido
+            if self.isMaximized():
+                self.showNormal()
+
+            # Se a janela estiver no seu tamanho mínimo definido, ela é maximizada
+            else:
+                self.showMaximized()
 
         # Fecha a aplicação
         if nome_botao == "btn_fechar_janela":
             self.close()
 
+    # Função que irá expandir e retrair o menu esquerdo
+    def expandir_menu(self):
+        # Pegando a largura do menu esquerdo
+        largura_menu_esquerdo = self.ui.leftMenuContent.width()
+
+        largura_padrao = 60
+
+        if largura_menu_esquerdo == 60:
+            largura_padrao = 200
+
+
+        # Animando a transição
+        self.animation = QPropertyAnimation(self.ui.leftMenuContent, b"minimumWidth")
+        self.animation.setDuration(900)
+        self.animation.setStartValue(largura_menu_esquerdo)
+        self.animation.setEndValue(largura_padrao)
+        self.animation.setEasingCurve(QEasingCurve.OutCirc)
+        self.animation.start()
+
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPosition().toPoint()
+
+    def mouseMoveEvent(self, event):
+        self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos)
+        self.dragPos = event.globalPosition().toPoint()
+        event.accept()
+
+
     def mudar_atributos_classe(self, valor_local_projeto, valor_nome_projeto):
         self.local_projeto_criado = valor_local_projeto
         self.nome_projeto_criado = valor_nome_projeto
+
+        # Mostra o nome do projeto no topo do programa
+        self.ui.label_nome_do_projeto.setText(self.nome_projeto_criado)
 
 
     def verificar_projeto_criado(self):
@@ -162,19 +181,19 @@ class MainWindow(QMainWindow):
                 # Mudando o atributo da classe, para uma lista com o nome dos arquivos selecionados
                 self.arquivos_selecionados = caminhos_arquivos_data
 
-                # Chamando a função que irá filtar os dados originais, eliminando os dados desnecessários
+                # Chamando a função que irá filtrar os dados originais, eliminando os dados desnecessários
                 FiltarDadosArquivosOriginais.excluir_dados_desnecessarios(self, self.arquivos_selecionados)
 
 
-
             except Exception as e:
-                DialogosSistema.msg_usuario(self, str(e), tipo = "Erro")
+                message = f"{e}"
+                dialog_erro = DialogoErro(message)
+                dialog_erro.exec()
 
         else:
-            DialogosSistema.msg_alerta_crie_projeto(self,"Crie um projeto antes de importar os arquivos!")
-
-
-
+            message = "Crie um projeto antes de importar os arquivos!"
+            dialog_info = DialogoInfo(message)
+            dialog_info.exec()
 
 
 

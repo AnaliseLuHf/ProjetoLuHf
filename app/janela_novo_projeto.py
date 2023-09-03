@@ -5,6 +5,7 @@ from app.dialogs import *
 from app.gerenciar_arquivos import *
 from datetime import datetime
 
+
 class JanelaNovoProjeto(QMainWindow):
 
     # Essas variáveis serão utilizadas para retornar, para a janela principal, o nome e o local onde o projeto foi salvo
@@ -13,11 +14,11 @@ class JanelaNovoProjeto(QMainWindow):
     def __init__(self):
         super().__init__()
         # Passa o caminho onde esta a pasta do projeto como um atributo. Assim, esse caminho pode ser usado por vários métodos.
-        self.local_projeto = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')  # Por padrão, o local será User>Desktop
+        self.local_projeto = os.path.join(os.environ['USERPROFILE'], 'Desktop')  # Por padrão, o local será User>Desktop
 
         # Atributo para o nome do projeto, para que ele possa ser usado por outro métodos
-        self.nome_projeto = "LuHf" + str(datetime.now())  # Por padrão, sera LuHF + Data e Hore quando foi criado
-
+        self.nome_projeto = "Análise Lu e Hf-" + str(datetime.now()).replace(':', '-').replace('.','_')  # O nome precisa ser corrigido pois ele possui
+                                                                                                                                # caracteres invalidos para os nomes das pastas (: e .)
         self.caminho_projeto = self.local_projeto+"\\"+ self.nome_projeto
 
         self.ui = Ui_JanelaNovoProjeto()
@@ -28,12 +29,20 @@ class JanelaNovoProjeto(QMainWindow):
         # Definindo um título para a janela
         self.setWindowTitle("Novo projeto")
 
+        # Oculta a barra de títulos
+        self.setWindowFlag(Qt.FramelessWindowHint)
+
         # Definindo um ícone
         self.setWindowIcon(QIcon("gui/images/icon.png"))
 
         # Conectando os botões as suas funções
         self.ui.btn_escolher_local_projeto.clicked.connect(self.selecionar_local_projeto)
         self.ui.btn_criar_projeto.clicked.connect(self.criar_projeto)
+        # Fecha a janela quando o botão for clicado
+        self.ui.btn_fechar_janela.clicked.connect(self.close)
+
+        # Mostrando um nome padrão no campo para inserir o nome do projeto
+        self.ui.lineEdit_nome_do_projeto.setText(self.nome_projeto)
 
     def selecionar_local_projeto(self):
         dialog = QFileDialog()
@@ -53,49 +62,40 @@ class JanelaNovoProjeto(QMainWindow):
 
             # Verificando se o local onde é inserido o nome do projeto e o local onde ficará salvo estão vazios
             if not self.nome_projeto.strip():
-                # Se self.nome_projeto estiver vazio o nome padrão será Analise Lu e Hf + Data e Hora de criação
-                nome_corrigido = "Análise Lu e Hf-" + str(datetime.now()).replace(':', '-').replace('.', '_')  # O nome precisa ser corrigido pois ele possui caracteres invalidos para os nomes das pastas (: e .)
-                self.nome_projeto = nome_corrigido
+                self.nome_projeto = self.nome_projeto
 
             if not self.local_projeto.strip():
                 # Se self.local_projeto estiver vazio o local padrão sera a pasta User>Desktop do PC
-                self.local_projeto = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+                self.local_projeto = os.path.join(os.environ['USERPROFILE'], 'Desktop')
 
             # Chamando o método da classe GerenciarArquivos, para criar a pasta com o nome e local desejado
             GerenciarArquivos.criar_pasta(self, local=self.local_projeto, nome_pasta=self.nome_projeto)
 
             # Se a criação da pasta do projeto teve exito
-            mensagem = "Projeto criado com sucesso!"
+            self.mostrar_mensagem_exito()
 
-            # Mostrando uma mensagem informando que o projeto foi criado
-            DialogosSistema.msg_usuario(self, mensagem, tipo="Exito")
+
 
         # Se tiver algum erro durante a criação da pasta
         # Caso o local selecionado para salvar o projeto já tenha uma pasta como o nome escolhido
-        except FileExistsError:
+        except FileExistsError :
             mensagem = f"'{self.nome_projeto}' já existe em '{self.local_projeto}'"
-            DialogosSistema.msg_usuario(self, mensagem, tipo="Erro")
+            self.mostrar_mensagem_erro(mensagem)
 
         # Caso o usuário não possua acesso ao local selecionado para salvar o projeto
         except PermissionError:
             mensagem = f"Acesso restrito a '{self.local_projeto}'!"
-            DialogosSistema.msg_usuario(self, mensagem, tipo="Erro")
+            self.mostrar_mensagem_erro(mensagem)
 
         # Ou qualquer outro erro que apareça
         except:
             mensagem = "Erro!"
-            DialogosSistema.msg_usuario(self, mensagem, tipo="Erro")
+            self.mostrar_mensagem_erro(mensagem)
 
-        # Após o projeto ter sido criado, o programa vai automaticamente para
-        # a página para selecionar os arquivos com os dados
-        #self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_add_arquivos)
-
-        # Mostra o nome do projeto no header do programa
-        '''self.ui.label_nome_projeto.setText(f"{self.nome_projeto}")'''
 
         # Mudando os atributos nome e local da classe
         self.caminho_projeto = self.local_projeto + "/"+ self.nome_projeto
-        print(self.caminho_projeto)
+
 
         # Enviando o nome do projeto e o local onde ele esta salvo para a janela principal
         valor_local_projeto = self.local_projeto
@@ -104,21 +104,32 @@ class JanelaNovoProjeto(QMainWindow):
 
 
 
-        # Cria as pastas necessárias para o projeto
-
+        # Cria as pastas necessárias para o projet
         # Pasta onde ficará guardado os arquivos importados
         GerenciarArquivos.criar_pasta(self, self.caminho_projeto.replace("/", "\\"), "data")
 
-        # Pasta onde ficará os arquivos após a filragem dos dados importantes
+        # Pasta onde ficarão os arquivos após a filragem dos dados importantes
         GerenciarArquivos.criar_pasta(self, self.caminho_projeto.replace("/", "\\"), "txt")
-
 
         self.close()
 
+    def mostrar_mensagem_exito(self):
+        message = f"Projeto criado com sucesso em: \n {self.caminho_projeto}"
+        dialog = DialogoExito(message)
+        dialog.exec()
+    def mostrar_mensagem_erro(self, mensagem):
+        message = f"{mensagem}"
+        dialog_erro = DialogoErro(message)
+        dialog_erro.exec()
 
 
+    def mousePressEvent(self, event):
+        self.dragPos = event.globalPosition().toPoint()
 
-
+    def mouseMoveEvent(self, event):
+        self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos)
+        self.dragPos = event.globalPosition().toPoint()
+        event.accept()
 
 
 if __name__ == "__main__":

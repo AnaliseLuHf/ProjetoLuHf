@@ -5,7 +5,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(900, 600)
+        MainWindow.resize(900, 605)
         MainWindow.setMinimumSize(QSize(900, 600))
         MainWindow.setStyleSheet(u"/*	Propriedades globais, que se aplicam em toda interface*/\n"
 "*{\n"
@@ -13,11 +13,13 @@ class Ui_MainWindow(object):
 "	background-repeat: none;\n"
 "	background-position: center;\n"
 "}\n"
+"QMainWindow{\n"
+"	border-radius: 10px;\n"
+"}\n"
 "\n"
 "/*	Propriedades da Central Widget*/\n"
 "#centralwidget{\n"
 "	background-color: rgb(40, 44, 52);\n"
-"	border-radius:10px;\n"
 "}\n"
 "/*	Propriedades que se aplicam ao menu esquerdo*/\n"
 "#leftMenuContent{\n"
@@ -31,15 +33,17 @@ class Ui_MainWindow(object):
 "#header_content{\n"
 "	background-color:#21252B;\n"
 "	border-bottom: 1px solid rgba(0,0,0,0.2);\n"
+"	color: grey;\n"
 "}\n"
 "#header_content QPushButton{\n"
 "	background-color: transparent;\n"
 "	border-radius: 5px;\n"
 "}\n"
+"\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
-"#header_content QPushButton:hover{\n"
-"	backgroun"
-                        "d-color: rgba(255, 255, 255, 0.1);\n"
+"#h"
+                        "eader_content QPushButton:hover{\n"
+"	background-color: rgba(255, 255, 255, 0.1);\n"
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
 "#header_content.QPushButton:pressed {	\n"
@@ -59,14 +63,14 @@ class Ui_MainWindow(object):
 "	background-color: transparent;\n"
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
-"	font-size: 9pt;\n"
-"	color: grey;\n"
+"	font-size: 10pt;\n"
+"	color: rgb(221, 221, 221);\n"
 "	font-weight: bold;\n"
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
-"#leftMenuContent QPushButton:hover{\n"
-"	background-color:"
-                        " rgba(255, 255, 255, 0.1);\n"
+""
+                        "#leftMenuContent QPushButton:hover{\n"
+"	background-color: rgba(255, 255, 255, 0.1);\n"
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito dque muda a cor dos bot\u00f5es quando eles s\u00e3o pressionados */\n"
 "#leftMenuContent .QPushButton:pressed {	\n"
@@ -92,10 +96,10 @@ class Ui_MainWindow(object):
 "	color: white;\n"
 "}\n"
 "#stackedWidget QPushButton:hover{\n"
-"	background-color:  rgba(255, 255, 255, 0.1);\n"
+"	background-color:  rgba"
+                        "(255, 255, 255, 0.1);\n"
 "}\n"
-"#stackedWidget QPushButton"
-                        ":pressed{\n"
+"#stackedWidget QPushButton:pressed{\n"
 "	background-color: 2828c5;\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
@@ -135,10 +139,10 @@ class Ui_MainWindow(object):
 "ListWidget */\n"
 "QListWidget {\n"
 "	background-color: rgb(44, 49, 58);\n"
-"	border: 1px solid rgb(44, 49, 60);\n"
+"	border"
+                        ": 1px solid rgb(44, 49, 60);\n"
 "	border-radius: 10px;\n"
-""
-                        "	gridline-color: rgb(44, 49, 58);\n"
+"	gridline-color: rgb(44, 49, 58);\n"
 "	border-bottom: 1px solid rgb(44, 49, 60);\n"
 "	font: 11pt \"Arial\";\n"
 "}\n"
@@ -173,9 +177,9 @@ class Ui_MainWindow(object):
 "	background-color: rgba(255,255,255,0.1);\n"
 "}\n"
 "QHeaderView::section{\n"
-"	background-color: rgb(33, 37, 43);\n"
-"	border: 1px solid  rgb(44"
-                        ", 49, 58);\n"
+"	backgr"
+                        "ound-color: rgb(33, 37, 43);\n"
+"	border: 1px solid  rgb(44, 49, 58);\n"
 "	border-style: none;\n"
 "    border-bottom: 1px solid   rgb(33, 37, 43);\n"
 "    border-right: 1px solid   rgb(33, 37, 43);\n"
@@ -205,13 +209,12 @@ class Ui_MainWindow(object):
 "	background-position: left center;\n"
 "    background-repeat: no-repeat;\n"
 "	border: none;\n"
-"	border-left: 2px solid rgb(255, 121, 198);\n"
 "	text-align: left;\n"
 "	padding-left: 8px;\n"
 "	margin: 0px;\n"
-"}\n"
-"/* /"
-                        "////////////////////////////////////////////////////////////////////////////////////////////////\n"
+""
+                        "}\n"
+"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "ScrollBars */\n"
 "QScrollBar:horizontal {\n"
 "    border: none;\n"
@@ -243,10 +246,10 @@ class Ui_MainWindow(object):
 "    subcontrol-position: left;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
-"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal\n"
+"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizonta"
+                        "l\n"
 "{\n"
-""
-                        "     background: none;\n"
+"     background: none;\n"
 "}\n"
 "QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal\n"
 "{\n"
@@ -282,8 +285,8 @@ class Ui_MainWindow(object):
 "     subcontrol-position: top;\n"
 "     subcontrol-origin: margin;\n"
 " }\n"
-" QScrollBar::up-arrow:vertical, QScrollBar::down-arrow"
-                        ":vertical {\n"
+" QScrollBar::up-arrow:vertical, QScrollBar"
+                        "::down-arrow:vertical {\n"
 "     background: none;\n"
 " }\n"
 "\n"
@@ -300,23 +303,33 @@ class Ui_MainWindow(object):
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.header_content = QWidget(self.centralwidget)
         self.header_content.setObjectName(u"header_content")
-        self.header_content.setMinimumSize(QSize(0, 40))
-        self.header_content.setMaximumSize(QSize(16777214, 40))
+        self.header_content.setMinimumSize(QSize(0, 30))
+        self.header_content.setMaximumSize(QSize(16777214, 30))
         self.horizontalLayout = QHBoxLayout(self.header_content)
         self.horizontalLayout.setSpacing(5)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(10, 0, 0, 0)
-        self.label_nome_pag_atual = QLabel(self.header_content)
-        self.label_nome_pag_atual.setObjectName(u"label_nome_pag_atual")
+        self.label_titulo_programa = QLabel(self.header_content)
+        self.label_titulo_programa.setObjectName(u"label_titulo_programa")
         font = QFont()
         font.setFamilies([u"Arial"])
         font.setPointSize(10)
-        self.label_nome_pag_atual.setFont(font)
-        self.label_nome_pag_atual.setStyleSheet(u"color:grey;\n"
+        self.label_titulo_programa.setFont(font)
+        self.label_titulo_programa.setStyleSheet(u"color:grey;\n"
 "\n"
 "")
 
-        self.horizontalLayout.addWidget(self.label_nome_pag_atual)
+        self.horizontalLayout.addWidget(self.label_titulo_programa)
+
+        self.label_nome_do_projeto = QLabel(self.header_content)
+        self.label_nome_do_projeto.setObjectName(u"label_nome_do_projeto")
+        font1 = QFont()
+        font1.setFamilies([u"Arial"])
+        font1.setItalic(True)
+        self.label_nome_do_projeto.setFont(font1)
+        self.label_nome_do_projeto.setStyleSheet(u"color:grey;")
+
+        self.horizontalLayout.addWidget(self.label_nome_do_projeto)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -350,12 +363,20 @@ class Ui_MainWindow(object):
         self.btn_fechar_janela.setObjectName(u"btn_fechar_janela")
         self.btn_fechar_janela.setMinimumSize(QSize(25, 25))
         self.btn_fechar_janela.setMaximumSize(QSize(25, 25))
-        self.btn_fechar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_close.png);")
+        self.btn_fechar_janela.setStyleSheet(u"QPushButton{\n"
+"	background-image: url(:/icones/icons/icon_close.png);\n"
+"}\n"
+"QPushButton:hover{\n"
+"	background-color: red;\n"
+"}\n"
+"\n"
+"\n"
+"")
 
         self.horizontalLayout_4.addWidget(self.btn_fechar_janela)
 
 
-        self.horizontalLayout.addWidget(self.frame_redm_janela, 0, Qt.AlignRight)
+        self.horizontalLayout.addWidget(self.frame_redm_janela)
 
 
         self.verticalLayout.addWidget(self.header_content, 0, Qt.AlignTop)
@@ -368,7 +389,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.app_content.sizePolicy().hasHeightForWidth())
         self.app_content.setSizePolicy(sizePolicy)
         self.horizontalLayout_5 = QHBoxLayout(self.app_content)
-        self.horizontalLayout_5.setSpacing(0)
+        self.horizontalLayout_5.setSpacing(15)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.horizontalLayout_5.setContentsMargins(0, 0, 0, 0)
         self.leftMenuContent = QWidget(self.app_content)
@@ -399,11 +420,11 @@ class Ui_MainWindow(object):
         self.btn_menu.setSizePolicy(sizePolicy1)
         self.btn_menu.setMinimumSize(QSize(100, 45))
         self.btn_menu.setMaximumSize(QSize(16777215, 45))
-        font1 = QFont()
-        font1.setFamilies([u"Arial"])
-        font1.setPointSize(9)
-        font1.setBold(True)
-        self.btn_menu.setFont(font1)
+        font2 = QFont()
+        font2.setFamilies([u"Arial"])
+        font2.setPointSize(10)
+        font2.setBold(True)
+        self.btn_menu.setFont(font2)
         self.btn_menu.setStyleSheet(u"background-image: url(:/icones/icons/icon_menu.png);\n"
 "")
 
@@ -579,10 +600,6 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.setContentsMargins(10, 0, 0, 0)
         self.label_5 = QLabel(self.frame_7)
         self.label_5.setObjectName(u"label_5")
-        font2 = QFont()
-        font2.setFamilies([u"Arial"])
-        font2.setPointSize(10)
-        font2.setBold(True)
         self.label_5.setFont(font2)
 
         self.verticalLayout_9.addWidget(self.label_5)
@@ -720,32 +737,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.stackedWidget)
 
-        self.footer_content = QWidget(self.mainBodyContent)
-        self.footer_content.setObjectName(u"footer_content")
-        self.footer_content.setMinimumSize(QSize(0, 20))
-        self.footer_content.setMaximumSize(QSize(16777215, 20))
-        self.horizontalLayout_2 = QHBoxLayout(self.footer_content)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(-1, 4, 0, 9)
-        self.horizontalSpacer_2 = QSpacerItem(662, 4, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_2.addItem(self.horizontalSpacer_2)
-
-        self.label_2 = QLabel(self.footer_content)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setMinimumSize(QSize(60, 15))
-        self.label_2.setMaximumSize(QSize(60, 15))
-        self.label_2.setStyleSheet(u"font-size: 9pt;\n"
-"color:#495D7DE3;\n"
-"\n"
-"")
-        self.label_2.setAlignment(Qt.AlignCenter)
-
-        self.horizontalLayout_2.addWidget(self.label_2)
-
-
-        self.verticalLayout_5.addWidget(self.footer_content, 0, Qt.AlignBottom)
-
 
         self.horizontalLayout_5.addWidget(self.mainBodyContent)
 
@@ -756,7 +747,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -764,7 +755,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.label_nome_pag_atual.setText(QCoreApplication.translate("MainWindow", u"Lu&Hf Data Analysis", None))
+        self.label_titulo_programa.setText(QCoreApplication.translate("MainWindow", u"Lu&Hf An\u00e1lise de Dados -", None))
+        self.label_nome_do_projeto.setText("")
 #if QT_CONFIG(tooltip)
         self.btn_minimizar_janela.setToolTip(QCoreApplication.translate("MainWindow", u"Minimizar", None))
 #endif // QT_CONFIG(tooltip)
@@ -792,11 +784,11 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.btn_add_arquivos.setToolTip(QCoreApplication.translate("MainWindow", u"Adicionar arquivos ao projeto", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_add_arquivos.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 3", None))
+        self.btn_add_arquivos.setText(QCoreApplication.translate("MainWindow", u"Importar arquivos", None))
 #if QT_CONFIG(tooltip)
         self.btn_pagina_visualizar_dados_arquivos.setToolTip(QCoreApplication.translate("MainWindow", u"Ver dados importados", None))
 #endif // QT_CONFIG(tooltip)
-        self.btn_pagina_visualizar_dados_arquivos.setText(QCoreApplication.translate("MainWindow", u"Op\u00e7\u00e3o 2", None))
+        self.btn_pagina_visualizar_dados_arquivos.setText(QCoreApplication.translate("MainWindow", u"Ver dados ", None))
         self.btn_novo_projeto_home.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
         self.btn_abrir_projeto.setText(QCoreApplication.translate("MainWindow", u"Abrir projeto", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Exportar", None))
@@ -804,6 +796,5 @@ class Ui_MainWindow(object):
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"Arquivos importados:", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"Dados originais:", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"Dados corrigidos:", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"v0.01", None))
     # retranslateUi
 

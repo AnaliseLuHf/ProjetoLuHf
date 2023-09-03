@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="icones">
+    <file>icons/icon_close.png</file>
+  </qresource>
+  <qresource prefix="imagens">
+    <file>images/icon.png</file>
+    <file>images/icones_dialogs/erro40.png</file>
+    <file>images/icones_dialogs/exito40.png</file>
+    <file>images/icones_dialogs/info40.png</file>
+  </qresource>
+</RCC>
