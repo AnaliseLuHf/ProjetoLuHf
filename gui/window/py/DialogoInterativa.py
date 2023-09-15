@@ -1,13 +1,14 @@
 from qt_core import *
 from gui.resources_dialogs import *
-class Ui_DialogInfo(object):
-    def setupUi(self, DialogInfo):
-        if not DialogInfo.objectName():
-            DialogInfo.setObjectName(u"DialogInfo")
-        DialogInfo.resize(500, 200)
-        DialogInfo.setMinimumSize(QSize(500, 200))
-        DialogInfo.setMaximumSize(QSize(500, 200))
-        DialogInfo.setStyleSheet(u"*{\n"
+
+class Ui_DialogInterativa(object):
+    def setupUi(self, DialogInterativa):
+        if not DialogInterativa.objectName():
+            DialogInterativa.setObjectName(u"DialogInterativa")
+        DialogInterativa.resize(500, 200)
+        DialogInterativa.setMinimumSize(QSize(500, 200))
+        DialogInterativa.setMaximumSize(QSize(500, 200))
+        DialogInterativa.setStyleSheet(u"*{\n"
 "	font-family:\"ArialI\";\n"
 "	background-repeat: none;\n"
 "	background-position: center;\n"
@@ -52,12 +53,13 @@ class Ui_DialogInfo(object):
 "QLineEdit:focus {\n"
 "	border: 2px solid rgb(91, 101, 124);\n"
 "}\n"
+"\n"
 "")
-        self.verticalLayout = QVBoxLayout(DialogInfo)
+        self.verticalLayout = QVBoxLayout(DialogInterativa)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(5, 5, 5, 5)
-        self.container_app = QFrame(DialogInfo)
+        self.verticalLayout.setContentsMargins(5, 5, 5, 0)
+        self.container_app = QFrame(DialogInterativa)
         self.container_app.setObjectName(u"container_app")
         self.container_app.setFrameShape(QFrame.StyledPanel)
         self.container_app.setFrameShadow(QFrame.Raised)
@@ -144,7 +146,7 @@ class Ui_DialogInfo(object):
         self.verticalLayout_3 = QVBoxLayout(self.body_content)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 6)
         self.frame_4 = QFrame(self.body_content)
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setMinimumSize(QSize(0, 40))
@@ -211,15 +213,14 @@ class Ui_DialogInfo(object):
         self.frame_5.setMaximumSize(QSize(16777215, 40))
         self.frame_5.setFrameShape(QFrame.StyledPanel)
         self.frame_5.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_4 = QVBoxLayout(self.frame_5)
-        self.verticalLayout_4.setSpacing(0)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 6)
-        self.btn_ok = QPushButton(self.frame_5)
-        self.btn_ok.setObjectName(u"btn_ok")
-        self.btn_ok.setMinimumSize(QSize(100, 30))
-        self.btn_ok.setMaximumSize(QSize(100, 30))
-        self.btn_ok.setStyleSheet(u"QPushButton{\n"
+        self.horizontalLayout_3 = QHBoxLayout(self.frame_5)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(-1, -1, -1, 6)
+        self.btn_sim = QPushButton(self.frame_5)
+        self.btn_sim.setObjectName(u"btn_sim")
+        self.btn_sim.setMinimumSize(QSize(100, 30))
+        self.btn_sim.setMaximumSize(QSize(100, 30))
+        self.btn_sim.setStyleSheet(u"QPushButton{\n"
 "	background-color:  #55afcf;\n"
 "	background-repeat: none;\n"
 "	background-position:center;\n"
@@ -239,7 +240,33 @@ class Ui_DialogInfo(object):
 "	border: 1px solid, rgba(0,0,0,0.1);\n"
 "}")
 
-        self.verticalLayout_4.addWidget(self.btn_ok, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+        self.horizontalLayout_3.addWidget(self.btn_sim)
+
+        self.btn_nao = QPushButton(self.frame_5)
+        self.btn_nao.setObjectName(u"btn_nao")
+        self.btn_nao.setMinimumSize(QSize(100, 30))
+        self.btn_nao.setMaximumSize(QSize(100, 30))
+        self.btn_nao.setStyleSheet(u"QPushButton{\n"
+"	background-color: rgb(118, 0, 0);\n"
+"	background-repeat: none;\n"
+"	background-position:center;\n"
+"	border: none;\n"
+"	border-radius: 2px;\n"
+"	font-size: 10pt;\n"
+"	font-weight: bold;\n"
+"	color:white ;\n"
+"}\n"
+"QPushButton:hover{\n"
+"	background-color: rgba(255,255,255,0.1);\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"	background-color: 2828c5;\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: 1px solid, rgba(0,0,0,0.1);\n"
+"}")
+
+        self.horizontalLayout_3.addWidget(self.btn_nao)
 
 
         self.verticalLayout_3.addWidget(self.frame_5)
@@ -251,17 +278,18 @@ class Ui_DialogInfo(object):
         self.verticalLayout.addWidget(self.container_app)
 
 
-        self.retranslateUi(DialogInfo)
+        self.retranslateUi(DialogInterativa)
 
-        QMetaObject.connectSlotsByName(DialogInfo)
+        QMetaObject.connectSlotsByName(DialogInterativa)
     # setupUi
 
-    def retranslateUi(self, DialogInfo):
-        DialogInfo.setWindowTitle(QCoreApplication.translate("DialogInfo", u"Dialog", None))
-        self.label.setText(QCoreApplication.translate("DialogInfo", u"Lu&Hf Data Analysis", None))
+    def retranslateUi(self, DialogInterativa):
+        DialogInterativa.setWindowTitle(QCoreApplication.translate("DialogInterativa", u"Dialog", None))
+        self.label.setText(QCoreApplication.translate("DialogInterativa", u"Lu&Hf Data Analysis", None))
         self.btn_fechar.setText("")
-        self.label_tipo_mensagem.setText(QCoreApplication.translate("DialogInfo", u"Informação!", None))
-        self.label_mensagem.setText(QCoreApplication.translate("DialogInfo", u"<html><head/><body><p align=\"justify\"><br/></p></body></html>", None))
-        self.btn_ok.setText(QCoreApplication.translate("DialogInfo", u"Ok", None))
+        self.label_tipo_mensagem.setText(QCoreApplication.translate("DialogInterativa", u"Info!", None))
+        self.label_mensagem.setText(QCoreApplication.translate("DialogInterativa", u"<html><head/><body><p align=\"justify\"><br/></p></body></html>", None))
+        self.btn_sim.setText(QCoreApplication.translate("DialogInterativa", u"Sim!", None))
+        self.btn_nao.setText(QCoreApplication.translate("DialogInterativa", u"N\u00e3o!", None))
     # retranslateUi
 

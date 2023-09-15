@@ -1,6 +1,5 @@
 from qt_core import *
 from gui.resources_janela_novo_projeto import *
-
 class Ui_JanelaNovoProjeto(object):
     def setupUi(self, JanelaNovoProjeto):
         if not JanelaNovoProjeto.objectName():
@@ -15,9 +14,13 @@ class Ui_JanelaNovoProjeto(object):
 "	color: rgb(221, 221, 221);\n"
 "}\n"
 "\n"
+"#container_app{\n"
+"	border-radius: 5px;\n"
+"}\n"
+"\n"
 "#header_content{\n"
-"	background-color:rgb(33, 37, 43);\n"
-"	border-bottom: 1px solid rgba(0,0,0,0.2);\n"
+"	background-color: rgb(11, 13, 15);\n"
+"	\n"
 "}\n"
 "#header_content QPushButton{\n"
 "	background-color: transparent;\n"
@@ -25,26 +28,26 @@ class Ui_JanelaNovoProjeto(object):
 "}\n"
 "/*	Propriedades que se aplicam aos bot\u00f5es , que aplicam um efeito de hover quando o mouse \u00e9 passado por eles*/\n"
 "#header_content QPushButton:hover{\n"
-"	background-color: rgba(255, 255, 255, 0.1);\n"
+"	background-color: red;\n"
 "}\n"
 "#body_content{\n"
-"	background-color:rgb(40, 44, 52);\n"
+"	background-color:rgb(26, 29, 34);\n"
 "}\n"
 "QLineEdit {\n"
-"	background-color: rgb(33, 37, 43);\n"
+"	background-color: rgb(11, 13, 15);\n"
 "	border-radius: 5px;\n"
 "	border: 2px solid rgb(33, 37, 43);\n"
-"	padding-left: 10px;\n"
+"	padding-left: 5px;\n"
 "	selection-color: rgb(255, 255, 255);\n"
-"	selection-background-color: rgb(255, 121, 198);\n"
+"	selection-background-color:  #55afcf;\n"
 "}\n"
 "#label_local_projeto{\n"
-"	background-color: rgb(33, 37, 43);\n"
+"	background-color: rgb(11, 13, 15);\n"
 "	border-radius: 5px;\n"
 "	border: 2px solid rgb(33, 37, 43);\n"
-"	padding"
-                        "-left: 10px;\n"
-"	selection-color: rgb(255, 255, 255);\n"
+"	padding-left: 5px;\n"
+""
+                        "	selection-color: rgb(255, 255, 255);\n"
 "	selection-background-color: rgb(255, 121, 198);\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -56,21 +59,31 @@ class Ui_JanelaNovoProjeto(object):
 "")
         self.centralwidget = QWidget(JanelaNovoProjeto)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setStyleSheet(u"")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.header_content = QFrame(self.centralwidget)
+        self.verticalLayout.setContentsMargins(5, 5, 5, 5)
+        self.container_app = QFrame(self.centralwidget)
+        self.container_app.setObjectName(u"container_app")
+        self.container_app.setFrameShape(QFrame.StyledPanel)
+        self.container_app.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_5 = QVBoxLayout(self.container_app)
+        self.verticalLayout_5.setSpacing(0)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.header_content = QFrame(self.container_app)
         self.header_content.setObjectName(u"header_content")
         self.header_content.setMinimumSize(QSize(0, 30))
         self.header_content.setMaximumSize(QSize(16777215, 30))
-        self.header_content.setStyleSheet(u"")
+        self.header_content.setStyleSheet(u"border-top-left-radius: 5px;\n"
+"border-top-right-radius: 5px;")
         self.header_content.setFrameShape(QFrame.StyledPanel)
         self.header_content.setFrameShadow(QFrame.Raised)
         self.horizontalLayout = QHBoxLayout(self.header_content)
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalLayout.setContentsMargins(0, 0, 4, 0)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.frame_3 = QFrame(self.header_content)
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setMinimumSize(QSize(30, 30))
@@ -104,7 +117,8 @@ class Ui_JanelaNovoProjeto(object):
 
         self.frame = QFrame(self.header_content)
         self.frame.setObjectName(u"frame")
-        self.frame.setMaximumSize(QSize(20, 20))
+        self.frame.setMinimumSize(QSize(25, 25))
+        self.frame.setMaximumSize(QSize(25, 25))
         self.frame.setStyleSheet(u"")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
@@ -114,8 +128,8 @@ class Ui_JanelaNovoProjeto(object):
         self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.btn_fechar_janela = QPushButton(self.frame)
         self.btn_fechar_janela.setObjectName(u"btn_fechar_janela")
-        self.btn_fechar_janela.setMinimumSize(QSize(20, 20))
-        self.btn_fechar_janela.setMaximumSize(QSize(20, 20))
+        self.btn_fechar_janela.setMinimumSize(QSize(25, 25))
+        self.btn_fechar_janela.setMaximumSize(QSize(25, 25))
         self.btn_fechar_janela.setStyleSheet(u"background-image: url(:/icones/icons/icon_close.png);")
 
         self.horizontalLayout_4.addWidget(self.btn_fechar_janela)
@@ -124,11 +138,12 @@ class Ui_JanelaNovoProjeto(object):
         self.horizontalLayout.addWidget(self.frame)
 
 
-        self.verticalLayout.addWidget(self.header_content)
+        self.verticalLayout_5.addWidget(self.header_content)
 
-        self.body_content = QFrame(self.centralwidget)
+        self.body_content = QFrame(self.container_app)
         self.body_content.setObjectName(u"body_content")
-        self.body_content.setStyleSheet(u"")
+        self.body_content.setStyleSheet(u"border-bottom-left-radius: 5px;\n"
+"border-bottom-right-radius: 5px;")
         self.body_content.setFrameShape(QFrame.StyledPanel)
         self.body_content.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.body_content)
@@ -259,7 +274,10 @@ class Ui_JanelaNovoProjeto(object):
         self.verticalLayout_3.addWidget(self.frame_5)
 
 
-        self.verticalLayout.addWidget(self.body_content)
+        self.verticalLayout_5.addWidget(self.body_content)
+
+
+        self.verticalLayout.addWidget(self.container_app)
 
         JanelaNovoProjeto.setCentralWidget(self.centralwidget)
 

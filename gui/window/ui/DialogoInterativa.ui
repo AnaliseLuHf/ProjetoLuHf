@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DialogErro</class>
- <widget class="QDialog" name="DialogErro">
+ <class>DialogInterativa</class>
+ <widget class="QDialog" name="DialogInterativa">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -70,6 +70,7 @@ QLineEdit:hover {
 QLineEdit:focus {
 	border: 2px solid rgb(91, 101, 124);
 }
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -86,7 +87,7 @@ QLineEdit:focus {
     <number>5</number>
    </property>
    <property name="bottomMargin">
-    <number>5</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QFrame" name="container_app">
@@ -310,7 +311,7 @@ border-bottom-right-radius: 5px;</string>
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>6</number>
          </property>
          <item>
           <widget class="QFrame" name="frame_4">
@@ -358,7 +359,7 @@ border-bottom-right-radius: 5px;</string>
                </font>
               </property>
               <property name="text">
-               <string>Erro!</string>
+               <string>Info!</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -408,7 +409,7 @@ border-bottom-right-radius: 5px;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">background-repeat: no-repeat;
-background-image: url(:/imagens/images/icones_dialogs/erro40.png);
+background-image: url(:/imagens/images/icones_dialogs/info40.png);
 background-position: center;</string>
               </property>
               <property name="frameShape">
@@ -467,24 +468,12 @@ background-position: center;</string>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
             <property name="bottomMargin">
              <number>6</number>
             </property>
-            <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-             <widget class="QPushButton" name="btn_ok">
+            <item>
+             <widget class="QPushButton" name="btn_sim">
               <property name="minimumSize">
                <size>
                 <width>100</width>
@@ -519,7 +508,47 @@ QPushButton:pressed{
 }</string>
               </property>
               <property name="text">
-               <string>Ok</string>
+               <string>Sim!</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="btn_nao">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+	background-color: rgb(118, 0, 0);
+	background-repeat: none;
+	background-position:center;
+	border: none;
+	border-radius: 2px;
+	font-size: 10pt;
+	font-weight: bold;
+	color:white ;
+}
+QPushButton:hover{
+	background-color: rgba(255,255,255,0.1);
+}
+
+QPushButton:pressed{
+	background-color: 2828c5;
+	color: rgb(255, 255, 255);
+	border: 1px solid, rgba(0,0,0,0.1);
+}</string>
+              </property>
+              <property name="text">
+               <string>Não!</string>
               </property>
              </widget>
             </item>

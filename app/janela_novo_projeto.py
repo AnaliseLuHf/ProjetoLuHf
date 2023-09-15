@@ -24,13 +24,12 @@ class JanelaNovoProjeto(QMainWindow):
         self.ui = Ui_JanelaNovoProjeto()
         self.ui.setupUi(self)
 
-
-
         # Definindo um título para a janela
         self.setWindowTitle("Novo projeto")
 
         # Oculta a barra de títulos
         self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
         # Definindo um ícone
         self.setWindowIcon(QIcon("gui/images/icon.png"))
@@ -79,7 +78,7 @@ class JanelaNovoProjeto(QMainWindow):
         # Se tiver algum erro durante a criação da pasta
         # Caso o local selecionado para salvar o projeto já tenha uma pasta como o nome escolhido
         except FileExistsError :
-            mensagem = f"'{self.nome_projeto}' já existe em '{self.local_projeto}'"
+            mensagem = f"'{self.nome_projeto}' já existe em '{self.local_projeto}.' Escolha um novo nome ou mude o local de salvamento do arquivo!"
             self.mostrar_mensagem_erro(mensagem)
 
         # Caso o usuário não possua acesso ao local selecionado para salvar o projeto
@@ -103,7 +102,6 @@ class JanelaNovoProjeto(QMainWindow):
         self.local_e_nome_projeto.emit(valor_local_projeto, valor_nome_projeto)
 
 
-
         # Cria as pastas necessárias para o projet
         # Pasta onde ficará guardado os arquivos importados
         GerenciarArquivos.criar_pasta(self, self.caminho_projeto.replace("/", "\\"), "data")
@@ -114,7 +112,7 @@ class JanelaNovoProjeto(QMainWindow):
         self.close()
 
     def mostrar_mensagem_exito(self):
-        message = f"Projeto criado com sucesso em: \n {self.caminho_projeto}"
+        message = f"Projeto criado com sucesso em:{self.caminho_projeto}"
         dialog = DialogoExito(message)
         dialog.exec()
     def mostrar_mensagem_erro(self, mensagem):
@@ -130,6 +128,8 @@ class JanelaNovoProjeto(QMainWindow):
         self.move(self.pos() + event.globalPosition().toPoint() - self.dragPos)
         self.dragPos = event.globalPosition().toPoint()
         event.accept()
+
+
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@ class GerenciarArquivos:
     def verificar_pasta(self, nome_pasta):
         # Verifica se o caminho existe e é uma pasta
         if os.path.exists(nome_pasta) and os.path.isdir(nome_pasta):
-           return True
+            return True
 
         else:
             return False
@@ -22,6 +22,17 @@ class GerenciarArquivos:
             caminho_original = caminho_origem[c]
             caminho_final = caminho_destino
             shutil.copy(caminho_original, caminho_final)
+
+    def limpar_diretório(self, caminho_diretorio):
+        # Listar todos os arquivos no diretório
+        arquivos = os.listdir(caminho_diretorio)
+
+        # Iterar sobre os arquivos e excluí-los
+        for arquivo in arquivos:
+            caminho_arquivo = os.path.join(caminho_diretorio, arquivo)
+            if os.path.isfile(caminho_arquivo):
+                os.remove(caminho_arquivo)
+
 
 
 

@@ -1,5 +1,26 @@
-from qt_core import *
-from gui.resources import *
+# -*- coding: utf-8 -*-
+
+################################################################################
+## Form generated from reading UI file 'MainWindowTestecZrhEa.ui'
+##
+## Created by: Qt User Interface Compiler version 6.3.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
+
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QHBoxLayout,
+    QHeaderView, QLabel, QListWidget, QListWidgetItem,
+    QMainWindow, QPushButton, QSizePolicy, QSpacerItem,
+    QSplitter, QStackedWidget, QTableWidget, QTableWidgetItem,
+    QVBoxLayout, QWidget)
+import resources_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -662,6 +683,10 @@ class Ui_MainWindow(object):
 
         self.splitter_2.addWidget(self.frame)
         self.tabela_dados_originais = QTableWidget(self.splitter_2)
+        if (self.tabela_dados_originais.columnCount() < 20):
+            self.tabela_dados_originais.setColumnCount(20)
+        if (self.tabela_dados_originais.rowCount() < 20):
+            self.tabela_dados_originais.setRowCount(20)
         self.tabela_dados_originais.setObjectName(u"tabela_dados_originais")
         self.tabela_dados_originais.setFocusPolicy(Qt.NoFocus)
         self.tabela_dados_originais.setStyleSheet(u"")
@@ -670,12 +695,12 @@ class Ui_MainWindow(object):
         self.tabela_dados_originais.setTextElideMode(Qt.ElideNone)
         self.tabela_dados_originais.setGridStyle(Qt.SolidLine)
         self.tabela_dados_originais.setCornerButtonEnabled(False)
-        self.tabela_dados_originais.setRowCount(0)
-        self.tabela_dados_originais.setColumnCount(0)
+        self.tabela_dados_originais.setRowCount(20)
+        self.tabela_dados_originais.setColumnCount(20)
         self.splitter_2.addWidget(self.tabela_dados_originais)
         self.tabela_dados_originais.horizontalHeader().setCascadingSectionResizes(False)
         self.tabela_dados_originais.horizontalHeader().setMinimumSectionSize(50)
-        self.tabela_dados_originais.horizontalHeader().setDefaultSectionSize(100)
+        self.tabela_dados_originais.horizontalHeader().setDefaultSectionSize(150)
         self.tabela_dados_originais.horizontalHeader().setStretchLastSection(True)
         self.tabela_dados_originais.verticalHeader().setVisible(False)
         self.tabela_dados_originais.verticalHeader().setStretchLastSection(True)
@@ -740,7 +765,7 @@ class Ui_MainWindow(object):
         self.tabela_dados_corrigidos.setColumnCount(0)
         self.splitter_3.addWidget(self.tabela_dados_corrigidos)
         self.tabela_dados_corrigidos.horizontalHeader().setMinimumSectionSize(50)
-        self.tabela_dados_corrigidos.horizontalHeader().setDefaultSectionSize(100)
+        self.tabela_dados_corrigidos.horizontalHeader().setDefaultSectionSize(150)
         self.tabela_dados_corrigidos.horizontalHeader().setStretchLastSection(True)
         self.tabela_dados_corrigidos.verticalHeader().setVisible(False)
         self.tabela_dados_corrigidos.verticalHeader().setStretchLastSection(True)
@@ -799,7 +824,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)

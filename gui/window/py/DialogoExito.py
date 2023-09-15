@@ -5,9 +5,9 @@ class Ui_DialogExito(object):
     def setupUi(self, DialogExito):
         if not DialogExito.objectName():
             DialogExito.setObjectName(u"DialogExito")
-        DialogExito.resize(400, 200)
-        DialogExito.setMinimumSize(QSize(400, 200))
-        DialogExito.setMaximumSize(QSize(400, 200))
+        DialogExito.resize(500, 200)
+        DialogExito.setMinimumSize(QSize(500, 200))
+        DialogExito.setMaximumSize(QSize(500, 200))
         DialogExito.setStyleSheet(u"*{\n"
 "	font-family:\"ArialI\";\n"
 "	background-repeat: none;\n"
@@ -16,8 +16,8 @@ class Ui_DialogExito(object):
 "}\n"
 "\n"
 "#header_content{\n"
-"	background-color:rgb(33, 37, 43);\n"
-"	border-bottom: 1px solid rgba(0,0,0,0.2);\n"
+"	background-color: rgb(11, 13, 15);\n"
+"	\n"
 "}\n"
 "#header_content QPushButton{\n"
 "	background-color: transparent;\n"
@@ -28,7 +28,7 @@ class Ui_DialogExito(object):
 "	background-color: rgba(255, 255, 255, 0.1);\n"
 "}\n"
 "#body_content{\n"
-"	background-color:rgb(40, 44, 52);\n"
+"	background-color:rgb(26, 29, 34);\n"
 "}\n"
 "QLineEdit {\n"
 "	background-color: rgb(33, 37, 43);\n"
@@ -42,9 +42,9 @@ class Ui_DialogExito(object):
 "	background-color: rgb(33, 37, 43);\n"
 "	border-radius: 5px;\n"
 "	border: 2px solid rgb(33, 37, 43);\n"
-"	padding"
-                        "-left: 10px;\n"
-"	selection-color: rgb(255, 255, 255);\n"
+"	padding-left: 10px;\n"
+"	selection-color: rgb(2"
+                        "55, 255, 255);\n"
 "	selection-background-color: rgb(255, 121, 198);\n"
 "}\n"
 "QLineEdit:hover {\n"
@@ -57,12 +57,21 @@ class Ui_DialogExito(object):
         self.verticalLayout = QVBoxLayout(DialogExito)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.header_content = QFrame(DialogExito)
+        self.verticalLayout.setContentsMargins(5, 5, 5, 5)
+        self.container_app = QFrame(DialogExito)
+        self.container_app.setObjectName(u"container_app")
+        self.container_app.setFrameShape(QFrame.StyledPanel)
+        self.container_app.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_6 = QVBoxLayout(self.container_app)
+        self.verticalLayout_6.setSpacing(0)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.header_content = QFrame(self.container_app)
         self.header_content.setObjectName(u"header_content")
         self.header_content.setMinimumSize(QSize(0, 30))
         self.header_content.setMaximumSize(QSize(16777215, 30))
-        self.header_content.setStyleSheet(u"")
+        self.header_content.setStyleSheet(u"border-top-left-radius: 5px;\n"
+"border-top-right-radius: 5px;")
         self.header_content.setFrameShape(QFrame.StyledPanel)
         self.header_content.setFrameShadow(QFrame.Raised)
         self.horizontalLayout = QHBoxLayout(self.header_content)
@@ -125,11 +134,12 @@ class Ui_DialogExito(object):
         self.horizontalLayout.addWidget(self.frame)
 
 
-        self.verticalLayout.addWidget(self.header_content)
+        self.verticalLayout_6.addWidget(self.header_content)
 
-        self.body_content = QFrame(DialogExito)
+        self.body_content = QFrame(self.container_app)
         self.body_content.setObjectName(u"body_content")
-        self.body_content.setStyleSheet(u"")
+        self.body_content.setStyleSheet(u"border-bottom-left-radius: 5px;\n"
+"border-bottom-right-radius: 5px;")
         self.body_content.setFrameShape(QFrame.StyledPanel)
         self.body_content.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.body_content)
@@ -188,7 +198,7 @@ class Ui_DialogExito(object):
         sizePolicy.setHeightForWidth(self.label_mensagem.sizePolicy().hasHeightForWidth())
         self.label_mensagem.setSizePolicy(sizePolicy)
         self.label_mensagem.setFont(font)
-        self.label_mensagem.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.label_mensagem.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.label_mensagem.setWordWrap(True)
 
         self.horizontalLayout_2.addWidget(self.label_mensagem)
@@ -236,7 +246,10 @@ class Ui_DialogExito(object):
         self.verticalLayout_3.addWidget(self.frame_5)
 
 
-        self.verticalLayout.addWidget(self.body_content)
+        self.verticalLayout_6.addWidget(self.body_content)
+
+
+        self.verticalLayout.addWidget(self.container_app)
 
 
         self.retranslateUi(DialogExito)
@@ -249,7 +262,7 @@ class Ui_DialogExito(object):
         self.label.setText(QCoreApplication.translate("DialogExito", u"Lu&Hf Data Analysis", None))
         self.btn_fechar.setText("")
         self.label_tipo_mensagem.setText(QCoreApplication.translate("DialogExito", u"Exito!", None))
-        self.label_mensagem.setText(QCoreApplication.translate("DialogExito", u"<html><head/><body><p align=\"justify\"><span style=\" font-size:10pt;\"><br/></span></p></body></html>", None))
+        self.label_mensagem.setText(QCoreApplication.translate("DialogExito", u"<html><head/><body><p align=\"justify\"><br/></p></body></html>", None))
         self.btn_ok.setText(QCoreApplication.translate("DialogExito", u"Ok", None))
     # retranslateUi
 
