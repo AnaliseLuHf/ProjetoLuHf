@@ -122,8 +122,9 @@ class DialogoInterativo(QDialog):
 
         if nome_botao == "btn_sim":
             self.opcaoSelecionada.emit("Sim")
-            self.accept()
             self.close()
+            self.accept()
+
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPosition().toPoint()

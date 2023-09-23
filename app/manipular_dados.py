@@ -26,7 +26,11 @@ class ManipularDadosArquivosOriginais():
     def criar_dataframes(self, arquivos):
         dataframes = {}
         for arquivo in arquivos:
-            dataframes[os.path.basename(arquivo)] = pd.read_csv(arquivo, delimiter='\t')
+            dataframes[os.path.basename(arquivo)] = pd.read_csv(arquivo, delimiter='\t', usecols=["Cycle","Time","172Yb","173Yb","175Lu","176Hf",
+                                                                                                  "177Hf","178Hf","179Hf","180Hf","181Ta","178Hf/177Hf (1)",
+                                                                                                  "180Hf/177Hf (2)","179Hf/177Hf (3)","172Yb/173Yb (4)",
+                                                                                                  "176Hf/177Hf (5)","176Hf/177Hf (6)","181Ta/180Hf (7)",
+                                                                                                  "175Lu/177Hf (8)","173Yb/177Hf (9)","172Yb/177Hf (10)"])
 
         return dataframes
 

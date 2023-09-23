@@ -1,12 +1,15 @@
 import sys
 import os
 import random
+import time
 from gui.window.py.MainWindow import *
 from gui.window.py.JanelaDeCarregamento import *
+from gui.window.py.ProgressoImportação import *
+from progress_file import *
 from app.gerenciar_arquivos import *  # Classe que gerencia a criação de pastas e arquivos do projeto
 from app.dialogs import *  # Classe que gerencia as caixas de mensagem que aparecem
 from app.janela_novo_projeto import *  # Classe que gerencia a janela para criar um projeto
-from app.manipular_dados import *
+from app.manipular_dados import * # Classe que gerencia a manipulação dos dados
 
 
 
@@ -69,6 +72,7 @@ class SplashScreen(QMainWindow):
         counter += 1
 
 
+# Classe principal da aplicação
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -78,9 +82,11 @@ class MainWindow(QMainWindow):
         self.nome_projeto_criado = None  # Guarda o nome do projeto
         self.caminho_pasta_data = None
         self.caminho_pasta_txt = None
-        self.arquivos_selecionados = [] # Guarda o caminho dos arquivos importados
+        self.caminhos_pasta_txt_corrigidos = None
+        self.arquivos_importados_data = [] # Guarda o caminho dos arquivos importados ( que foram copiados para a pasta data)
         self.arquivos_txt = [] # Guarda o caminho dos arquivos txt
         self.dataframes_arquivos_txt = {} # Dicionário, onde estão dos dataframes com os dados necessários de cada
+        self.dataframes_arquivos_txt_corrigidos = {}
 
         # arquivo importado
 
@@ -111,6 +117,7 @@ class MainWindow(QMainWindow):
         self.ui.btn_pagina_novo_projeto.clicked.connect(self.clique_botao)
         self.ui.btn_add_arquivos.clicked.connect(self.clique_botao)
         self.ui.btn_pagina_visualizar_dados_arquivos.clicked.connect(self.clique_botao)
+        self.ui.btn_add_arquivos_adicionais.clicked.connect(self.clique_botao)
 
         # Botões que redimensionam a janela
         self.ui.btn_minimizar_janela.clicked.connect(self.clique_botao)
@@ -137,15 +144,25 @@ class MainWindow(QMainWindow):
 
         # Mostra a janela para criar um projeto
         if nome_botao == "btn_pagina_novo_projeto" or nome_botao == "btn_novo_projeto_home":
+            # Verificando se já existe algum projeto em andamento
+            status_projeto = self.verificar_projeto_criado()
 
-            # Abre a janela para criar um projeto
-            self.jn_novo_projeto = JanelaNovoProjeto()
+            if status_projeto is not True: # Caso não tenha
+                # Abre a janela para criar um projeto
+                self.jn_novo_projeto = JanelaNovoProjeto()
 
-            # Muda os atributos da classe principal, pois a janela do novo projeto pega o
-            # nome e o local do projeto escolhido pelo usuário
-            self.jn_novo_projeto.local_e_nome_projeto.connect(self.mudar_atributos_classe)
+                # Muda os atributos da classe principal, pois a janela do novo projeto pega o
+                # nome e o local do projeto escolhido pelo usuário
+                self.jn_novo_projeto.local_e_nome_projeto.connect(self.mudar_atributos_classe)
+                self.jn_novo_projeto.show()
+            else:
+                # Caso já tenha arquivos importados, é mostrado na tela uma mensagem para continuar a importação (apagando os arquivos já importados) ou não
+                mensagem = ("Já existe um projeto em andamento.Deseja criar um novo projeto?")
+                dialogo_interativo = DialogoInterativo(mensagem)
+                dialogo_interativo.opcaoSelecionada.connect(self.obter_op_selecionada_novo_projeto)
+                dialogo_interativo.exec()
 
-            self.jn_novo_projeto.show()
+
 
         # Mostra a página para ver os arquivos carregados, já com os dados corrigidos do background
         if nome_botao == "btn_pagina_visualizar_dados_arquivos":
@@ -154,13 +171,13 @@ class MainWindow(QMainWindow):
         # Abre a caixa de diálogos para selecionar os arquivos
         if nome_botao == "btn_add_arquivos":
             # Verificando se já existem arquivos importados
-            if len(self.arquivos_selecionados) > 0:
+            if len(self.arquivos_importados_data) > 0:
                 # Caso já tenha arquivos importados, é mostrado na tela uma mensagem para continuar a importação (apagando os arquivos já importados) ou não
                 mensagem = ("A importação de novos arquivos irá apagar os arquivos já importados."
-                            " Caso queira adicionar mais arquivos, use a opção 'Adicionar arquivos adicionais'"
+                            " Caso queira adicionar mais arquivos, use a opção 'Adicionar arquivos'."
                             "Deseja continuar?")
                 dialogo_interativo = DialogoInterativo(mensagem)
-                dialogo_interativo.opcaoSelecionada.connect(self.obter_op_selecionada)
+                dialogo_interativo.opcaoSelecionada.connect(self.obter_op_selecionada_importar)
                 dialogo_interativo.exec()
 
             else: # Se não existir, a função para adicionar os arquivos é chamada
@@ -184,6 +201,21 @@ class MainWindow(QMainWindow):
         # Fecha a aplicação
         if nome_botao == "btn_fechar_janela":
             self.close()
+
+        if nome_botao =="btn_add_arquivos_adicionais":
+            # Verificando se existe algum projeto criado e se já há algum arquivo importado
+            if len(self.arquivos_importados_data) > 0 and self.verificar_projeto_criado() == True:
+                mensagem = 'Deseja importar arquivos adicionais ao projeto atual?'
+                dialogo_interativo = DialogoInterativo(mensagem)
+                dialogo_interativo.opcaoSelecionada.connect(self.obter_op_selecionada_importação_adicional)
+                dialogo_interativo.exec()
+
+            else:
+                if not self.verificar_projeto_criado():
+                    self.mostrar_mensagem_info("Nenhum projeto criado!")
+
+                if len(self.arquivos_importados_data) == 0:
+                    self.mostrar_mensagem_info("Ainda não há arquivos importados ao projeto atual!")
 
     # Função que irá expandir e retrair o menu esquerdo
     def expandir_menu(self):
@@ -228,23 +260,42 @@ class MainWindow(QMainWindow):
 
     def limpar_atributos_classe(self):
         # Apagando os dados dos atributos da classe, que são preenchidos quando a função adicionar_arquivos é chamada
-        self.arquivos_selecionados = []  # Guarda o caminho dos arquivos importados
+        self.arquivos_importados_data = []  # Guarda o caminho dos arquivos importados
         self.arquivos_txt = []  # Guarda o caminho dos arquivos txt
         self.dataframes_arquivos_txt = {}  # Dicionário, onde estão dos dataframes com os dados necessários de cada
         # arquivo importado
 
+        # Limpando a lista e a tabela como os dados anteriores (que foram excluídos)
+        self.ui.lista_arquivos_importados.clear()
+        self.ui.tabela_dados_originais.clear()
+
+    # Como essa função é chamada apenas quando a opção clicada for "Sim", não é preciso fazer uma verificação da opção escolhida
+    def obter_op_selecionada_importar(self):
+        # Limpa os atributos da classe, que dependem dos arquivos importados
+        self.limpar_atributos_classe()
         # Apagando os arquivos já importados da pasta do projeto
         GerenciarArquivos.limpar_diretório(self, self.caminho_pasta_data)
         GerenciarArquivos.limpar_diretório(self, self.caminho_pasta_txt)
 
-
-    # Como essa função é chamada apenas quando a opção clicada for "Sim", não é preciso fazer uma verificação da opção escolhida
-    def obter_op_selecionada(self):
-        # A partir desse ponto estava dando certo
-        # Limpa os atributos da classe, que dependem dos arquivos importados
-        self.limpar_atributos_classe()
-
         self.adicionar_arquivos()
+
+    def obter_op_selecionada_importação_adicional(self):
+        self.importar_arquivos_adicionais()
+
+    def obter_op_selecionada_novo_projeto(self):
+        # Verifica se já tem algum arquivo importado
+        if len(self.arquivos_importados_data) > 0:
+            self.limpar_atributos_classe()
+
+
+        # Abre a janela para criar um projeto
+        self.jn_novo_projeto = JanelaNovoProjeto()
+
+        # Muda os atributos da classe principal, pois a janela do novo projeto pega o
+        # nome e o local do projeto escolhido pelo usuário
+        self.jn_novo_projeto.local_e_nome_projeto.connect(self.mudar_atributos_classe)
+        self.jn_novo_projeto.show()
+
 
     def verificar_projeto_criado(self):
         if self.local_projeto_criado is not None and self.nome_projeto_criado is not None:
@@ -253,72 +304,72 @@ class MainWindow(QMainWindow):
             return False
 
     def adicionar_arquivos(self):
-
+        print('Verificando projeto criado...')
         status_projeto = self.verificar_projeto_criado()
 
         if status_projeto:
             # Chama a função que abre a caixa de diálogo para selecionar os arquivos
-            arquivos_selecionados = self.selecionar_arquivos()
+            print('Chamando a função para selecionar os arquivos...')
+            arquivos_selecionados, num_arquivos = self.selecionar_arquivos()
+
 
             # Copiando os arquivos selecionados para a pasta "data" do projeto
-            self.caminho_pasta_data= self.local_projeto_criado + "/" + self.nome_projeto_criado + "/data"
+            self.caminho_pasta_data = self.local_projeto_criado + "/" + self.nome_projeto_criado + "/data"
 
             try:
+
+                print('Copiando os arquivos selecionados para a pasta data...')
                 GerenciarArquivos.copiar_arquivos(self, arquivos_selecionados, self.caminho_pasta_data)
 
                 # Pegando o caminho dos arquivos copiados para a pasta data, para passar como uma lista
                 # sendo um atributo da classe
-                caminhos_arquivos_data = []
+                self.arquivos_importados_data = self.caminho_completo_arquivo(self.caminho_pasta_data)
 
-                for arquivo in os.listdir(self.caminho_pasta_data):
-                    caminho_arquivo = self.caminho_pasta_data + "/" + arquivo
-                    if os.path.isfile(caminho_arquivo):
-                        caminhos_arquivos_data.append(caminho_arquivo)
 
-                # Mudando o atributo da classe, para uma lista com o nome dos arquivos selecionados
-                self.arquivos_selecionados = caminhos_arquivos_data
+                print('Iniciando thread...')
+                self.start_import(num_arquivos)
+
 
                 # Chamando a função que irá filtrar os dados originais, eliminando os dados desnecessários
-                ManipularDadosArquivosOriginais.excluir_dados_desnecessarios(self, arquivos=self.arquivos_selecionados,
+                print('Excluindo dados desnecessários...')
+                ManipularDadosArquivosOriginais.excluir_dados_desnecessarios(self, arquivos=self.arquivos_importados_data,
                                                                              local=self.local_projeto_criado, nome=self.nome_projeto_criado)
 
-                # Mostrando os arquivos convertidos (exp para txt) em uma lista
+
                 # Pegando o caminho da pasta txt
                 self.caminho_pasta_txt = self.local_projeto_criado + "/" + self.nome_projeto_criado + "/txt"
 
-                # Use a função os.listdir() para listar todos os itens na pasta (incluindo pastas)
-                itens = os.listdir(self.caminho_pasta_txt)
+                # Obtendo o caminho dos arquivos na pasta txt, e passando como o atributo da classe
+                self.arquivos_txt = self.caminho_completo_arquivo(self.caminho_pasta_txt)
+                print(self.arquivos_txt)
 
-                # Filtrar apenas os arquivos (não diretórios - retira alguma pasta, se houver).
-                # Pegando os nomes dos arquivos
-                nomes_arquivos_txt = [item for item in itens if os.path.isfile(os.path.join(self.caminho_pasta_txt, item))]
 
-                # Colocando os caminhos dos arquivos txt como uma lista, que será um atributo da classe
-                self.arquivos_txt = [self.caminho_pasta_txt + "/" + arquivo for arquivo in nomes_arquivos_txt]
+                # Pegando os nomes dos arquivos na pasta txt
+                nomes_arquivos_txt = self.obter_nomes_arquivos(self.caminho_pasta_txt)
+
+
                 # Criando dataframes com os dados dos arquivos txt
+                print('Criando dataframes')
                 self.dataframes_arquivos_txt = ManipularDadosArquivosOriginais.criar_dataframes(self, self.arquivos_txt)
 
                 # Passando os nomes para a função que irá os adicionar a lista
+                print("Preenchendo listas...")
                 self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
 
+                print('Preenchendo tabelas...')
                 # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes, assim que a os arquivos são importados
                 self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
 
                 # Leva para a página para ver os dados dos arquivos
                 self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_visualizar_dados_importados)
 
-                print(f'Local: {self.local_projeto_criado} \n Nome: {self.nome_projeto_criado} \n Arquivos importados:{self.arquivos_selecionados}'
-                      f'Arquivos txt: {self.arquivos_txt} \n Dataframes: {self.dataframes_arquivos_txt}')
 
             except Exception as e:
-                message = f"{e}"
-                dialog_erro = DialogoErro(message)
-                dialog_erro.exec()
+                self.mostrar_mensagem_erro(f"{e}")
+
 
         else:
-            message = "Crie um projeto antes de importar os arquivos!"
-            dialog_info = DialogoInfo(message)
-            dialog_info.exec()
+            self.mostrar_mensagem_info("Crie um projeto antes de importar os arquivos!")
 
     def selecionar_arquivos(self):
         while True:
@@ -333,10 +384,31 @@ class MainWindow(QMainWindow):
                 arquivos_selecionados = file_dialog.selectedFiles()
 
                 if arquivos_selecionados:
-                    return arquivos_selecionados
+                    return arquivos_selecionados, len(arquivos_selecionados)
 
                 else:
                     return None  # O usuário cancelou a operação
+
+    # Função que vai copiar os arquivos selecionados para a pasta data do projeto
+
+    def caminho_completo_arquivo(self, caminho_diretorio):
+        arquivos = []
+        for arquivo in os.listdir(caminho_diretorio):
+            caminho_arquivo = caminho_diretorio + "/" + arquivo
+            if os.path.isfile(caminho_arquivo):
+                arquivos.append(caminho_arquivo)
+
+        return arquivos
+
+    def obter_nomes_arquivos(self, caminho_diretorio):
+        # Use a função os.listdir() para listar todos os itens no diretório
+        itens_no_diretorio = os.listdir(caminho_diretorio)
+
+        # Use uma list comprehension para pegar apenas os nomes dos arquivos (não diretórios)
+        nomes_de_arquivos = [item for item in itens_no_diretorio if
+                             os.path.isfile(os.path.join(caminho_diretorio, item))]
+
+        return nomes_de_arquivos
 
 
     # Função que irá preencher as listas do programa com os arquivos
@@ -383,19 +455,92 @@ class MainWindow(QMainWindow):
         # Redimensiona o tamanho das colunas para mostrar os dados com o tamanho correto
         self.ui.tabela_dados_originais.resizeColumnsToContents()
 
+    def importar_arquivos_adicionais(self):
+        try:
+            arquivos_selecionados, num_arquivos = self.selecionar_arquivos()
+
+            # Mostrando a janela que mostra o carregamento dos arquivos
+            self.start_import(num_arquivos)
+
+            # Copiando os arquivos para a pasta data
+            GerenciarArquivos.copiar_arquivos(self, arquivos_selecionados, self.caminho_pasta_data)
+
+            # Pegando o caminho dos arquivos copiados para a pasta data, para passar como uma lista
+            # sendo um atributo da classe
+            self.arquivos_importados_data = self.caminho_completo_arquivo(self.caminho_pasta_data)
+
+
+            # Excluindo os dados desnessários dos arquivos importados, que estão na pasta data
+            ManipularDadosArquivosOriginais.excluir_dados_desnecessarios(self, arquivos=self.arquivos_importados_data,
+                                                                         local=self.local_projeto_criado,
+                                                                         nome=self.nome_projeto_criado)
+
+            # Obtendo o caminho dos arquivos na pasta txt, e passando como o atributo da classe
+            self.arquivos_txt = self.caminho_completo_arquivo(self.caminho_pasta_txt)
+            print(self.arquivos_txt)
+
+            # Pegando os nomes dos arquivos na pasta txt
+            nomes_arquivos_txt = self.obter_nomes_arquivos(self.caminho_pasta_txt)
+
+            # Criando dataframes com os dados dos arquivos txt
+            print('Criando dataframes')
+            self.dataframes_arquivos_txt = ManipularDadosArquivosOriginais.criar_dataframes(self, self.arquivos_txt)
+
+            # Passando os nomes para a função que irá os adicionar a lista
+            print("Preenchendo listas...")
+            self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
+
+            print('Preenchendo tabelas...')
+            # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes, assim que a os arquivos são importados
+            self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
+
+        except Exception as e:
+            self.mostrar_mensagem_erro(f"{e}")
+
+
+
+
     def mostrar_mensagem_exito(self):
         message = f"Projeto criado com sucesso em:{self.caminho_projeto}"
-        dialog = DialogoExito(message)
-        dialog.exec()
+        dialog_exito = DialogoExito(message)
+        dialog_exito.exec()
 
     def mostrar_mensagem_erro(self, mensagem):
         message = f"{mensagem}"
         dialog_erro = DialogoErro(message)
         dialog_erro.exec()
 
+    def mostrar_mensagem_info(self, mensagem):
+        message = f"{mensagem}"
+        dialog_info = DialogoInfo(message)
+        dialog_info.exec()
 
+    def start_import(self, total_arquivos):
+        self.loading_window = LoadingWindow()
+        self.file_loader = FileLoader(total_arquivos)
+        self.file_loader.progress_updated.connect(self.loading_window.update_progress)
+        self.file_loader.finished.connect(self.loading_complete)
+        self.file_loader.start()
+        self.loading_window.exec()
 
+    def loading_complete(self):
+        self.loading_window.close()
 
+class FileLoader(QThread):
+    progress_updated = Signal(int)
+
+    def __init__(self, total_files):
+        super().__init__()
+        self.total_files = total_files
+        print(self.total_files)
+    def run(self):
+        # Simule a importação de arquivos aqui
+
+        for i in range(self.total_files):
+            # Simule a importação de cada arquivo
+            time.sleep(1)  # Espere 1 segundo (substitua pelo seu processo de importação real)
+            progress = (i + 1) * 100 / self.total_files
+            self.progress_updated.emit(progress)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

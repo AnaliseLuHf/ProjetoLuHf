@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icones">
+    <file>icons/cil-file-add.png</file>
     <file>icons/cil-3d.png</file>
     <file>icons/cil-4k.png</file>
     <file>icons/cil-account-logout.png</file>

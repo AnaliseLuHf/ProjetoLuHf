@@ -112,7 +112,7 @@ class JanelaNovoProjeto(QMainWindow):
         self.close()
 
     def mostrar_mensagem_exito(self):
-        message = f"Projeto criado com sucesso em:{self.caminho_projeto}"
+        message = f"Projeto criado com sucesso!"
         dialog = DialogoExito(message)
         dialog.exec()
     def mostrar_mensagem_erro(self, mensagem):

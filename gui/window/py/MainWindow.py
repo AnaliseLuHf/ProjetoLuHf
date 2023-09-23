@@ -1,11 +1,10 @@
 from qt_core import *
 from gui.resources import *
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(700, 574)
+        MainWindow.resize(792, 574)
         MainWindow.setMinimumSize(QSize(700, 500))
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"/*	Propriedades globais, que se aplicam em toda interface*/\n"
@@ -312,7 +311,7 @@ class Ui_MainWindow(object):
         self.container_app.setObjectName(u"container_app")
         self.container_app.setStyleSheet(u"#container_app{\n"
 "	background-color: rgb(40, 44, 52);\n"
-"	border-radius: 2px;\n"
+"	border-radius: 4px;\n"
 "}\n"
 "")
         self.container_app.setFrameShape(QFrame.StyledPanel)
@@ -325,8 +324,8 @@ class Ui_MainWindow(object):
         self.header_content.setObjectName(u"header_content")
         self.header_content.setMinimumSize(QSize(0, 30))
         self.header_content.setMaximumSize(QSize(16777214, 30))
-        self.header_content.setStyleSheet(u"border-top-left-radius: 2px;\n"
-"border-top-right-radius: 2px;\n"
+        self.header_content.setStyleSheet(u"border-top-left-radius: 4px;\n"
+"border-top-right-radius: 4px;\n"
 "")
         self.horizontalLayout = QHBoxLayout(self.header_content)
         self.horizontalLayout.setSpacing(5)
@@ -500,6 +499,14 @@ class Ui_MainWindow(object):
         self.btn_pagina_visualizar_dados_arquivos.setStyleSheet(u"background-image: url(:/icones/icons/cil-screen-desktop.png);")
 
         self.verticalLayout_4.addWidget(self.btn_pagina_visualizar_dados_arquivos)
+
+        self.btn_add_arquivos_adicionais = QPushButton(self.frame_center_menu)
+        self.btn_add_arquivos_adicionais.setObjectName(u"btn_add_arquivos_adicionais")
+        self.btn_add_arquivos_adicionais.setMinimumSize(QSize(100, 45))
+        self.btn_add_arquivos_adicionais.setMaximumSize(QSize(16777215, 45))
+        self.btn_add_arquivos_adicionais.setStyleSheet(u"background-image: url(:/icones/icons/cil-file-add.png);")
+
+        self.verticalLayout_4.addWidget(self.btn_add_arquivos_adicionais)
 
 
         self.verticalLayout_2.addWidget(self.frame_center_menu)
@@ -799,7 +806,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -834,13 +841,17 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.btn_pagina_novo_projeto.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
 #if QT_CONFIG(tooltip)
-        self.btn_add_arquivos.setToolTip(QCoreApplication.translate("MainWindow", u"Adicionar arquivos ao projeto", None))
+        self.btn_add_arquivos.setToolTip(QCoreApplication.translate("MainWindow", u"Importar arquivos ao projeto", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_add_arquivos.setText(QCoreApplication.translate("MainWindow", u"Importar arquivos", None))
 #if QT_CONFIG(tooltip)
         self.btn_pagina_visualizar_dados_arquivos.setToolTip(QCoreApplication.translate("MainWindow", u"Ver dados importados", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_pagina_visualizar_dados_arquivos.setText(QCoreApplication.translate("MainWindow", u"Ver dados ", None))
+#if QT_CONFIG(tooltip)
+        self.btn_add_arquivos_adicionais.setToolTip(QCoreApplication.translate("MainWindow", u"Adicionar mais arquivos ao projeto atual", None))
+#endif // QT_CONFIG(tooltip)
+        self.btn_add_arquivos_adicionais.setText(QCoreApplication.translate("MainWindow", u"Adicionar arquivos", None))
         self.btn_novo_projeto_home.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
         self.btn_abrir_projeto.setText(QCoreApplication.translate("MainWindow", u"Abrir projeto", None))
         self.pushButton.setText(QCoreApplication.translate("MainWindow", u"Exportar", None))
