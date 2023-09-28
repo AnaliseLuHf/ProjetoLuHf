@@ -10,6 +10,7 @@ from app.gerenciar_arquivos import *  # Classe que gerencia a criação de pasta
 from app.dialogs import *  # Classe que gerencia as caixas de mensagem que aparecem
 from app.janela_novo_projeto import *  # Classe que gerencia a janela para criar um projeto
 from app.manipular_dados import * # Classe que gerencia a manipulação dos dados
+from app.background_graphic import *
 
 
 
@@ -88,8 +89,6 @@ class MainWindow(QMainWindow):
         self.dataframes_arquivos_txt = {} # Dicionário, onde estão dos dataframes com os dados necessários de cada
         self.dataframes_arquivos_txt_corrigidos = {}
 
-        # arquivo importado
-
         # Setup a Main Window
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -118,6 +117,7 @@ class MainWindow(QMainWindow):
         self.ui.btn_add_arquivos.clicked.connect(self.clique_botao)
         self.ui.btn_pagina_visualizar_dados_arquivos.clicked.connect(self.clique_botao)
         self.ui.btn_add_arquivos_adicionais.clicked.connect(self.clique_botao)
+        self.ui.btn_definir_background.clicked.connect(self.clique_botao)
 
         # Botões que redimensionam a janela
         self.ui.btn_minimizar_janela.clicked.connect(self.clique_botao)
@@ -129,6 +129,8 @@ class MainWindow(QMainWindow):
 
         # Conectando o item selecionado das listas, para preencher a tabela com os dados
         self.ui.lista_arquivos_importados.itemClicked.connect(self.preencher_tab_arquivos_importados)
+
+
 
     # Essa função pega o nome do botão que foi clicado e conecta a uma "função" para ele
     def clique_botao(self):
@@ -172,7 +174,8 @@ class MainWindow(QMainWindow):
         if nome_botao == "btn_add_arquivos":
             # Verificando se já existem arquivos importados
             if len(self.arquivos_importados_data) > 0:
-                # Caso já tenha arquivos importados, é mostrado na tela uma mensagem para continuar a importação (apagando os arquivos já importados) ou não
+                # Caso já tenha arquivos importados, é mostrado na tela uma mensagem para continuar a
+                # importação (apagando os arquivos já importados) ou não
                 mensagem = ("A importação de novos arquivos irá apagar os arquivos já importados."
                             " Caso queira adicionar mais arquivos, use a opção 'Adicionar arquivos'."
                             "Deseja continuar?")
@@ -217,6 +220,10 @@ class MainWindow(QMainWindow):
                 if len(self.arquivos_importados_data) == 0:
                     self.mostrar_mensagem_info("Ainda não há arquivos importados ao projeto atual!")
 
+        if nome_botao == "btn_definir_background":
+            self.definir_intervalo_background()
+
+
     # Função que irá expandir e retrair o menu esquerdo
     def expandir_menu(self):
         # Pegando a largura do menu esquerdo
@@ -237,7 +244,7 @@ class MainWindow(QMainWindow):
 
     # Esses métodos são responsáveis por redimensionar e movimentar a janela
     def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
+        if event.button() == QtCore.Qt.LeftButton:
             self.drag_start_position = event.globalPosition().toPoint() - self.pos()
             event.accept()
 
@@ -247,7 +254,7 @@ class MainWindow(QMainWindow):
             event.accept()
 
     def mouseReleaseEvent(self, event):
-        if event.button() == Qt.LeftButton:
+        if event.button() == QtCore.Qt.LeftButton:
             self.drag_start_position = None
             event.accept()
 
@@ -269,7 +276,8 @@ class MainWindow(QMainWindow):
         self.ui.lista_arquivos_importados.clear()
         self.ui.tabela_dados_originais.clear()
 
-    # Como essa função é chamada apenas quando a opção clicada for "Sim", não é preciso fazer uma verificação da opção escolhida
+    # Como essa função é chamada apenas quando a opção clicada for "Sim", não é preciso fazer uma verificação da
+    # opção escolhida
     def obter_op_selecionada_importar(self):
         # Limpa os atributos da classe, que dependem dos arquivos importados
         self.limpar_atributos_classe()
@@ -312,7 +320,6 @@ class MainWindow(QMainWindow):
             print('Chamando a função para selecionar os arquivos...')
             arquivos_selecionados, num_arquivos = self.selecionar_arquivos()
 
-
             # Copiando os arquivos selecionados para a pasta "data" do projeto
             self.caminho_pasta_data = self.local_projeto_criado + "/" + self.nome_projeto_criado + "/data"
 
@@ -328,7 +335,6 @@ class MainWindow(QMainWindow):
 
                 print('Iniciando thread...')
                 self.start_import(num_arquivos)
-
 
                 # Chamando a função que irá filtrar os dados originais, eliminando os dados desnecessários
                 print('Excluindo dados desnecessários...')
@@ -491,14 +497,23 @@ class MainWindow(QMainWindow):
             self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
 
             print('Preenchendo tabelas...')
-            # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes, assim que a os arquivos são importados
+            # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes,
+            # assim que a os arquivos são importados
             self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
 
         except Exception as e:
             self.mostrar_mensagem_erro(f"{e}")
 
+    def definir_intervalo_background(self):
+        if len(self.dataframes_arquivos_txt) > 0:
+            self.definir_background = BackgroundWindow()
+            self.definir_background.adicionar_dados(dados=self.dataframes_arquivos_txt)
+            self.definir_background.preencher_combobox()
+            self.definir_background.plotar_grafico()
+            self.definir_background.show()
 
-
+        else:
+            self.mostrar_mensagem_info("Adicione alguns dados antes!")
 
     def mostrar_mensagem_exito(self):
         message = f"Projeto criado com sucesso em:{self.caminho_projeto}"
@@ -538,9 +553,10 @@ class FileLoader(QThread):
 
         for i in range(self.total_files):
             # Simule a importação de cada arquivo
-            time.sleep(1)  # Espere 1 segundo (substitua pelo seu processo de importação real)
+            time.sleep(1)
             progress = (i + 1) * 100 / self.total_files
             self.progress_updated.emit(progress)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

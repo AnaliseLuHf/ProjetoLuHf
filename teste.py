@@ -1,47 +1,31 @@
-import numpy as np
-
 import pyqtgraph as pg
-from pyqtgraph.Qt import QtCore
+from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QWidget
 
-app = pg.mkQApp("InfiniteLine Example")
-win = pg.GraphicsLayoutWidget(show=True, title="Plotting items examples")
-win.resize(1000,600)
+class MyMainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
 
-# Enable antialiasing for prettier plots
-pg.setConfigOptions(antialias=True)
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.central_layout = QVBoxLayout()
+        self.central_widget.setLayout(self.central_layout)
 
-# Create a plot with some random data
-p1 = win.addPlot(title="Plot Items example", y=np.random.normal(size=100, scale=10), pen=0.5)
-p1.setYRange(-40, 40)
+        # Crie um objeto PlotWidget
+        self.plot_widget = pg.PlotWidget()
+        self.central_layout.addWidget(self.plot_widget)
 
-# Add three infinite lines with labels
-inf1 = pg.InfiniteLine(movable=True, angle=90, label='x={value:0.2f}',
-                       labelOpts={'position':0.1, 'color': (200,200,100), 'fill': (200,200,200,50), 'movable': True})
-inf2 = pg.InfiniteLine(movable=True, angle=0, pen=(0, 0, 200), bounds = [-20, 20], hoverPen=(0,200,0), label='y={value:0.2f}mm',
-                       labelOpts={'color': (200,0,0), 'movable': True, 'fill': (0, 0, 200, 100)})
-inf3 = pg.InfiniteLine(movable=True, angle=45, pen='g', label='diagonal',
-                       labelOpts={'rotateAxis': [1, 0], 'fill': (0, 200, 0, 100), 'movable': True})
-inf1.setPos([2,2])
-p1.addItem(inf1)
-p1.addItem(inf2)
-p1.addItem(inf3)
+        # Dados para o gráfico de exemplo
+        x = [1, 2, 3, 4, 5]
+        y = [2, 4, 1, 3, 7]
 
+        # Crie uma curva com os dados
+        curve = self.plot_widget.plot(x, y)
 
-
-
-def callableFunction(x, y):
-    return f"Square Values: ({x**2:.4f}, {y**2:.4f})"
-
-targetItem4 = pg.TargetItem(
-    pos=(10, -10),
-    label=callableFunction
-)
-
-
-# Add a linear region with a label
-lr = pg.LinearRegionItem(values=[70, 80])
-p1.addItem(lr)
-label = pg.InfLineLabel(lr.lines[1], "region 1", position=0.95, rotateAxis=(1,0), anchor=(1, 1))
+        # Mude a espessura da linha
+        curve.setPen(width=5)  # Defina a espessura da linha para 2 pixels
 
 if __name__ == '__main__':
-    pg.exec()
+    app = QApplication([])
+    window = MyMainWindow()
+    window.show()
+    app.exec()
