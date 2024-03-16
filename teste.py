@@ -1,31 +1,40 @@
+#import pyqtgraph.examples
+#pyqtgraph.examples.run()
+
+import sys
+from PySide6.QtWidgets import QApplication
 import pyqtgraph as pg
-from PySide6.QtWidgets import QMainWindow, QApplication, QVBoxLayout, QWidget
 
-class MyMainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+def regionChanged():
+    # Esta função será chamada quando a região for movida
+    print("Posição da linha inicial:", regiao_background.getRegion()[0])
+    print("Posição da linha final:", regiao_background.getRegion()[1])
 
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
-        self.central_layout = QVBoxLayout()
-        self.central_widget.setLayout(self.central_layout)
+def main():
+    # Crie uma aplicação Qt
+    app = QApplication(sys.argv)
 
-        # Crie um objeto PlotWidget
-        self.plot_widget = pg.PlotWidget()
-        self.central_layout.addWidget(self.plot_widget)
+    # Crie um widget de plotagem
+    plot_widget = pg.plot()
 
-        # Dados para o gráfico de exemplo
-        x = [1, 2, 3, 4, 5]
-        y = [2, 4, 1, 3, 7]
+    # Defina os valores inicial e final para a região
+    inicio_background = 1
+    final_background = 5
 
-        # Crie uma curva com os dados
-        curve = self.plot_widget.plot(x, y)
+    # Crie a região linear
+    global regiao_background
+    regiao_background = pg.LinearRegionItem([inicio_background, final_background])
+    regiao_background.setBrush(pg.mkBrush(255, 255, 255, 50))
+    plot_widget.addItem(regiao_background)
 
-        # Mude a espessura da linha
-        curve.setPen(width=5)  # Defina a espessura da linha para 2 pixels
+    # Conecte o sinal sigRegionChangeFinished ao slot regionChanged
+    regiao_background.sigRegionChangeFinished.connect(regionChanged)
+
+    # Exiba o widget de plotagem
+    plot_widget.show()
+
+    # Feche a aplicação quando a janela for fechada
+    sys.exit(app.exec_())
 
 if __name__ == '__main__':
-    app = QApplication([])
-    window = MyMainWindow()
-    window.show()
-    app.exec()
+    main()

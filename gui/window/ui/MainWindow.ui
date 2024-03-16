@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>574</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>700</width>
-    <height>500</height>
+    <width>800</width>
+    <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -152,9 +152,12 @@ QListWidget {
 	border-radius: 10px;
 	gridline-color: rgb(44, 49, 58);
 	border-bottom: 1px solid rgb(44, 49, 60);
-	font: 11pt &quot;Arial&quot;;
+	font: 10pt &quot;Arial&quot;;
+	
 }
-
+QListWidget::item {
+    margin-bottom: 2px; /* Espaçamento inferior entre os itens */
+}
 QListWidget::item:hover {
 	background:  rgb(33, 37, 43);
 	border-radius: 5px;
@@ -202,12 +205,18 @@ QHeaderView::section:horizontal{
 }
 QTableWidget::horizontalHeader {	
 	background-color:   rgb(44, 49, 58);
-	color: #ffb86c
+	color: #ffb86c;
+}
+QTableWidget::verticalHeader {	
+	background-color:   rgb(44, 49, 58);
+	color: #ffb86c;
 }
 QHeaderView::section:vertical{
+	background-color: rgb(33, 37, 43);
   	border: 1px solid rgb(33, 37, 43);
 	padding-left: 7px;
 }
+
 QTableWidget QTableCornerButton::section {
 	background-color:  transparent;
 }
@@ -850,7 +859,7 @@ QPushButton:hover{
                  <widget class="QPushButton" name="btn_definir_background">
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>100</width>
                     <height>45</height>
                    </size>
                   </property>
@@ -887,6 +896,55 @@ QPushButton:hover{
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QFrame" name="frame_bottom_menu">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_13">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="btn_configuracoes">
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>45</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>45</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-image: url(:/icones/icons/cil-settings.png);</string>
+                  </property>
+                  <property name="text">
+                   <string>Configurações</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -920,7 +978,7 @@ QPushButton:hover{
                 <string notr="true"/>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="pagina_inicial">
                 <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -1150,13 +1208,13 @@ QPushButton:hover{
                        <widget class="QFrame" name="frame">
                         <property name="minimumSize">
                          <size>
-                          <width>150</width>
+                          <width>0</width>
                           <height>0</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>150</width>
+                          <width>155</width>
                           <height>16777215</height>
                          </size>
                         </property>
@@ -1197,6 +1255,12 @@ border-radius: 5px;</string>
                              <height>30</height>
                             </size>
                            </property>
+                           <property name="font">
+                            <font>
+                             <family>Arial</family>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
                            <property name="frameShape">
                             <enum>QFrame::StyledPanel</enum>
                            </property>
@@ -1234,7 +1298,7 @@ border-radius: 5px;</string>
                                </font>
                               </property>
                               <property name="text">
-                               <string>DADOS ORIGINAIS:</string>
+                               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Material de referência:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                               </property>
                              </widget>
                             </item>
@@ -1246,11 +1310,14 @@ border-radius: 5px;</string>
                            <property name="focusPolicy">
                             <enum>Qt::NoFocus</enum>
                            </property>
+                           <property name="selectionMode">
+                            <enum>QAbstractItemView::ExtendedSelection</enum>
+                           </property>
                           </widget>
                          </item>
                         </layout>
                        </widget>
-                       <widget class="QTableWidget" name="tabela_dados_originais">
+                       <widget class="QTableWidget" name="tabela_material_referencia">
                         <property name="focusPolicy">
                          <enum>Qt::NoFocus</enum>
                         </property>
@@ -1291,6 +1358,9 @@ border-radius: 5px;</string>
                          <bool>true</bool>
                         </attribute>
                         <attribute name="verticalHeaderVisible">
+                         <bool>true</bool>
+                        </attribute>
+                        <attribute name="verticalHeaderCascadingSectionResizes">
                          <bool>false</bool>
                         </attribute>
                         <attribute name="verticalHeaderStretchLastSection">
@@ -1329,13 +1399,13 @@ border-radius: 5px;</string>
                        <widget class="QFrame" name="frame_2">
                         <property name="minimumSize">
                          <size>
-                          <width>150</width>
+                          <width>0</width>
                           <height>0</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>150</width>
+                          <width>155</width>
                           <height>16777215</height>
                          </size>
                         </property>
@@ -1407,7 +1477,7 @@ border-radius: 5px;</string>
                                </font>
                               </property>
                               <property name="text">
-                               <string>DADOS CORRIGIDOS:</string>
+                               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Amostras:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                               </property>
                              </widget>
                             </item>
@@ -1418,6 +1488,12 @@ border-radius: 5px;</string>
                           <widget class="QListWidget" name="lista_arquivos_corrigidos">
                            <property name="focusPolicy">
                             <enum>Qt::NoFocus</enum>
+                           </property>
+                           <property name="selectionMode">
+                            <enum>QAbstractItemView::MultiSelection</enum>
+                           </property>
+                           <property name="selectionRectVisible">
+                            <bool>false</bool>
                            </property>
                           </widget>
                          </item>
@@ -1443,7 +1519,7 @@ border-radius: 5px;</string>
                          <number>0</number>
                         </property>
                         <attribute name="horizontalHeaderMinimumSectionSize">
-                         <number>50</number>
+                         <number>100</number>
                         </attribute>
                         <attribute name="horizontalHeaderDefaultSectionSize">
                          <number>100</number>
@@ -1452,7 +1528,7 @@ border-radius: 5px;</string>
                          <bool>true</bool>
                         </attribute>
                         <attribute name="verticalHeaderVisible">
-                         <bool>false</bool>
+                         <bool>true</bool>
                         </attribute>
                         <attribute name="verticalHeaderStretchLastSection">
                          <bool>true</bool>
@@ -1462,6 +1538,32 @@ border-radius: 5px;</string>
                      </item>
                     </layout>
                    </widget>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="pagina_configuracoes">
+                <layout class="QVBoxLayout" name="verticalLayout_14">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QWidget" name="widget" native="true">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(40, 44, 52);</string>
+                   </property>
                   </widget>
                  </item>
                 </layout>

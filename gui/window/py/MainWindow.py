@@ -5,8 +5,8 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(792, 574)
-        MainWindow.setMinimumSize(QSize(700, 500))
+        MainWindow.resize(800, 600)
+        MainWindow.setMinimumSize(QSize(800, 600))
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"/*	Propriedades globais, que se aplicam em toda interface*/\n"
 "*{\n"
@@ -141,9 +141,12 @@ class Ui_MainWindow(object):
 "	gridline-color: rgb(44, 49, 58);\n"
 "	border-bottom: "
                         "1px solid rgb(44, 49, 60);\n"
-"	font: 11pt \"Arial\";\n"
+"	font: 10pt \"Arial\";\n"
+"	\n"
 "}\n"
-"\n"
+"QListWidget::item {\n"
+"    margin-bottom: 2px; /* Espa\u00e7amento inferior entre os itens */\n"
+"}\n"
 "QListWidget::item:hover {\n"
 "	background:  rgb(33, 37, 43);\n"
 "	border-radius: 5px;\n"
@@ -174,11 +177,11 @@ class Ui_MainWindow(object):
 "QTableWidget::item:selected{\n"
 "	background-color: rgba(255,255,255,0.1);\n"
 "}\n"
-"QHeaderView::section{\n"
+"QHeaderView::secti"
+                        "on{\n"
 "	background-color: rgb(85, 170, 255);\n"
 "	border: 1px solid  rgb(44, 49, 58);\n"
-"	border-style: "
-                        "none;\n"
+"	border-style: none;\n"
 "    border-bottom: 1px solid   rgb(33, 37, 43);\n"
 "    border-right: 1px solid   rgb(33, 37, 43);\n"
 "	color: rgb(221, 221, 221);\n"
@@ -192,19 +195,26 @@ class Ui_MainWindow(object):
 "}\n"
 "QTableWidget::horizontalHeader {	\n"
 "	background-color:   rgb(44, 49, 58);\n"
-"	color: #ffb86c\n"
+"	color: #ffb86c;\n"
+"}\n"
+"QTableWidget::verticalHeader {	\n"
+"	background-color:   rgb(44, 49, 58);\n"
+"	color: #ffb86c;\n"
 "}\n"
 "QHeaderView::section:vertical{\n"
+"	background-color: rgb(33, 37, 43);\n"
 "  	border: 1px solid rgb(33, 37, 43);\n"
 "	padding-left: 7px;\n"
 "}\n"
+"\n"
 "QTableWidget QTableCornerButton::section {\n"
 "	background-color:  transparent;\n"
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
 "Tooltip */\n"
-"QToolTip {\n"
+""
+                        "QToolTip {\n"
 "	color: #ffffff;\n"
 "	background-color: rgba(33, 37, 43, 180);\n"
 "	border: 1px solid rgb(44, 49, 58);\n"
@@ -212,8 +222,7 @@ class Ui_MainWindow(object):
 "	background-position: left center;\n"
 "    background-repeat: no-repeat;\n"
 "	border: none;\n"
-"	text-a"
-                        "lign: left;\n"
+"	text-align: left;\n"
 "	padding-left: 8px;\n"
 "	margin: 0px;\n"
 "}\n"
@@ -240,7 +249,8 @@ class Ui_MainWindow(object):
 "    subcontrol-position: right;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
-"QScrollBar::sub-line:horizontal {\n"
+"QScrollBar::sub-line:"
+                        "horizontal {\n"
 "    border: none;\n"
 "    background: rgb(55, 63, 77);\n"
 "    width: 20px;\n"
@@ -249,8 +259,7 @@ class Ui_MainWindow(object):
 "    subcontrol-position: left;\n"
 "    subcontrol-origin: margin;\n"
 "}\n"
-"QScroll"
-                        "Bar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal\n"
+"QScrollBar::up-arrow:horizontal, QScrollBar::down-arrow:horizontal\n"
 "{\n"
 "     background: none;\n"
 "}\n"
@@ -279,15 +288,15 @@ class Ui_MainWindow(object):
 "     subcontrol-position: bottom;\n"
 "     subcontrol-origin: margin;\n"
 " }\n"
-" QScrollBar::sub-line:vertical {\n"
+""
+                        " QScrollBar::sub-line:vertical {\n"
 "	border: none;\n"
 "    background: rgb(55, 63, 77);\n"
 "     height: 20px;\n"
 "	border-top-left-radius: 4px;\n"
 "    border-top-right-radius: 4px;\n"
 "     subcontrol-position: top;\n"
-"     subcontrol-origin: mar"
-                        "gin;\n"
+"     subcontrol-origin: margin;\n"
 " }\n"
 " QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {\n"
 "     background: none;\n"
@@ -511,7 +520,7 @@ class Ui_MainWindow(object):
 
         self.btn_definir_background = QPushButton(self.frame_center_menu)
         self.btn_definir_background.setObjectName(u"btn_definir_background")
-        self.btn_definir_background.setMinimumSize(QSize(0, 45))
+        self.btn_definir_background.setMinimumSize(QSize(100, 45))
         self.btn_definir_background.setMaximumSize(QSize(16777215, 45))
         self.btn_definir_background.setStyleSheet(u"background-image: url(:/icones/icons/cil-chart-line.png);")
 
@@ -523,6 +532,25 @@ class Ui_MainWindow(object):
         self.verticalSpacer = QSpacerItem(20, 258, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
+
+        self.frame_bottom_menu = QFrame(self.leftMenuContent)
+        self.frame_bottom_menu.setObjectName(u"frame_bottom_menu")
+        self.frame_bottom_menu.setFrameShape(QFrame.StyledPanel)
+        self.frame_bottom_menu.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_13 = QVBoxLayout(self.frame_bottom_menu)
+        self.verticalLayout_13.setSpacing(0)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 0)
+        self.btn_configuracoes = QPushButton(self.frame_bottom_menu)
+        self.btn_configuracoes.setObjectName(u"btn_configuracoes")
+        self.btn_configuracoes.setMinimumSize(QSize(100, 45))
+        self.btn_configuracoes.setMaximumSize(QSize(16777215, 45))
+        self.btn_configuracoes.setStyleSheet(u"background-image: url(:/icones/icons/cil-settings.png);")
+
+        self.verticalLayout_13.addWidget(self.btn_configuracoes)
+
+
+        self.verticalLayout_2.addWidget(self.frame_bottom_menu)
 
 
         self.horizontalLayout_5.addWidget(self.leftMenuContent)
@@ -637,8 +665,8 @@ class Ui_MainWindow(object):
         self.splitter_2.setHandleWidth(10)
         self.frame = QFrame(self.splitter_2)
         self.frame.setObjectName(u"frame")
-        self.frame.setMinimumSize(QSize(150, 0))
-        self.frame.setMaximumSize(QSize(150, 16777215))
+        self.frame.setMinimumSize(QSize(0, 0))
+        self.frame.setMaximumSize(QSize(155, 16777215))
         self.frame.setStyleSheet(u"background-color:  rgb(44, 49, 58);\n"
 "border-radius: 5px;")
         self.frame.setFrameShape(QFrame.StyledPanel)
@@ -650,6 +678,7 @@ class Ui_MainWindow(object):
         self.frame_3.setObjectName(u"frame_3")
         self.frame_3.setMinimumSize(QSize(0, 30))
         self.frame_3.setMaximumSize(QSize(16777215, 30))
+        self.frame_3.setFont(font)
         self.frame_3.setFrameShape(QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QFrame.Raised)
         self.verticalLayout_11 = QVBoxLayout(self.frame_3)
@@ -673,28 +702,30 @@ class Ui_MainWindow(object):
         self.lista_arquivos_importados = QListWidget(self.frame)
         self.lista_arquivos_importados.setObjectName(u"lista_arquivos_importados")
         self.lista_arquivos_importados.setFocusPolicy(Qt.NoFocus)
+        self.lista_arquivos_importados.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
         self.verticalLayout_9.addWidget(self.lista_arquivos_importados)
 
         self.splitter_2.addWidget(self.frame)
-        self.tabela_dados_originais = QTableWidget(self.splitter_2)
-        self.tabela_dados_originais.setObjectName(u"tabela_dados_originais")
-        self.tabela_dados_originais.setFocusPolicy(Qt.NoFocus)
-        self.tabela_dados_originais.setStyleSheet(u"")
-        self.tabela_dados_originais.setFrameShadow(QFrame.Sunken)
-        self.tabela_dados_originais.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tabela_dados_originais.setTextElideMode(Qt.ElideNone)
-        self.tabela_dados_originais.setGridStyle(Qt.SolidLine)
-        self.tabela_dados_originais.setCornerButtonEnabled(False)
-        self.tabela_dados_originais.setRowCount(0)
-        self.tabela_dados_originais.setColumnCount(0)
-        self.splitter_2.addWidget(self.tabela_dados_originais)
-        self.tabela_dados_originais.horizontalHeader().setCascadingSectionResizes(False)
-        self.tabela_dados_originais.horizontalHeader().setMinimumSectionSize(50)
-        self.tabela_dados_originais.horizontalHeader().setDefaultSectionSize(100)
-        self.tabela_dados_originais.horizontalHeader().setStretchLastSection(True)
-        self.tabela_dados_originais.verticalHeader().setVisible(False)
-        self.tabela_dados_originais.verticalHeader().setStretchLastSection(True)
+        self.tabela_material_referencia = QTableWidget(self.splitter_2)
+        self.tabela_material_referencia.setObjectName(u"tabela_material_referencia")
+        self.tabela_material_referencia.setFocusPolicy(Qt.NoFocus)
+        self.tabela_material_referencia.setStyleSheet(u"")
+        self.tabela_material_referencia.setFrameShadow(QFrame.Sunken)
+        self.tabela_material_referencia.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tabela_material_referencia.setTextElideMode(Qt.ElideNone)
+        self.tabela_material_referencia.setGridStyle(Qt.SolidLine)
+        self.tabela_material_referencia.setCornerButtonEnabled(False)
+        self.tabela_material_referencia.setRowCount(0)
+        self.tabela_material_referencia.setColumnCount(0)
+        self.splitter_2.addWidget(self.tabela_material_referencia)
+        self.tabela_material_referencia.horizontalHeader().setCascadingSectionResizes(False)
+        self.tabela_material_referencia.horizontalHeader().setMinimumSectionSize(50)
+        self.tabela_material_referencia.horizontalHeader().setDefaultSectionSize(100)
+        self.tabela_material_referencia.horizontalHeader().setStretchLastSection(True)
+        self.tabela_material_referencia.verticalHeader().setVisible(True)
+        self.tabela_material_referencia.verticalHeader().setCascadingSectionResizes(False)
+        self.tabela_material_referencia.verticalHeader().setStretchLastSection(True)
 
         self.horizontalLayout_3.addWidget(self.splitter_2)
 
@@ -711,8 +742,8 @@ class Ui_MainWindow(object):
         self.splitter_3.setHandleWidth(10)
         self.frame_2 = QFrame(self.splitter_3)
         self.frame_2.setObjectName(u"frame_2")
-        self.frame_2.setMinimumSize(QSize(150, 0))
-        self.frame_2.setMaximumSize(QSize(150, 16777215))
+        self.frame_2.setMinimumSize(QSize(0, 0))
+        self.frame_2.setMaximumSize(QSize(155, 16777215))
         self.frame_2.setStyleSheet(u" background-color: rgb(44, 49, 58);\n"
 "border-radius: 5px;")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
@@ -742,6 +773,8 @@ class Ui_MainWindow(object):
         self.lista_arquivos_corrigidos = QListWidget(self.frame_2)
         self.lista_arquivos_corrigidos.setObjectName(u"lista_arquivos_corrigidos")
         self.lista_arquivos_corrigidos.setFocusPolicy(Qt.NoFocus)
+        self.lista_arquivos_corrigidos.setSelectionMode(QAbstractItemView.MultiSelection)
+        self.lista_arquivos_corrigidos.setSelectionRectVisible(False)
 
         self.verticalLayout_10.addWidget(self.lista_arquivos_corrigidos)
 
@@ -755,10 +788,10 @@ class Ui_MainWindow(object):
         self.tabela_dados_corrigidos.setRowCount(0)
         self.tabela_dados_corrigidos.setColumnCount(0)
         self.splitter_3.addWidget(self.tabela_dados_corrigidos)
-        self.tabela_dados_corrigidos.horizontalHeader().setMinimumSectionSize(50)
+        self.tabela_dados_corrigidos.horizontalHeader().setMinimumSectionSize(100)
         self.tabela_dados_corrigidos.horizontalHeader().setDefaultSectionSize(100)
         self.tabela_dados_corrigidos.horizontalHeader().setStretchLastSection(True)
-        self.tabela_dados_corrigidos.verticalHeader().setVisible(False)
+        self.tabela_dados_corrigidos.verticalHeader().setVisible(True)
         self.tabela_dados_corrigidos.verticalHeader().setStretchLastSection(True)
 
         self.horizontalLayout_6.addWidget(self.splitter_3)
@@ -768,6 +801,19 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.addWidget(self.splitter)
 
         self.stackedWidget.addWidget(self.pagina_visualizar_dados_importados)
+        self.pagina_configuracoes = QWidget()
+        self.pagina_configuracoes.setObjectName(u"pagina_configuracoes")
+        self.verticalLayout_14 = QVBoxLayout(self.pagina_configuracoes)
+        self.verticalLayout_14.setSpacing(0)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.verticalLayout_14.setContentsMargins(0, 0, 0, 0)
+        self.widget = QWidget(self.pagina_configuracoes)
+        self.widget.setObjectName(u"widget")
+        self.widget.setStyleSheet(u"background-color: rgb(40, 44, 52);")
+
+        self.verticalLayout_14.addWidget(self.widget)
+
+        self.stackedWidget.addWidget(self.pagina_configuracoes)
 
         self.verticalLayout_5.addWidget(self.stackedWidget)
 
@@ -865,11 +911,12 @@ class Ui_MainWindow(object):
         self.btn_definir_background.setToolTip(QCoreApplication.translate("MainWindow", u"Defina o intervalo para o Background e Sinal", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_definir_background.setText(QCoreApplication.translate("MainWindow", u"Definir B/S", None))
+        self.btn_configuracoes.setText(QCoreApplication.translate("MainWindow", u"Configura\u00e7\u00f5es", None))
         self.btn_novo_projeto_home.setText(QCoreApplication.translate("MainWindow", u"Novo projeto", None))
         self.btn_abrir_projeto.setText(QCoreApplication.translate("MainWindow", u"Abrir projeto", None))
         self.btn_importar_dados.setText(QCoreApplication.translate("MainWindow", u"Importar dados", None))
         self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"Configura\u00e7\u00f5es", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"DADOS ORIGINAIS:", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"DADOS CORRIGIDOS:", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:11pt;\">Material de refer\u00eancia:</span></p></body></html>", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:11pt;\">Amostras:</span></p></body></html>", None))
     # retranslateUi
 

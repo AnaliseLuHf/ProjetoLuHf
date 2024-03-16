@@ -100,9 +100,9 @@ class Ui_BackgroundWindow(object):
 "	border-top-r"
                         "ight-radius: 3px;\n"
 "	border-bottom-right-radius: 3px;	\n"
-"	background-image: url(:/icons/images/icons/cil-arrow-bottom.png);\n"
+"	background-image: url(:/icones/icons/cil-arrow-bottom.png);\n"
 "	background-position: center;\n"
-"	background-repeat: no-reperat;\n"
+"	background-repeat: no-repeat;\n"
 " }\n"
 "QComboBox QAbstractItemView {\n"
 "	color: grey;	\n"
@@ -221,127 +221,6 @@ class Ui_BackgroundWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.leftMenuContent = QWidget(self.body_content)
-        self.leftMenuContent.setObjectName(u"leftMenuContent")
-        self.leftMenuContent.setMinimumSize(QSize(60, 0))
-        self.leftMenuContent.setMaximumSize(QSize(60, 16777215))
-        self.leftMenuContent.setFont(font)
-        self.leftMenuContent.setStyleSheet(u"color: grey;\n"
-"font-size:10pt;\n"
-"")
-        self.verticalLayout_5 = QVBoxLayout(self.leftMenuContent)
-        self.verticalLayout_5.setSpacing(0)
-        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.frame_top_menu = QFrame(self.leftMenuContent)
-        self.frame_top_menu.setObjectName(u"frame_top_menu")
-        self.frame_top_menu.setStyleSheet(u"")
-        self.frame_top_menu.setFrameShape(QFrame.StyledPanel)
-        self.frame_top_menu.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_4 = QVBoxLayout(self.frame_top_menu)
-        self.verticalLayout_4.setSpacing(0)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.btn_ver_ajustes = QPushButton(self.frame_top_menu)
-        self.btn_ver_ajustes.setObjectName(u"btn_ver_ajustes")
-        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.btn_ver_ajustes.sizePolicy().hasHeightForWidth())
-        self.btn_ver_ajustes.setSizePolicy(sizePolicy)
-        self.btn_ver_ajustes.setMinimumSize(QSize(100, 45))
-        self.btn_ver_ajustes.setMaximumSize(QSize(16777215, 45))
-        font2 = QFont()
-        font2.setFamilies([u"Arial"])
-        font2.setPointSize(10)
-        font2.setBold(True)
-        self.btn_ver_ajustes.setFont(font2)
-        self.btn_ver_ajustes.setStyleSheet(u"background-image: url(:/icones/icons/icon_menu.png);\n"
-"")
-
-        self.verticalLayout_4.addWidget(self.btn_ver_ajustes, 0, Qt.AlignTop)
-
-
-        self.verticalLayout_5.addWidget(self.frame_top_menu)
-
-        self.frame = QFrame(self.leftMenuContent)
-        self.frame.setObjectName(u"frame")
-        self.frame.setFrameShape(QFrame.StyledPanel)
-        self.frame.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_3 = QVBoxLayout(self.frame)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.label = QLabel(self.frame)
-        self.label.setObjectName(u"label")
-        self.label.setMinimumSize(QSize(0, 20))
-        self.label.setMaximumSize(QSize(16777215, 20))
-        self.label.setStyleSheet(u"")
-
-        self.verticalLayout_3.addWidget(self.label)
-
-        self.comboBox_arquivo_base = QComboBox(self.frame)
-        self.comboBox_arquivo_base.setObjectName(u"comboBox_arquivo_base")
-
-        self.verticalLayout_3.addWidget(self.comboBox_arquivo_base)
-
-        self.label_3 = QLabel(self.frame)
-        self.label_3.setObjectName(u"label_3")
-
-        self.verticalLayout_3.addWidget(self.label_3)
-
-        self.comboBox_material_referencia = QComboBox(self.frame)
-        self.comboBox_material_referencia.setObjectName(u"comboBox_material_referencia")
-
-        self.verticalLayout_3.addWidget(self.comboBox_material_referencia)
-
-        self.line = QFrame(self.frame)
-        self.line.setObjectName(u"line")
-        self.line.setStyleSheet(u"background-color: rgb(57, 57, 57);")
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout_3.addWidget(self.line)
-
-        self.label_2 = QLabel(self.frame)
-        self.label_2.setObjectName(u"label_2")
-
-        self.verticalLayout_3.addWidget(self.label_2)
-
-        self.label_intervalo_background = QLabel(self.frame)
-        self.label_intervalo_background.setObjectName(u"label_intervalo_background")
-        self.label_intervalo_background.setStyleSheet(u"background-color: rgb(27, 29, 35);\n"
-"border-radius: 5px;\n"
-"border: 2px solid rgb(33, 37, 43);\n"
-"padding: 5px;\n"
-"padding-left: 5px;\n"
-"")
-
-        self.verticalLayout_3.addWidget(self.label_intervalo_background)
-
-        self.label_4 = QLabel(self.frame)
-        self.label_4.setObjectName(u"label_4")
-
-        self.verticalLayout_3.addWidget(self.label_4)
-
-        self.label_intervalo_sinal = QLabel(self.frame)
-        self.label_intervalo_sinal.setObjectName(u"label_intervalo_sinal")
-        self.label_intervalo_sinal.setStyleSheet(u"background-color: rgb(27, 29, 35);\n"
-"border-radius: 5px;\n"
-"border: 2px solid rgb(33, 37, 43);\n"
-"padding: 5px;\n"
-"padding-left: 5px;")
-
-        self.verticalLayout_3.addWidget(self.label_intervalo_sinal)
-
-
-        self.verticalLayout_5.addWidget(self.frame)
-
-        self.verticalSpacer = QSpacerItem(20, 313, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_5.addItem(self.verticalSpacer)
-
-
-        self.horizontalLayout_2.addWidget(self.leftMenuContent)
-
         self.Graph_content = QWidget(self.body_content)
         self.Graph_content.setObjectName(u"Graph_content")
         self.Graph_content.setStyleSheet(u"border-bottom-right-radius: 4px;")
@@ -399,15 +278,5 @@ class Ui_BackgroundWindow(object):
         self.btn_fechar_janela.setToolTip(QCoreApplication.translate("BackgroundWindow", u"Fechar", None))
 #endif // QT_CONFIG(tooltip)
         self.btn_fechar_janela.setText("")
-#if QT_CONFIG(tooltip)
-        self.btn_ver_ajustes.setToolTip(QCoreApplication.translate("BackgroundWindow", u"Menu", None))
-#endif // QT_CONFIG(tooltip)
-        self.btn_ver_ajustes.setText(QCoreApplication.translate("BackgroundWindow", u"Ajustes", None))
-        self.label.setText(QCoreApplication.translate("BackgroundWindow", u"Dados de:", None))
-        self.label_3.setText(QCoreApplication.translate("BackgroundWindow", u"Material de refer\u00eancia:", None))
-        self.label_2.setText(QCoreApplication.translate("BackgroundWindow", u"Intervalo de Background:", None))
-        self.label_intervalo_background.setText("")
-        self.label_4.setText(QCoreApplication.translate("BackgroundWindow", u"Intervalo de Sinal:", None))
-        self.label_intervalo_sinal.setText("")
     # retranslateUi
 

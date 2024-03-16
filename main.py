@@ -2,6 +2,9 @@ import sys
 import os
 import random
 import time
+
+import pandas as pd
+
 from gui.window.py.MainWindow import *
 from gui.window.py.JanelaDeCarregamento import *
 from gui.window.py.ProgressoImportação import *
@@ -87,7 +90,9 @@ class MainWindow(QMainWindow):
         self.arquivos_importados_data = [] # Guarda o caminho dos arquivos importados ( que foram copiados para a pasta data)
         self.arquivos_txt = [] # Guarda o caminho dos arquivos txt
         self.dataframes_arquivos_txt = {} # Dicionário, onde estão dos dataframes com os dados necessários de cada
-        self.dataframes_arquivos_txt_corrigidos = {}
+        self.media_arquivos_referencias = {} # Dicionário que irá guardar as medias dos arquivos usados como referências
+        self.media_arquivos_amostras_corrigidos = {}
+        self.last_selection = None
 
         # Setup a Main Window
         self.ui = Ui_MainWindow()
@@ -127,8 +132,10 @@ class MainWindow(QMainWindow):
         # Botão para criar um projeto a partir da tela principal
         self.ui.btn_novo_projeto_home.clicked.connect(self.clique_botao)
 
-        # Conectando o item selecionado das listas, para preencher a tabela com os dados
-        self.ui.lista_arquivos_importados.itemClicked.connect(self.preencher_tab_arquivos_importados)
+        # Sinais que conectam as funcionalidades das listas
+        self.ui.lista_arquivos_importados.itemSelectionChanged.connect(self.obter_itens_selecionados_listas)
+        self.ui.lista_arquivos_corrigidos.itemSelectionChanged.connect(self.obter_itens_selecionados_listas)
+
 
 
 
@@ -274,7 +281,7 @@ class MainWindow(QMainWindow):
 
         # Limpando a lista e a tabela como os dados anteriores (que foram excluídos)
         self.ui.lista_arquivos_importados.clear()
-        self.ui.tabela_dados_originais.clear()
+        self.ui.tabela_material_referencia.clear()
 
     # Como essa função é chamada apenas quando a opção clicada for "Sim", não é preciso fazer uma verificação da
     # opção escolhida
@@ -312,32 +319,24 @@ class MainWindow(QMainWindow):
             return False
 
     def adicionar_arquivos(self):
-        print('Verificando projeto criado...')
         status_projeto = self.verificar_projeto_criado()
 
         if status_projeto:
             # Chama a função que abre a caixa de diálogo para selecionar os arquivos
-            print('Chamando a função para selecionar os arquivos...')
             arquivos_selecionados, num_arquivos = self.selecionar_arquivos()
 
             # Copiando os arquivos selecionados para a pasta "data" do projeto
             self.caminho_pasta_data = self.local_projeto_criado + "/" + self.nome_projeto_criado + "/data"
 
             try:
-
-                print('Copiando os arquivos selecionados para a pasta data...')
                 GerenciarArquivos.copiar_arquivos(self, arquivos_selecionados, self.caminho_pasta_data)
 
                 # Pegando o caminho dos arquivos copiados para a pasta data, para passar como uma lista
                 # sendo um atributo da classe
                 self.arquivos_importados_data = self.caminho_completo_arquivo(self.caminho_pasta_data)
 
-
-                print('Iniciando thread...')
                 self.start_import(num_arquivos)
-
                 # Chamando a função que irá filtrar os dados originais, eliminando os dados desnecessários
-                print('Excluindo dados desnecessários...')
                 ManipularDadosArquivosOriginais.excluir_dados_desnecessarios(self, arquivos=self.arquivos_importados_data,
                                                                              local=self.local_projeto_criado, nome=self.nome_projeto_criado)
 
@@ -347,24 +346,16 @@ class MainWindow(QMainWindow):
 
                 # Obtendo o caminho dos arquivos na pasta txt, e passando como o atributo da classe
                 self.arquivos_txt = self.caminho_completo_arquivo(self.caminho_pasta_txt)
-                print(self.arquivos_txt)
-
 
                 # Pegando os nomes dos arquivos na pasta txt
                 nomes_arquivos_txt = self.obter_nomes_arquivos(self.caminho_pasta_txt)
 
-
                 # Criando dataframes com os dados dos arquivos txt
-                print('Criando dataframes')
                 self.dataframes_arquivos_txt = ManipularDadosArquivosOriginais.criar_dataframes(self, self.arquivos_txt)
 
                 # Passando os nomes para a função que irá os adicionar a lista
-                print("Preenchendo listas...")
                 self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
-
-                print('Preenchendo tabelas...')
-                # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes, assim que a os arquivos são importados
-                self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
+                self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_corrigidos)
 
                 # Leva para a página para ver os dados dos arquivos
                 self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_visualizar_dados_importados)
@@ -428,38 +419,76 @@ class MainWindow(QMainWindow):
             list_item = QListWidgetItem(arquivo)
             lista.addItem(list_item)
 
-        # Deixa o primeiro item da lista já selecionado ( vai auxiliar para preencher automaticamente
+        # Deixa o primeiro item da lista já selecionado (vai auxiliar para preencher automaticamente
         # a tabela com os dados importados)
         lista.setCurrentRow(0)
 
+    # Este método será chamado quando o índice selecionado em qualquer das listas for alterado
+    def obter_itens_selecionados_listas(self):
+        # Identificando qual lista onde os itens foram selecionados
+        sender = self.sender()
 
-    def preencher_tab_arquivos_importados(self, item):
-        # Obtendo o item selecionado atual da lista Arquivos importados
-        item_selecionado = item.text()
+        # Obtem os nomes dos itens selecionados para criar a média dos arquivos
+        if sender == self.ui.lista_arquivos_importados:
+            self.media_arquivos_referencias = {}
+            arquivos_referencia = self.ui.lista_arquivos_importados.selectedItems()
+            nomes_arquivos_ref = []
+            for arquivo in arquivos_referencia:
+                nomes_arquivos_ref.append(arquivo.text())
 
-        # Obtendo os dados do arquivo selecionado anteriormente (item selecionado na lista), do dicionário de dataframe
-        dados = self.dataframes_arquivos_txt[item_selecionado]
+            self.calcular_medias_arquivos(nomes_arquivos_ref, self.media_arquivos_referencias)
+            # Chamando a função para preencher as tabelas com os dados
+            self.preencher_tabelas(self.media_arquivos_referencias,self.ui.tabela_material_referencia)
+
+        if sender == self.ui.lista_arquivos_corrigidos:
+            self.media_arquivos_amostras_corrigidos = {}
+            arquivos_amostras = self.ui.lista_arquivos_corrigidos.selectedItems()
+            nomes_arquivos_amostras = []
+            for arquivo in arquivos_amostras:
+                nomes_arquivos_amostras.append(arquivo.text())
+
+            self.calcular_medias_arquivos(nomes_arquivos_amostras, self.media_arquivos_amostras_corrigidos)
+            self.preencher_tabelas(self.media_arquivos_amostras_corrigidos, self.ui.tabela_dados_corrigidos)
+
+
+    def calcular_medias_arquivos(self,arquivos,dict_onde_salvar):
+        medias = {}
+        for item in arquivos:
+            # Obtendo os dados do arquivo selecionado anteriormente (item selecionado na lista), do dicionário de dataframe
+            dados = self.dataframes_arquivos_txt[item]
+            # Criando a média do arquivo (sem background), e adicionando ao dicionário que irá guardá-los
+            dict_onde_salvar[item] = dados.mean()
+
+    def preencher_tabelas(self, dados, nome_tabela):
+        # Criando uma dataframe para conter os dados das médias dos arquivos que serão mostrados
+        df_dados = pd.DataFrame(dados)
+
+        # Ao calcular a média de um dataframe, o resultado será dado em forma de uma série pandas (vertical)
+        # sendo necessário transpor esse dataframe (linhas se tornam colunas)
+        df_dados = df_dados.transpose()
 
         # Obtendo o número de linhas e colunas do dataframe
-        num_linhas = len(dados)
-        num_colunas = len(dados.columns)
+        num_linhas = len(df_dados)
+        num_colunas = len(df_dados.columns)
 
         # Configurando o número de linhas e coluna da tabela
-        self.ui.tabela_dados_originais.setRowCount(num_linhas)
-        self.ui.tabela_dados_originais.setColumnCount(num_colunas)
+        nome_tabela.setRowCount(num_linhas)
+        nome_tabela.setColumnCount(num_colunas)
 
         # ENCONTRANDO O NOME DAS COLUNAS
-        nome_das_colunas = dados.columns.tolist()
-        self.ui.tabela_dados_originais.setHorizontalHeaderLabels(nome_das_colunas)
+        nome_das_colunas = df_dados.columns.tolist()
+        nome_das_linhas = dados.keys()
+        nome_tabela.setHorizontalHeaderLabels(nome_das_colunas)
+        nome_tabela.setVerticalHeaderLabels(nome_das_linhas)
 
         # Adicionando itens à tabela
         for linha in range(num_linhas):
             for coluna in range(num_colunas):
-                self.ui.tabela_dados_originais.setItem(linha, coluna, QTableWidgetItem(
-                    str(dados.iloc[linha][coluna])))
+                nome_tabela.setItem(linha, coluna, QTableWidgetItem(
+                    str(df_dados.iloc[linha][coluna])))
 
         # Redimensiona o tamanho das colunas para mostrar os dados com o tamanho correto
-        self.ui.tabela_dados_originais.resizeColumnsToContents()
+        nome_tabela.resizeColumnsToContents()
 
     def importar_arquivos_adicionais(self):
         try:
@@ -475,40 +504,45 @@ class MainWindow(QMainWindow):
             # sendo um atributo da classe
             self.arquivos_importados_data = self.caminho_completo_arquivo(self.caminho_pasta_data)
 
-
-            # Excluindo os dados desnessários dos arquivos importados, que estão na pasta data
+            # Excluindo os dados desnecessários dos arquivos importados, que estão na pasta data
             ManipularDadosArquivosOriginais.excluir_dados_desnecessarios(self, arquivos=self.arquivos_importados_data,
                                                                          local=self.local_projeto_criado,
                                                                          nome=self.nome_projeto_criado)
 
             # Obtendo o caminho dos arquivos na pasta txt, e passando como o atributo da classe
             self.arquivos_txt = self.caminho_completo_arquivo(self.caminho_pasta_txt)
-            print(self.arquivos_txt)
 
             # Pegando os nomes dos arquivos na pasta txt
             nomes_arquivos_txt = self.obter_nomes_arquivos(self.caminho_pasta_txt)
 
             # Criando dataframes com os dados dos arquivos txt
-            print('Criando dataframes')
             self.dataframes_arquivos_txt = ManipularDadosArquivosOriginais.criar_dataframes(self, self.arquivos_txt)
 
             # Passando os nomes para a função que irá os adicionar a lista
-            print("Preenchendo listas...")
             self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
+            self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_corrigidos)
 
-            print('Preenchendo tabelas...')
             # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes,
-            # assim que a os arquivos são importados
-            self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
+            # assim que os arquivos são importados
+            #self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
 
         except Exception as e:
             self.mostrar_mensagem_erro(f"{e}")
 
     def definir_intervalo_background(self):
         if len(self.dataframes_arquivos_txt) > 0:
+            #Pega a lista de itens selecionados
+            arquivos_selecionados = self.ui.lista_arquivos_importados.selectedItems()
+
+            # Seleciona apenas o primeiro arquivo
+            arquivo_referencia = arquivos_selecionados[0].text()
             self.definir_background = BackgroundWindow()
-            self.definir_background.adicionar_dados(dados=self.dataframes_arquivos_txt)
-            self.definir_background.preencher_combobox()
+
+            # Obtém os dados do arquivo usado como referência
+            #dados_do_arquivo_referencia = self.dataframes_arquivos_txt[arquivo_referencia]
+            self.definir_background.dados_referencia =  self.dataframes_arquivos_txt[arquivo_referencia]
+            #self.definir_background.adicionar_dados(dados=dados_do_arquivo_referencia)
+            self.definir_background.adicionar_dados()
             self.definir_background.plotar_grafico()
             self.definir_background.show()
 
@@ -548,6 +582,7 @@ class FileLoader(QThread):
         super().__init__()
         self.total_files = total_files
         print(self.total_files)
+
     def run(self):
         # Simule a importação de arquivos aqui
 
