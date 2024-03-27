@@ -1306,7 +1306,7 @@ border-radius: 5px;</string>
                           </widget>
                          </item>
                          <item>
-                          <widget class="QListWidget" name="lista_arquivos_importados">
+                          <widget class="QListWidget" name="lista_mat_referencia">
                            <property name="focusPolicy">
                             <enum>Qt::NoFocus</enum>
                            </property>
@@ -1317,7 +1317,7 @@ border-radius: 5px;</string>
                          </item>
                         </layout>
                        </widget>
-                       <widget class="QTableWidget" name="tabela_material_referencia">
+                       <widget class="QTableWidget" name="tabela_mat_referencia">
                         <property name="focusPolicy">
                          <enum>Qt::NoFocus</enum>
                         </property>
@@ -1485,12 +1485,12 @@ border-radius: 5px;</string>
                           </widget>
                          </item>
                          <item>
-                          <widget class="QListWidget" name="lista_arquivos_corrigidos">
+                          <widget class="QListWidget" name="lista_amostras_corrigidas">
                            <property name="focusPolicy">
                             <enum>Qt::NoFocus</enum>
                            </property>
                            <property name="selectionMode">
-                            <enum>QAbstractItemView::MultiSelection</enum>
+                            <enum>QAbstractItemView::ExtendedSelection</enum>
                            </property>
                            <property name="selectionRectVisible">
                             <bool>false</bool>
@@ -1499,7 +1499,7 @@ border-radius: 5px;</string>
                          </item>
                         </layout>
                        </widget>
-                       <widget class="QTableWidget" name="tabela_dados_corrigidos">
+                       <widget class="QTableWidget" name="tabela_amostras_corrigidas">
                         <property name="focusPolicy">
                          <enum>Qt::NoFocus</enum>
                         </property>

@@ -14,7 +14,7 @@ from app.dialogs import *  # Classe que gerencia as caixas de mensagem que apare
 from app.janela_novo_projeto import *  # Classe que gerencia a janela para criar um projeto
 from app.manipular_dados import * # Classe que gerencia a manipulação dos dados
 from app.background_graphic import *
-
+from app.correcoes import * # Classe que realiza o cálculo das correções
 
 
 # Classe que gerencia uma tela de carregamento para a aplicação
@@ -89,10 +89,13 @@ class MainWindow(QMainWindow):
         self.caminhos_pasta_txt_corrigidos = None
         self.arquivos_importados_data = [] # Guarda o caminho dos arquivos importados ( que foram copiados para a pasta data)
         self.arquivos_txt = [] # Guarda o caminho dos arquivos txt
-        self.dataframes_arquivos_txt = {} # Dicionário, onde estão dos dataframes com os dados necessários de cada
-        self.media_arquivos_referencias = {} # Dicionário que irá guardar as medias dos arquivos usados como referências
-        self.media_arquivos_amostras_corrigidos = {}
-        self.last_selection = None
+        self.dataframes_arquivos_txt = {} # Dicionário, onde estão dos dataframes com os dados necessários de cada arquivo
+        self.last_selection = None # Atualizar a última seleção das listas (QListWidget)
+        self.sinal_separado = {} # Dicionário que irá guardar os dados do sinal de cada arquivo
+        self.background_separado = {} # # Dicionário que irá guardar os dados do background de cada arquivo
+        self.media_background = {} # Dicionário que irá guardar a média dos dados do background de cada arquivo
+        self.media_sinal = {} # Dicionário que irá guardar a média dos dados do sinal de cada arquivo
+        self.limite_background_sinal = {} # Dicionário que irá guardar o limite do sinal de cada arquivo
 
         # Setup a Main Window
         self.ui = Ui_MainWindow()
@@ -133,8 +136,8 @@ class MainWindow(QMainWindow):
         self.ui.btn_novo_projeto_home.clicked.connect(self.clique_botao)
 
         # Sinais que conectam as funcionalidades das listas
-        self.ui.lista_arquivos_importados.itemSelectionChanged.connect(self.obter_itens_selecionados_listas)
-        self.ui.lista_arquivos_corrigidos.itemSelectionChanged.connect(self.obter_itens_selecionados_listas)
+        self.ui.lista_mat_referencia.itemSelectionChanged.connect(self.obter_itens_selecionados_listas)
+        self.ui.lista_amostras_corrigidas.itemSelectionChanged.connect(self.obter_itens_selecionados_listas)
 
 
 
@@ -280,8 +283,8 @@ class MainWindow(QMainWindow):
         # arquivo importado
 
         # Limpando a lista e a tabela como os dados anteriores (que foram excluídos)
-        self.ui.lista_arquivos_importados.clear()
-        self.ui.tabela_material_referencia.clear()
+        self.ui.lista_mat_referencia.clear()
+        self.ui.tabela_mat_referencia.clear()
 
     # Como essa função é chamada apenas quando a opção clicada for "Sim", não é preciso fazer uma verificação da
     # opção escolhida
@@ -353,17 +356,20 @@ class MainWindow(QMainWindow):
                 # Criando dataframes com os dados dos arquivos txt
                 self.dataframes_arquivos_txt = ManipularDadosArquivosOriginais.criar_dataframes(self, self.arquivos_txt)
 
+                # Calculando os dados de background/sinal
+                self.sinal_separado, self.background_separado, self.media_background, self.media_sinal, self.limite_background_sinal = (
+                    CalcularCorrecoes.corrigir_background_sinal( self, self.dataframes_arquivos_txt))
+
                 # Passando os nomes para a função que irá os adicionar a lista
-                self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
-                self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_corrigidos)
+                self.preencher_listas(nomes_arquivos_txt, self.ui.lista_mat_referencia)
+                self.preencher_listas(nomes_arquivos_txt, self.ui.lista_amostras_corrigidas)
+
 
                 # Leva para a página para ver os dados dos arquivos
                 self.ui.stackedWidget.setCurrentWidget(self.ui.pagina_visualizar_dados_importados)
 
-
             except Exception as e:
                 self.mostrar_mensagem_erro(f"{e}")
-
 
         else:
             self.mostrar_mensagem_info("Crie um projeto antes de importar os arquivos!")
@@ -429,44 +435,34 @@ class MainWindow(QMainWindow):
         sender = self.sender()
 
         # Obtem os nomes dos itens selecionados para criar a média dos arquivos
-        if sender == self.ui.lista_arquivos_importados:
-            self.media_arquivos_referencias = {}
-            arquivos_referencia = self.ui.lista_arquivos_importados.selectedItems()
-            nomes_arquivos_ref = []
+        if sender == self.ui.lista_mat_referencia:
+            # Obtendo os itens de referência selecionados na lista
+            arquivos_referencia = self.ui.lista_mat_referencia.selectedItems()
+            nomes_arquivos_ref = [] # Obtem o nome dos arquivos
             for arquivo in arquivos_referencia:
                 nomes_arquivos_ref.append(arquivo.text())
 
-            self.calcular_medias_arquivos(nomes_arquivos_ref, self.media_arquivos_referencias)
-            # Chamando a função para preencher as tabelas com os dados
-            self.preencher_tabelas(self.media_arquivos_referencias,self.ui.tabela_material_referencia)
+            self.preencher_tabelas(self.media_sinal, nomes_arquivos_ref, self.ui.tabela_mat_referencia)
 
-        if sender == self.ui.lista_arquivos_corrigidos:
+        if sender == self.ui.lista_amostras_corrigidas:
             self.media_arquivos_amostras_corrigidos = {}
-            arquivos_amostras = self.ui.lista_arquivos_corrigidos.selectedItems()
+            arquivos_amostras = self.ui.lista_amostras_corrigidas.selectedItems()
             nomes_arquivos_amostras = []
             for arquivo in arquivos_amostras:
                 nomes_arquivos_amostras.append(arquivo.text())
 
-            self.calcular_medias_arquivos(nomes_arquivos_amostras, self.media_arquivos_amostras_corrigidos)
-            self.preencher_tabelas(self.media_arquivos_amostras_corrigidos, self.ui.tabela_dados_corrigidos)
+            self.preencher_tabelas(self.media_sinal, nomes_arquivos_amostras, self.ui.tabela_amostras_corrigidas)
 
 
-    def calcular_medias_arquivos(self,arquivos,dict_onde_salvar):
-        medias = {}
-        for item in arquivos:
-            # Obtendo os dados do arquivo selecionado anteriormente (item selecionado na lista), do dicionário de dataframe
-            dados = self.dataframes_arquivos_txt[item]
-            # Criando a média do arquivo (sem background), e adicionando ao dicionário que irá guardá-los
-            dict_onde_salvar[item] = dados.mean()
+    def preencher_tabelas(self, dados, nomes_arquivos, nome_tabela):
+        dados_tabelados = {}
+        for arquivo in nomes_arquivos:
+            dados_tabelados[arquivo] = dados[arquivo]
 
-    def preencher_tabelas(self, dados, nome_tabela):
-        # Criando uma dataframe para conter os dados das médias dos arquivos que serão mostrados
-        df_dados = pd.DataFrame(dados)
+        # Criando uma dataframe para conter os dados das médias dos arquivos de referência
+        df_dados = pd.DataFrame(dados_tabelados)
 
-        # Ao calcular a média de um dataframe, o resultado será dado em forma de uma série pandas (vertical)
-        # sendo necessário transpor esse dataframe (linhas se tornam colunas)
         df_dados = df_dados.transpose()
-
         # Obtendo o número de linhas e colunas do dataframe
         num_linhas = len(df_dados)
         num_colunas = len(df_dados.columns)
@@ -477,7 +473,7 @@ class MainWindow(QMainWindow):
 
         # ENCONTRANDO O NOME DAS COLUNAS
         nome_das_colunas = df_dados.columns.tolist()
-        nome_das_linhas = dados.keys()
+        nome_das_linhas = nomes_arquivos
         nome_tabela.setHorizontalHeaderLabels(nome_das_colunas)
         nome_tabela.setVerticalHeaderLabels(nome_das_linhas)
 
@@ -489,6 +485,7 @@ class MainWindow(QMainWindow):
 
         # Redimensiona o tamanho das colunas para mostrar os dados com o tamanho correto
         nome_tabela.resizeColumnsToContents()
+
 
     def importar_arquivos_adicionais(self):
         try:
@@ -518,29 +515,36 @@ class MainWindow(QMainWindow):
             # Criando dataframes com os dados dos arquivos txt
             self.dataframes_arquivos_txt = ManipularDadosArquivosOriginais.criar_dataframes(self, self.arquivos_txt)
 
-            # Passando os nomes para a função que irá os adicionar a lista
-            self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_importados)
-            self.preencher_listas(nomes_arquivos_txt, self.ui.lista_arquivos_corrigidos)
+            # Calculando os dados de background/sinal
+            self.sinal_separado, self.background_separado, self.media_background, self.media_sinal, self.limite_background_sinal = (
+                CalcularCorrecoes.corrigir_background_sinal(self, self.dataframes_arquivos_txt))
 
-            # Preenchendo a tabela com os dados do primeiro arquivo do dicionário de dataframes,
-            # assim que os arquivos são importados
-            #self.preencher_tab_arquivos_importados(item=self.ui.lista_arquivos_importados.item(0))
+            # Passando os nomes para a função que irá os adicionar a lista
+            self.preencher_listas(nomes_arquivos_txt, self.ui.lista_mat_referencia)
+            self.preencher_listas(nomes_arquivos_txt, self.ui.lista_amostras_corrigidas)
+
+
 
         except Exception as e:
             self.mostrar_mensagem_erro(f"{e}")
 
+
     def definir_intervalo_background(self):
         if len(self.dataframes_arquivos_txt) > 0:
             #Pega a lista de itens selecionados
-            arquivos_selecionados = self.ui.lista_arquivos_importados.selectedItems()
+            arquivos_selecionados = self.ui.lista_mat_referencia.selectedItems()
+
 
             # Seleciona apenas o primeiro arquivo
             arquivo_referencia = arquivos_selecionados[0].text()
+
             self.definir_background = BackgroundWindow()
 
             # Obtém os dados do arquivo usado como referência
             #dados_do_arquivo_referencia = self.dataframes_arquivos_txt[arquivo_referencia]
             self.definir_background.dados_referencia =  self.dataframes_arquivos_txt[arquivo_referencia]
+            # Obtendo o limite B/S do arquivo usado como referência
+            self.definir_background.final_background = self.limite_background_sinal[arquivo_referencia]
             #self.definir_background.adicionar_dados(dados=dados_do_arquivo_referencia)
             self.definir_background.adicionar_dados()
             self.definir_background.plotar_grafico()

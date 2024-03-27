@@ -13,6 +13,7 @@ class BackgroundWindow(QMainWindow):
         self.plot_widget = PlotWidget()
         self.curve = None
         self.dados_referencia = None
+        self.final_background =  None
 
 
         # Setup a Main Window
@@ -87,13 +88,7 @@ class BackgroundWindow(QMainWindow):
             self.drag_start_position = None
             event.accept()
 
-    # Este método evita que as regiões do background e sinal sejam movidas na vertical (pode sumir com os nomes das regiões no gráfico)
-    '''def customMouseDragEvent(self, ev):
-        if ev.button() == Qt.LeftButton:
-            # Ajusta a posição horizontal da região com base no movimento do mouse
-            self.setRegion([self.getRegion()[0] + ev.pos().x() - ev.lastPos().x(),
-                            self.getRegion()[1] + ev.pos().x() - ev.lastPos().x()])
-            ev.accept()'''
+
 
 
     def plotar_grafico(self):
@@ -103,8 +98,6 @@ class BackgroundWindow(QMainWindow):
         self.curve = self.plot_widget.plot([], [])  # Criar uma curva vazia
 
         self.estilizar_grafico()
-
-
 
     def adicionar_dados(self):
         dados = self.dados_referencia
@@ -142,16 +135,14 @@ class BackgroundWindow(QMainWindow):
     def definir_background(self):
         num_pontos = self.dados_referencia.shape[0]
 
-        pontos_a_retirar = math.ceil(num_pontos * 0.1)
-
         inicio_background = 1
-        limite_final_background = pontos_a_retirar
+
 
         # Criando a região do background no gráfico
         # Crie uma região linear entre as duas linhas
-        self.regiao_background = LinearRegionItem([inicio_background, limite_final_background])
+        self.regiao_background = LinearRegionItem([inicio_background, self.final_background])
         self.regiao_background.setBrush(QBrush(QColor(255, 255, 255, 50)))
-        self.regiao_background.setMovable(True)
+        #self.regiao_background.setMovable(True)
         inicio_background = self.regiao_background.lines[0]  # Linha esquerda da região do background
         inicio_background.setBounds((1, 1))  # Sempre fixa em 1
         final_background = self.regiao_background.lines[1]  # Linha direita da região do background
@@ -159,12 +150,10 @@ class BackgroundWindow(QMainWindow):
         final_background.setBounds((1, limite_sup_background))
         self.plot_widget.addItem(self.regiao_background)
 
-        #self.regiao_background.mouseDragEvent = lambda ev: self.customMouseDragEvent(self.regiao_background, ev)
-
         pg.InfLineLabel(self.regiao_background.lines[0], "Background", position=0.1, rotateAxis=(1, 0), anchor=(1, 1))
 
-        inicio_sinal = limite_final_background + 1
-        limite_final_sinal = num_pontos - pontos_a_retirar
+        inicio_sinal = self.final_background + 1
+        limite_final_sinal = num_pontos
 
         # Crie uma região linear entre as duas linhas
         self.regiao_sinal = LinearRegionItem([inicio_sinal, limite_final_sinal])
@@ -173,7 +162,6 @@ class BackgroundWindow(QMainWindow):
         inicio_sinal.setBounds((2,num_pontos))
         final_sinal = self.regiao_sinal.lines[1]  # Linha direita da região do background
         final_sinal.setBounds((2, num_pontos))
-
         self.plot_widget.addItem(self.regiao_sinal)
         pg.InfLineLabel(self.regiao_sinal.lines[1], "Sinal", position=0.1, rotateAxis=(1, 0), anchor=(1, 1))
 
